@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: pip install openai pillow
 
+      - name: Prepare daily travel topic
+        working-directory: travel-agent
+        run: |
+          python scripts/pick_topic.py
+          python scripts/generate_post.py
+
       - name: Generate wallpaper pack
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -36,11 +42,14 @@ jobs:
           else
             python modules/wallpaper/scripts/generate_wallpaper_pack.py
           fi
+          python modules/wallpaper/scripts/make_preview_grid.py
+          python modules/wallpaper/scripts/generate_product_page.py
+          python modules/wallpaper/scripts/package_wallpaper_zip.py
 
       - name: Commit wallpaper output
         run: |
           git config user.name "wallpaper-agent"
           git config user.email "agent@example.com"
-          git add outputs/
+          git add outputs/ travel-agent/outputs/
           git commit -m "Generate daily wallpaper pack" || echo "No changes"
           git push

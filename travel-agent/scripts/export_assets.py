@@ -21,9 +21,10 @@ IMAGE_STYLE_RULES = (
 )
 
 TEXT_RULES = (
-    "文字要求：只保留重点短句，每张图中文字不超过 4 处，单处尽量 4-10 个汉字；"
-    "中文字体风格参考金陵体、圆体、手写圆润标题字，要求清晰可读；"
-    "必须加入小号水印/印章文字“扬仔游星球”，放在右下角或边缘，不遮挡主体。"
+    "文字要求：只保留重点短句，每张图中文字不超过 4 处，单处尽量 4-10 个汉字或 2-5 个英文单词；"
+    "所有文字必须排版美观、清晰可读、无错字、无乱码、无多余文字；"
+    "中文字体风格参考金陵体、圆体、手写圆润标题字；英文使用干净现代的人文无衬线字体，类似 claude.com 网站的温和现代字体气质；"
+    "必须加入小号水印/印章文字，放在右下角或边缘，不遮挡主体。"
 )
 
 COPYRIGHT_RULES = (
@@ -31,6 +32,43 @@ COPYRIGHT_RULES = (
     "不要复刻任何参考图的具体版式、构图、标题、路线、图标排列、水印、人物或独特表达；"
     "不要使用真实照片、博主截图、真实地图、真实路线图、平台水印、品牌 Logo 或受版权保护角色。"
 )
+
+LANGUAGE_VARIANTS = [
+    {
+        "code": "zh-Hans",
+        "name": "中文简体",
+        "suffix": "zh-Hans",
+        "watermark": "扬仔游星球",
+        "rules": (
+            "语言版本：中文简体。图片内所有文字必须使用简体中文；"
+            "水印/印章文字使用“扬仔游星球”；"
+            "标题和标签使用可爱圆润中文手写风，不能出现繁体字或英文说明。"
+        ),
+    },
+    {
+        "code": "zh-Hant",
+        "name": "中文繁体",
+        "suffix": "zh-Hant",
+        "watermark": "揚仔遊星球",
+        "rules": (
+            "語言版本：中文繁體。圖片內所有文字必須使用繁體中文；"
+            "水印/印章文字使用「揚仔遊星球」；"
+            "標題和標籤使用可愛圓潤中文手寫風，不能出現簡體字或英文說明。"
+        ),
+    },
+    {
+        "code": "en",
+        "name": "English",
+        "suffix": "en",
+        "watermark": "Yangzai Travel Planet",
+        "rules": (
+            "Language version: English. All visible text inside the image must be natural, short English; "
+            "use the small watermark/stamp text “Yangzai Travel Planet”; "
+            "use a clean modern humanist sans-serif font with a warm editorial feeling similar to claude.com; "
+            "do not include Chinese characters in this English version."
+        ),
+    },
+]
 
 
 def today() -> str:
@@ -76,6 +114,16 @@ def scripts(city: dict[str, str], topic: dict[str, str]) -> list[dict[str, str]]
     ]
 
 
+def localized_prompt(item: dict[str, str], language: dict[str, str]) -> str:
+    return (
+        f"{item['prompt']}"
+        f"{language['rules']}"
+        "最终检查：这是同一张卡的独立语言版本，画面结构可以一致，但文字只能使用本版本语言；"
+        "不要把三种语言同时放进一张图；"
+        "如果无法保证长句无误，请减少文字，只保留标题、1-3 个短标签和品牌水印。"
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=today())
@@ -89,15 +137,20 @@ def main() -> int:
     cities = {item["slug"]: item for item in read_csv(ROOT / "cities.csv")}
     topics = {item["slug"]: item for item in read_csv(ROOT / "topics.csv")}
     data = scripts(cities[city_slug], topics[topic_slug])
-    prompt_data = [
-        {
-            "card": item["card"],
-            "title": item["title"],
-            "prompt": item["prompt"],
-            "filename": f"img_{item['card']}.png",
-        }
-        for item in data
-    ]
+    prompt_data = []
+    for item in data:
+        for language in LANGUAGE_VARIANTS:
+            prompt_data.append(
+                {
+                    "card": item["card"],
+                    "title": item["title"],
+                    "language": language["code"],
+                    "language_name": language["name"],
+                    "watermark": language["watermark"],
+                    "prompt": localized_prompt(item, language),
+                    "filename": f"img_{item['card']}_{language['suffix']}.png",
+                }
+            )
 
     (out_dir / "slides.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "image_prompts.json").write_text(json.dumps(prompt_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -105,7 +158,23 @@ def main() -> int:
         "\n\n".join(
             [
                 "# 每张图的卡通绘图 prompt",
-                *[f"## 图 {item['card']}｜{item['title']}\n\n### 画面脚本\n{item['script']}\n\n### Prompt\n{item['prompt']}" for item in data],
+                *[
+                    "\n\n".join(
+                        [
+                            f"## 图 {item['card']}｜{item['title']}",
+                            f"### 画面脚本\n{item['script']}",
+                            *[
+                                (
+                                    f"### {language['name']} Prompt\n"
+                                    f"文件名：`img_{item['card']}_{language['suffix']}.png`\n\n"
+                                    f"{localized_prompt(item, language)}"
+                                )
+                                for language in LANGUAGE_VARIANTS
+                            ],
+                        ]
+                    )
+                    for item in data
+                ],
                 "",
             ]
         ),

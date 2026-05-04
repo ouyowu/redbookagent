@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Package wallpaper PNGs and metadata into a zip file."""
+"""Package paid wallpapers and license into product/wallpaper_pack.zip."""
 
 from __future__ import annotations
 
@@ -8,31 +8,37 @@ import zipfile
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+OUTPUT_ROOT = REPO_ROOT / "outputs"
 
 
 def latest_output_dir() -> Path:
-    candidates = sorted((ROOT / "outputs").glob("*"))
+    candidates = sorted(OUTPUT_ROOT.glob("*-wallpaper"))
     if not candidates:
         raise SystemExit("没有找到壁纸输出目录")
     return candidates[-1]
+
+
+def resolve_output_dir(value: str | None) -> Path:
+    if not value:
+        return latest_output_dir()
+    path = Path(value)
+    return path if path.is_absolute() else REPO_ROOT / path
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir")
     args = parser.parse_args()
-
-    out_dir = Path(args.output_dir) if args.output_dir else latest_output_dir()
-    if not out_dir.is_absolute():
-        out_dir = ROOT / out_dir
-    zip_path = out_dir / f"{out_dir.name}.zip"
-    include_ext = {".png", ".md", ".json", ".html"}
+    output = resolve_output_dir(args.output_dir)
+    zip_path = output / "product" / "wallpaper_pack.zip"
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(out_dir.iterdir()):
-            if path == zip_path or path.suffix.lower() not in include_ext:
-                continue
-            archive.write(path, arcname=path.name)
+        for path in sorted((output / "wallpapers").glob("*.png")):
+            archive.write(path, arcname=f"wallpapers/{path.name}")
+        for name in ["usage_license.txt", "product_description.md", "risk_review.md"]:
+            path = output / "product" / name
+            if path.exists():
+                archive.write(path, arcname=name)
     print(zip_path)
     return 0
 

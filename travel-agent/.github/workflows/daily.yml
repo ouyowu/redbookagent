@@ -1,0 +1,66 @@
+name: Daily Xiaohongshu Travel Agent
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # UTC 02:00，即曼谷/中国时间 09:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install openai pandas requests beautifulsoup4
+
+      - name: Generate travel post
+        working-directory: travel-agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python scripts/pick_topic.py
+          python scripts/generate_post.py
+          python scripts/export_assets.py
+
+      - name: Generate images
+        working-directory: travel-agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/generate_images.py
+
+      - name: Commit output
+        if: ${{ vars.TRAVEL_AGENT_OPEN_PR != 'true' }}
+        run: |
+          git config user.name "travel-agent"
+          git config user.email "agent@example.com"
+          git add travel-agent/outputs/
+          git commit -m "Generate daily travel post" || echo "No changes"
+          git push
+
+      - name: Open review PR
+        if: ${{ vars.TRAVEL_AGENT_OPEN_PR == 'true' }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: travel-agent/daily-output
+          delete-branch: true
+          title: "Daily travel agent output"
+          commit-message: "chore: generate daily travel agent output"
+          body: |
+            自动生成“扬仔游星球”今日旅行内容包，请人工审核后发布。
+
+            审核重点：
+            - 是否只使用公开资料提炼事实、地点、交通方式和体验建议
+            - 是否未复制博主原文、原图、截图、路线图或独特表达
+            - 是否完成营业时间、票价、预约和交通信息的发布前复核
+          add-paths: |
+            travel-agent/outputs/**

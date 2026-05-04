@@ -1,0 +1,46 @@
+name: Daily Wallpaper Pack Agent
+
+on:
+  schedule:
+    - cron: "10 2 * * *" # UTC 02:10，即曼谷/中国时间 09:10
+  workflow_dispatch:
+    inputs:
+      city:
+        description: "Optional city slug, e.g. tokyo"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  generate-wallpaper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install openai pillow
+
+      - name: Generate wallpaper pack
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.city }}" ]; then
+            python modules/wallpaper/scripts/generate_wallpaper_pack.py --city "${{ inputs.city }}"
+          else
+            python modules/wallpaper/scripts/generate_wallpaper_pack.py
+          fi
+
+      - name: Commit wallpaper output
+        run: |
+          git config user.name "wallpaper-agent"
+          git config user.email "agent@example.com"
+          git add outputs/
+          git commit -m "Generate daily wallpaper pack" || echo "No changes"
+          git push

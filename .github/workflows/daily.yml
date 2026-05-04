@@ -33,7 +33,7 @@ jobs:
           python scripts/export_assets.py
 
       - name: Generate images
-        if: ${{ secrets.OPENAI_API_KEY != '' }}
+        if: ${{ vars.TRAVEL_AGENT_GENERATE_IMAGES == 'true' }}
         continue-on-error: true
         working-directory: travel-agent
         env:

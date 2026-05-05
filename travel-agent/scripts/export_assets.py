@@ -46,17 +46,6 @@ LANGUAGE_VARIANTS = [
         ),
     },
     {
-        "code": "zh-Hant",
-        "name": "中文繁体",
-        "suffix": "zh-Hant",
-        "watermark": "揚仔遊星球",
-        "rules": (
-            "語言版本：中文繁體。圖片內所有文字必須使用繁體中文；"
-            "水印/印章文字使用「揚仔遊星球」；"
-            "標題和標籤使用可愛圓潤中文手寫風，不能出現簡體字或英文說明。"
-        ),
-    },
-    {
         "code": "en",
         "name": "English",
         "suffix": "en",

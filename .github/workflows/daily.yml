@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "0 2 * * *" # 曼谷时间 09:00
   workflow_dispatch:
+    inputs:
+      generate_images:
+        description: "Generate images after preparing post and prompts"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -36,6 +42,7 @@ jobs:
           echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
 
       - name: Generate images
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.generate_images }}
         working-directory: travel-agent
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

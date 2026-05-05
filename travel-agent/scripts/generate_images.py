@@ -72,7 +72,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Generate PNG images from image_prompts.json.")
     parser.add_argument("--output-dir", help="Output directory containing image_prompts.json. Defaults to today's output.")
     parser.add_argument("--size", default="1024x1536", help="Vertical image size for gpt-image-1.")
-    parser.add_argument("--quality", default="high", choices=["low", "medium", "high", "auto"], help="Image quality for gpt-image-1.")
+    parser.add_argument("--quality", default="low", choices=["low", "medium", "high", "auto"], help="Image quality for gpt-image-1.")
     args = parser.parse_args()
 
     output_dir = resolve_output_dir(args.output_dir)

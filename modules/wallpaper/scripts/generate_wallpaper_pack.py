@@ -183,7 +183,7 @@ def generate_image(prompt: str):
     if OpenAI is None or not os.getenv("OPENAI_API_KEY"):
         return None
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    result = client.images.generate(model="gpt-image-1", prompt=prompt, size=API_SIZE, quality="high")
+    result = client.images.generate(model="gpt-image-1", prompt=prompt, size=API_SIZE, quality="low")
     data = result.data[0].b64_json
     if not data:
         return None

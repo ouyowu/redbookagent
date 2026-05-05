@@ -38,6 +38,7 @@ LANGUAGE_VARIANTS = [
         "code": "zh-Hans",
         "name": "中文简体",
         "suffix": "zh-Hans",
+        "pack_file": "notebooklm_image_pack_zh-Hans.md",
         "watermark": "扬仔游星球",
         "rules": (
             "语言版本：中文简体。图片内所有文字必须使用简体中文；"
@@ -49,6 +50,7 @@ LANGUAGE_VARIANTS = [
         "code": "zh-Hant",
         "name": "中文繁体",
         "suffix": "zh-Hant",
+        "pack_file": "notebooklm_image_pack_zh-Hant.md",
         "watermark": "揚仔遊星球",
         "rules": (
             "語言版本：繁體中文。圖片內所有文字必須使用繁體中文；"
@@ -60,6 +62,7 @@ LANGUAGE_VARIANTS = [
         "code": "en",
         "name": "English",
         "suffix": "en",
+        "pack_file": "notebooklm_image_pack_en.md",
         "watermark": "Yangzai Travel Planet",
         "rules": (
             "Language version: English. All visible text inside the image must be natural, short English; "
@@ -180,6 +183,156 @@ def render_notebooklm_pack(city: dict[str, str], topic: dict[str, str], items: l
     )
 
 
+def render_notebooklm_pack_single_language(
+    city: dict[str, str],
+    topic: dict[str, str],
+    items: list[dict[str, str]],
+    prompt_data: list[dict[str, str]],
+    language: dict[str, str],
+) -> str:
+    if language["code"] == "zh-Hant":
+        title = f"# NotebookLM 手動出圖工作包｜{city['name']}｜{topic['name']}｜繁體中文"
+        intro = "把這整份內容貼進 NotebookLM，適合直接生成一套繁體中文旅行配圖。"
+        task_header = "## 你的任務"
+        task = (
+            f"請基於以下資料，為「揚仔遊星球」製作 {city['name']} {topic['name']} 小紅書旅行圖文配圖。"
+            "整體風格要原創、可愛、像旅行手帳，不要做成真實照片，也不要複製任何現成攻略圖版式。"
+        )
+        requirement_header = "## 總體要求"
+        requirements = [
+            "- 輸出風格：原創卡通旅行手帳、奶油紙張紋理、水彩和彩鉛質感、手繪描邊、貼紙拼貼、郵戳和膠帶元素。",
+            "- 畫幅：直式，接近 9:16，適合小紅書封面和手機大螢幕瀏覽。",
+            "- 文字控制：少字、短句、排版清晰，寧可少寫，也不要長句塞滿畫面。",
+            "- 版權邊界：不要使用真實照片、真實地圖、路線圖、品牌 Logo、平台水印、受版權保護角色，也不要模仿具體插畫師風格。",
+            "- 品牌標識：角落可加小號水印，使用「揚仔遊星球」。",
+        ]
+        context_header = "## 城市與主題背景"
+        directive_header = "## 建議給 NotebookLM 的一句總指令"
+        directive = (
+            f"請為「揚仔遊星球」生成 {city['name']} {topic['name']} 小紅書旅行配圖，"
+            "做成原創卡通旅行手帳風，直式，高可讀、低文字密度、適合收藏，不要真實照片感。"
+        )
+        split_header = "## 分圖要求"
+        easy_header = "## 最省事用法"
+        easy_lines = [
+            "- 想先試一張：先用圖 1 封面的繁體中文版本。",
+            "- 想做整套：讓 NotebookLM 按圖 1 到圖 5 分 5 次生成。",
+        ]
+        final_header = "## 可直接貼上的最終短指令"
+        final_line = (
+            f"請先生成圖 1 封面，城市是 {city['name']}，主題是 {topic['name']}，"
+            "使用繁體中文，風格為原創可愛旅行手帳，直式，少字，高可讀，不要真實照片感。"
+        )
+    elif language["code"] == "en":
+        title = f"# NotebookLM Image Pack | {city['name']} | {topic['name']} | English"
+        intro = "Paste this full note into NotebookLM to generate a complete English travel image set."
+        task_header = "## Your Task"
+        task = (
+            f"Use the material below to create Xiaohongshu-style travel visuals for Yangzai Travel Planet about {city['name']} and {topic['name']}. "
+            "Keep the look original, cute, and like a travel journal. Do not make it look like a real photo and do not copy any existing guide layout."
+        )
+        requirement_header = "## Overall Direction"
+        requirements = [
+            "- Visual style: original cartoon travel journal, cream paper texture, watercolor and colored pencil feeling, hand-drawn outlines, stickers, postage marks, and tape details.",
+            "- Canvas: vertical, close to 9:16, suitable for Xiaohongshu covers and phone-first viewing.",
+            "- Text: short, sparse, readable. Fewer words are better than long dense captions.",
+            "- Copyright boundary: no real photos, real maps, route maps, logos, platform watermarks, protected characters, or artist-style imitation.",
+            "- Brand mark: add a small corner watermark using `Yangzai Travel Planet`.",
+        ]
+        context_header = "## City and Theme Context"
+        directive_header = "## One-Line Prompt for NotebookLM"
+        directive = (
+            f"Create original Xiaohongshu travel visuals for Yangzai Travel Planet about {city['name']} and {topic['name']}, "
+            "in a cute cartoon travel-journal style, vertical, readable, low text density, and not photo-real."
+        )
+        split_header = "## Slide-by-Slide Requirements"
+        easy_header = "## Fastest Way To Use This"
+        easy_lines = [
+            "- If you only want one test image, start with Slide 1 Cover in English.",
+            "- If you want the full set, ask NotebookLM to generate Slides 1 through 5 one by one.",
+        ]
+        final_header = "## Final Short Prompt To Paste"
+        final_line = (
+            f"Generate Slide 1 Cover for {city['name']} with the theme {topic['name']}, "
+            "in English, using an original cute travel-journal style, vertical layout, low text density, and no photo-real look."
+        )
+    else:
+        title = f"# NotebookLM 手动出图工作包｜{city['name']}｜{topic['name']}｜简体中文"
+        intro = "把这整份内容贴进 NotebookLM，适合直接生成一套简体中文旅行配图。"
+        task_header = "## 你的任务"
+        task = (
+            f"请基于以下资料，为“扬仔游星球”制作 {city['name']} {topic['name']} 小红书旅行图文配图。"
+            "整体风格要原创、可爱、像旅行手账，不要做成真实照片，也不要复制任何现成攻略图版式。"
+        )
+        requirement_header = "## 总体要求"
+        requirements = [
+            "- 输出风格：原创卡通旅行手账、奶油纸张纹理、水彩和彩铅质感、手绘描边、贴纸拼贴、邮戳和胶带元素。",
+            "- 画幅：竖版，接近 9:16，适合小红书封面和手机大屏浏览。",
+            "- 文字控制：少字、短句、排版清晰，宁可少写，也不要长句堆满画面。",
+            "- 版权边界：不要使用真实照片、真实地图、路线图、品牌 Logo、平台水印、受版权保护角色，也不要模仿具体插画师风格。",
+            "- 品牌标识：角落可加小号水印，使用“扬仔游星球”。",
+        ]
+        context_header = "## 城市与主题背景"
+        directive_header = "## 建议给 NotebookLM 的一句总指令"
+        directive = (
+            f"请为“扬仔游星球”生成 {city['name']} {topic['name']} 小红书旅行配图，"
+            "做成原创卡通旅行手账风，竖版，高可读、低文字密度、适合收藏，不要真实照片感。"
+        )
+        split_header = "## 分图要求"
+        easy_header = "## 最省事用法"
+        easy_lines = [
+            "- 想先试一张：先用图 1 封面的简体中文版本。",
+            "- 想做整套：让 NotebookLM 按图 1 到图 5 分 5 次生成。",
+        ]
+        final_header = "## 可直接贴上的最终短指令"
+        final_line = (
+            f"请先生成图 1 封面，城市是 {city['name']}，主题是 {topic['name']}，"
+            "使用简体中文，风格为原创可爱旅行手账，竖版，少字，高可读，不要真实照片感。"
+        )
+
+    visible_prompts = [prompt for prompt in prompt_data if prompt["language"] == language["code"]]
+    return "\n\n".join(
+        [
+            title,
+            intro,
+            task_header,
+            task,
+            requirement_header,
+            *requirements,
+            context_header,
+            f"- 城市：{city['name']}，{city['country']}",
+            f"- 主题：{topic['name']}",
+            f"- 角度：{topic['angle']}",
+            f"- 官方资料入口：{city['official_url']}",
+            f"- 开放旅行指南：{city['guide_url']}",
+            directive_header,
+            directive,
+            split_header,
+            *[
+                "\n".join(
+                    [
+                        f"### 图 {item['card']}｜{item['title']}" if language["code"] != "en" else f"### Slide {item['card']} | {item['title']}",
+                        f"画面脚本：{item['script']}" if language["code"] != "en" else f"Visual brief: {item['script']}",
+                        *[
+                            f"- 文件 `{prompt['filename']}`：{prompt['prompt']}"
+                            if language["code"] != "en"
+                            else f"- File `{prompt['filename']}`: {prompt['prompt']}"
+                            for prompt in visible_prompts
+                            if prompt["card"] == item["card"]
+                        ],
+                    ]
+                )
+                for item in items
+            ],
+            easy_header,
+            *easy_lines,
+            final_header,
+            final_line,
+            "",
+        ]
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=today())
@@ -240,6 +393,17 @@ def main() -> int:
         render_notebooklm_pack(cities[city_slug], topics[topic_slug], data, prompt_data),
         encoding="utf-8",
     )
+    for language in LANGUAGE_VARIANTS:
+        (out_dir / language["pack_file"]).write_text(
+            render_notebooklm_pack_single_language(
+                cities[city_slug],
+                topics[topic_slug],
+                data,
+                prompt_data,
+                language,
+            ),
+            encoding="utf-8",
+        )
     print(out_dir)
     return 0
 

@@ -30,21 +30,23 @@ jobs:
       - name: Prepare daily travel topic
         working-directory: travel-agent
         run: |
-          python scripts/pick_topic.py
-          python scripts/generate_post.py
+          RUN_DATE=$(TZ=Asia/Bangkok date +%F-%H%M)
+          python scripts/pick_topic.py --date "$RUN_DATE"
+          python scripts/generate_post.py --date "$RUN_DATE"
+          echo "RUN_DATE=$RUN_DATE" >> "$GITHUB_ENV"
 
       - name: Generate wallpaper pack
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           if [ -n "${{ inputs.city }}" ]; then
-            python modules/wallpaper/scripts/generate_wallpaper_pack.py --city "${{ inputs.city }}"
+            WALLPAPER_DIR=$(python modules/wallpaper/scripts/generate_wallpaper_pack.py --date "$RUN_DATE" --city "${{ inputs.city }}")
           else
-            python modules/wallpaper/scripts/generate_wallpaper_pack.py
+            WALLPAPER_DIR=$(python modules/wallpaper/scripts/generate_wallpaper_pack.py --date "$RUN_DATE")
           fi
-          python modules/wallpaper/scripts/make_preview_grid.py
-          python modules/wallpaper/scripts/generate_product_page.py
-          python modules/wallpaper/scripts/package_wallpaper_zip.py
+          python modules/wallpaper/scripts/make_preview_grid.py --output-dir "$WALLPAPER_DIR"
+          python modules/wallpaper/scripts/generate_product_page.py --output-dir "$WALLPAPER_DIR"
+          python modules/wallpaper/scripts/package_wallpaper_zip.py --output-dir "$WALLPAPER_DIR"
 
       - name: Commit wallpaper output
         run: |

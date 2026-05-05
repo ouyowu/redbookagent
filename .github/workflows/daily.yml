@@ -29,7 +29,8 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           RUN_DATE=$(TZ=Asia/Bangkok date +%F-%H%M)
-          OUTPUT_DIR=$(python scripts/pick_topic.py --date "$RUN_DATE")
+          BRIEF_PATH=$(python scripts/pick_topic.py --date "$RUN_DATE")
+          OUTPUT_DIR=$(dirname "$BRIEF_PATH")
           python scripts/generate_post.py --date "$RUN_DATE"
           python scripts/export_assets.py --date "$RUN_DATE"
           echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"

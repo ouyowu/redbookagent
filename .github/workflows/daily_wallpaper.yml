@@ -1,8 +1,6 @@
 name: Daily Wallpaper Pack Agent
 
 on:
-  schedule:
-    - cron: "10 2 * * *" # 曼谷时间 09:10
   workflow_dispatch:
     inputs:
       city:

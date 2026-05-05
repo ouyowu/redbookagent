@@ -39,6 +39,7 @@ LANGUAGE_VARIANTS = [
         "name": "中文简体",
         "suffix": "zh-Hans",
         "pack_file": "notebooklm_image_pack_zh-Hans.md",
+        "prompt_file": "image_prompts_zh-Hans.md",
         "watermark": "扬仔游星球",
         "rules": (
             "语言版本：中文简体。图片内所有文字必须使用简体中文；"
@@ -51,6 +52,7 @@ LANGUAGE_VARIANTS = [
         "name": "中文繁体",
         "suffix": "zh-Hant",
         "pack_file": "notebooklm_image_pack_zh-Hant.md",
+        "prompt_file": "image_prompts_zh-Hant.md",
         "watermark": "揚仔遊星球",
         "rules": (
             "語言版本：繁體中文。圖片內所有文字必須使用繁體中文；"
@@ -63,6 +65,7 @@ LANGUAGE_VARIANTS = [
         "name": "English",
         "suffix": "en",
         "pack_file": "notebooklm_image_pack_en.md",
+        "prompt_file": "image_prompts_en.md",
         "watermark": "Yangzai Travel Planet",
         "rules": (
             "Language version: English. All visible text inside the image must be natural, short English; "
@@ -333,6 +336,45 @@ def render_notebooklm_pack_single_language(
     )
 
 
+def render_image_prompts_single_language(items: list[dict[str, str]], language: dict[str, str]) -> str:
+    title = {
+        "zh-Hans": "# 每张图的卡通绘图 prompt｜简体中文",
+        "zh-Hant": "# 每張圖的卡通繪圖 Prompt｜繁體中文",
+        "en": "# Cartoon image prompts for each slide | English",
+    }[language["code"]]
+    script_label = {
+        "zh-Hans": "### 画面脚本",
+        "zh-Hant": "### 畫面腳本",
+        "en": "### Visual brief",
+    }[language["code"]]
+    return "\n\n".join(
+        [
+            title,
+            *[
+                "\n\n".join(
+                    [
+                        f"## 图 {item['card']}｜{item['title']}" if language["code"] != "en" else f"## Slide {item['card']} | {item['title']}",
+                        f"{script_label}\n{item['script']}",
+                        (
+                            f"### {language['name']} Prompt\n"
+                            f"文件名：`img_{item['card']}_{language['suffix']}.png`\n\n"
+                            f"{localized_prompt(item, language)}"
+                        )
+                        if language["code"] != "en"
+                        else (
+                            f"### {language['name']} Prompt\n"
+                            f"Filename: `img_{item['card']}_{language['suffix']}.png`\n\n"
+                            f"{localized_prompt(item, language)}"
+                        ),
+                    ]
+                )
+                for item in items
+            ],
+            "",
+        ]
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=today())
@@ -389,6 +431,11 @@ def main() -> int:
         ),
         encoding="utf-8",
     )
+    for language in LANGUAGE_VARIANTS:
+        (out_dir / language["prompt_file"]).write_text(
+            render_image_prompts_single_language(data, language),
+            encoding="utf-8",
+        )
     (out_dir / "notebooklm_image_pack.md").write_text(
         render_notebooklm_pack(cities[city_slug], topics[topic_slug], data, prompt_data),
         encoding="utf-8",

@@ -28,15 +28,17 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          python scripts/pick_topic.py
-          python scripts/generate_post.py
-          python scripts/export_assets.py
+          RUN_DATE=$(TZ=Asia/Bangkok date +%F-%H%M)
+          OUTPUT_DIR=$(python scripts/pick_topic.py --date "$RUN_DATE")
+          python scripts/generate_post.py --date "$RUN_DATE"
+          python scripts/export_assets.py --date "$RUN_DATE"
+          echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
 
       - name: Generate images
         working-directory: travel-agent
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python scripts/generate_images.py
+        run: python scripts/generate_images.py --output-dir "$OUTPUT_DIR"
 
       - name: Commit output
         if: ${{ vars.TRAVEL_AGENT_OPEN_PR != 'true' }}

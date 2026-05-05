@@ -10,7 +10,7 @@ import json
 import os
 from pathlib import Path
 
-from openai import OpenAI
+from openai import BadRequestError, OpenAI
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +68,16 @@ def generate_image(client: OpenAI, prompt: str, filename: Path, size: str, quali
     filename.write_bytes(base64.b64decode(image_base64))
 
 
+def is_billing_limit_error(error: BadRequestError) -> bool:
+    body = getattr(error, "body", None)
+    if not isinstance(body, dict):
+        return False
+    error_body = body.get("error")
+    if not isinstance(error_body, dict):
+        return False
+    return error_body.get("code") == "billing_hard_limit_reached"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate PNG images from image_prompts.json.")
     parser.add_argument("--output-dir", help="Output directory containing image_prompts.json. Defaults to today's output.")
@@ -83,10 +93,31 @@ def main() -> int:
         raise SystemExit("缺少 OPENAI_API_KEY，无法调用图片生成接口")
 
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    for item in load_prompts(prompts_path):
-        filename = output_dir / item["filename"]
-        generate_image(client, item["prompt"], filename, args.size, args.quality)
-        print(filename)
+    prompts = load_prompts(prompts_path)
+    try:
+        for item in prompts:
+            filename = output_dir / item["filename"]
+            generate_image(client, item["prompt"], filename, args.size, args.quality)
+            print(filename)
+    except BadRequestError as error:
+        if not is_billing_limit_error(error):
+            raise
+        status_path = output_dir / "image_generation_status.md"
+        status_path.write_text(
+            "\n".join(
+                [
+                    "# Image generation skipped",
+                    "",
+                    "OpenAI billing hard limit has been reached.",
+                    "Text assets and image prompts were generated successfully.",
+                    "Top up billing or raise the spending limit, then rerun image generation.",
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        print(f"跳过图片生成：OpenAI 账户已达到 billing hard limit。状态已写入 {status_path}")
+        return 0
     return 0
 
 

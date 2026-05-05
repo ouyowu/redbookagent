@@ -57,6 +57,15 @@ def load_prompts(path: Path) -> list[dict[str, str]]:
     return prompts
 
 
+def prompt_priority(item: dict[str, str]) -> tuple[int, int, str]:
+    filename = item["filename"]
+    parts = filename.removesuffix(".png").split("_")
+    card = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 99
+    language = parts[2] if len(parts) > 2 else ""
+    language_rank = 0 if language == "zh-Hans" else 1
+    return (card, language_rank, filename)
+
+
 def generate_image(client: OpenAI, prompt: str, filename: Path, size: str, quality: str) -> None:
     result = client.images.generate(
         model="gpt-image-1",
@@ -93,23 +102,30 @@ def main() -> int:
         raise SystemExit("缺少 OPENAI_API_KEY，无法调用图片生成接口")
 
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    prompts = load_prompts(prompts_path)
+    prompts = sorted(load_prompts(prompts_path), key=prompt_priority)
+    generated_count = 0
     try:
         for item in prompts:
             filename = output_dir / item["filename"]
             generate_image(client, item["prompt"], filename, args.size, args.quality)
             print(filename)
+            generated_count += 1
     except BadRequestError as error:
         if not is_billing_limit_error(error):
             raise
         status_path = output_dir / "image_generation_status.md"
+        generated_files = [item["filename"] for item in prompts[:generated_count]]
+        skipped_files = [item["filename"] for item in prompts[generated_count:]]
         status_path.write_text(
             "\n".join(
                 [
                     "# Image generation skipped",
                     "",
                     "OpenAI billing hard limit has been reached.",
+                    f"Generated {generated_count} image(s) before the limit was hit.",
                     "Text assets and image prompts were generated successfully.",
+                    f"Generated files: {', '.join(generated_files) if generated_files else 'none'}",
+                    f"Skipped files: {', '.join(skipped_files) if skipped_files else 'none'}",
                     "Top up billing or raise the spending limit, then rerun image generation.",
                 ]
             )

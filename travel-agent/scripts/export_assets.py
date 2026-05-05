@@ -127,6 +127,52 @@ def localized_prompt(item: dict[str, str], language: dict[str, str]) -> str:
     )
 
 
+def notebooklm_series_instruction(city: dict[str, str], topic: dict[str, str], language: dict[str, str]) -> str:
+    if language["code"] == "en":
+        return (
+            f"Create this as a 5-image Xiaohongshu travel series for {city['name']} about {topic['name']}, not as a single infographic. "
+            "Keep one consistent visual system across all 5 images. Each image must stand alone, cover a different content module, "
+            "and must not be merged into one long poster or one summary board. Generate one image at a time and wait for confirmation before the next."
+        )
+    if language["code"] == "zh-Hant":
+        return (
+            f"請把這次任務做成 {city['name']}「{topic['name']}」的 5 張小紅書旅行圖集，不要合併成 1 張總資訊圖。"
+            "5 張圖要保持同一套視覺風格，但每張都要獨立成圖、分工不同、資訊不要重複；"
+            "不要做成長海報、總覽圖或一張塞滿全部內容的資訊板。請一次只生成 1 張，等確認後再生成下一張。"
+        )
+    return (
+        f"请把这次任务做成 {city['name']}「{topic['name']}」的 5 张小红书旅行图集，不要合并成 1 张总信息图。"
+        "5 张图要保持同一套视觉风格，但每张都要独立成图、分工不同、信息不要重复；"
+        "不要做成长海报、总览图或一张塞满全部内容的信息板。请一次只生成 1 张，等确认后再生成下一张。"
+    )
+
+
+def notebooklm_direct_prompt(city: dict[str, str], topic: dict[str, str], item: dict[str, str], prompt: dict[str, str], language: dict[str, str]) -> str:
+    if language["code"] == "en":
+        return (
+            f"Generate Slide {item['card']} only for a 5-image Xiaohongshu travel series about {city['name']} and {topic['name']}. "
+            f"This slide is `{item['title']}`. Do not merge it with other slides. Keep the same cute travel-journal style used across the full set. "
+            "Use a vertical layout, keep the text sparse and readable, and make this image visually distinct from the other slides. "
+            f"Visual brief: {item['script']} "
+            f"Image prompt: {prompt['prompt']}"
+        )
+    if language["code"] == "zh-Hant":
+        return (
+            f"請只生成第 {item['card']} 張圖，這是一套 {city['name']}「{topic['name']}」5 張小紅書旅行圖集中的其中一張。"
+            f"本張主題是「{item['title']}」，不要和其他頁合併。"
+            "請保持與整套圖集一致的可愛旅行手帳風格，直式構圖，少字高可讀，並且讓本張內容與其他頁有明確分工。"
+            f"畫面腳本：{item['script']}"
+            f"具體出圖要求：{prompt['prompt']}"
+        )
+    return (
+        f"请只生成第 {item['card']} 张图，这是一套 {city['name']}「{topic['name']}」5 张小红书旅行图集中的其中一张。"
+        f"本张主题是「{item['title']}」，不要和其他页合并。"
+        "请保持与整套图集一致的可爱旅行手账风格，竖版构图，少字高可读，并且让本张内容与其他页有明确分工。"
+        f"画面脚本：{item['script']}"
+        f"具体出图要求：{prompt['prompt']}"
+    )
+
+
 def render_notebooklm_pack(city: dict[str, str], topic: dict[str, str], items: list[dict[str, str]], prompt_data: list[dict[str, str]]) -> str:
     return "\n\n".join(
         [
@@ -310,6 +356,8 @@ def render_notebooklm_pack_single_language(
             f"- 开放旅行指南：{city['guide_url']}",
             directive_header,
             directive,
+            "## 图集执行总指令" if language["code"] != "en" else "## Series Execution Prompt",
+            notebooklm_series_instruction(city, topic, language),
             split_header,
             *[
                 "\n".join(
@@ -323,12 +371,41 @@ def render_notebooklm_pack_single_language(
                             for prompt in visible_prompts
                             if prompt["card"] == item["card"]
                         ],
+                        "",
+                        "#### 可直接复制给 NotebookLM 的独立指令"
+                        if language["code"] == "zh-Hans"
+                        else "#### 可直接複製給 NotebookLM 的獨立指令"
+                        if language["code"] == "zh-Hant"
+                        else "#### Direct prompt to paste into NotebookLM",
+                        "```text",
+                        next(
+                            notebooklm_direct_prompt(city, topic, item, prompt, language)
+                            for prompt in visible_prompts
+                            if prompt["card"] == item["card"]
+                        ),
+                        "```",
                     ]
                 )
                 for item in items
             ],
             easy_header,
             *easy_lines,
+            "## 推荐使用顺序" if language["code"] == "zh-Hans" else "## 推薦使用順序" if language["code"] == "zh-Hant" else "## Recommended workflow",
+            "1. 先把上面的“图集执行总指令”贴给 NotebookLM。"
+            if language["code"] == "zh-Hans"
+            else "1. 先把上面的「圖集執行總指令」貼給 NotebookLM。"
+            if language["code"] == "zh-Hant"
+            else "1. Paste the series execution prompt into NotebookLM first.",
+            "2. 再复制图 1 的独立指令，先生成封面。"
+            if language["code"] == "zh-Hans"
+            else "2. 再複製圖 1 的獨立指令，先生成封面。"
+            if language["code"] == "zh-Hant"
+            else "2. Then paste the direct prompt for Slide 1 and generate the cover first.",
+            "3. 确认风格满意后，再按图 2 到图 5 依次生成。"
+            if language["code"] == "zh-Hans"
+            else "3. 確認風格滿意後，再按圖 2 到圖 5 依次生成。"
+            if language["code"] == "zh-Hant"
+            else "3. Once the style looks right, continue with Slides 2 through 5 one by one.",
             final_header,
             final_line,
             "",

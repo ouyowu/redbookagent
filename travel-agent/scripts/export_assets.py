@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export slides.json, image_prompts.json, and image_prompts.md."""
+"""Export slides.json, image_prompts.json, image_prompts.md, and NotebookLM helper copy."""
 
 from __future__ import annotations
 
@@ -108,6 +108,65 @@ def localized_prompt(item: dict[str, str], language: dict[str, str]) -> str:
     )
 
 
+def render_notebooklm_pack(city: dict[str, str], topic: dict[str, str], items: list[dict[str, str]], prompt_data: list[dict[str, str]]) -> str:
+    return "\n\n".join(
+        [
+            f"# NotebookLM 手动出图工作包｜{city['name']}｜{topic['name']}",
+            "把这整份内容贴进 NotebookLM，适合让它生成 1 张信息整合型旅行图，或者按下方分图要求逐张生成。",
+            "## 你的任务",
+            (
+                f"请基于以下资料，为“扬仔游星球”制作 {city['name']} {topic['name']} 小红书旅行图文配图。"
+                "整体风格要原创、可爱、像旅行手账，不要做成真实照片，不要复制任何现成攻略图的版式。"
+            ),
+            "## 总体要求",
+            "- 输出风格：原创卡通旅行手账、奶油纸张纹理、水彩和彩铅质感、手绘描边、贴纸拼贴、邮戳和胶带元素。",
+            "- 画幅：竖版，接近 9:16，适合小红书封面和手机大屏浏览。",
+            "- 文字控制：少字、短句、排版清晰，宁可少写，也不要长句堆满画面。",
+            "- 版权边界：不要使用真实照片、真实地图、路线图、品牌 Logo、平台水印、受版权保护角色，也不要模仿具体插画师风格。",
+            "- 品牌标识：可加小号角落水印，中文用“扬仔游星球”，英文用“Yangzai Travel Planet”。",
+            "## 城市与主题背景",
+            f"- 城市：{city['name']}，{city['country']}",
+            f"- 主题：{topic['name']}",
+            f"- 角度：{topic['angle']}",
+            f"- 官方资料入口：{city['official_url']}",
+            f"- 开放旅行指南：{city['guide_url']}",
+            "## 建议给 NotebookLM 的一句总指令",
+            (
+                f"请为“扬仔游星球”生成 {city['name']} {topic['name']} 小红书旅行配图，"
+                "做成原创卡通旅行手账风，竖版，高可读、低文字密度、适合收藏，不要真实照片感。"
+            ),
+            "## 分图要求",
+            *[
+                "\n".join(
+                    [
+                        f"### 图 {item['card']}｜{item['title']}",
+                        f"画面脚本：{item['script']}",
+                        *[
+                            (
+                                f"- {prompt['language_name']} 文件 `{prompt['filename']}`："
+                                f"{prompt['prompt']}"
+                            )
+                            for prompt in prompt_data
+                            if prompt["card"] == item["card"]
+                        ],
+                    ]
+                )
+                for item in items
+            ],
+            "## 最省事用法",
+            "- 想先试一张：优先用“图 1｜封面”的中文简体版本。",
+            "- 想做整套：让 NotebookLM 按图 1、图 2、图 3 分三次生成。",
+            "- 想做英文版：直接使用对应 English 段落，不要中英混排。",
+            "## 贴给 NotebookLM 的最终短指令",
+            (
+                f"请先生成图 1 封面，城市是 {city['name']}，主题是 {topic['name']}，"
+                "使用中文简体，风格为原创可爱旅行手账，竖版，少字，高可读，不要真实照片感。"
+            ),
+            "",
+        ]
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--date", default=today())
@@ -162,6 +221,10 @@ def main() -> int:
                 "",
             ]
         ),
+        encoding="utf-8",
+    )
+    (out_dir / "notebooklm_image_pack.md").write_text(
+        render_notebooklm_pack(cities[city_slug], topics[topic_slug], data, prompt_data),
         encoding="utf-8",
     )
     print(out_dir)

@@ -2,7 +2,7 @@ name: Daily Xiaohongshu Travel Agent
 
 on:
   schedule:
-    - cron: "0 2,6,11 * * *" # 曼谷时间 09:00、13:00、18:00
+    - cron: "0 2 * * *" # 曼谷时间 09:00
   workflow_dispatch:
 
 permissions:

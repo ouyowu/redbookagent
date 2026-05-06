@@ -38,6 +38,17 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python scripts/generate_images.py
 
+      - name: Email daily package
+        working-directory: travel-agent
+        env:
+          TRAVEL_AGENT_SMTP_HOST: ${{ secrets.TRAVEL_AGENT_SMTP_HOST }}
+          TRAVEL_AGENT_SMTP_PORT: ${{ secrets.TRAVEL_AGENT_SMTP_PORT }}
+          TRAVEL_AGENT_SMTP_USERNAME: ${{ secrets.TRAVEL_AGENT_SMTP_USERNAME }}
+          TRAVEL_AGENT_SMTP_PASSWORD: ${{ secrets.TRAVEL_AGENT_SMTP_PASSWORD }}
+          TRAVEL_AGENT_EMAIL_FROM: ${{ secrets.TRAVEL_AGENT_EMAIL_FROM }}
+          TRAVEL_AGENT_EMAIL_TO: ${{ secrets.TRAVEL_AGENT_EMAIL_TO }}
+        run: python scripts/email_output.py
+
       - name: Commit output
         if: ${{ vars.TRAVEL_AGENT_OPEN_PR != 'true' }}
         run: |

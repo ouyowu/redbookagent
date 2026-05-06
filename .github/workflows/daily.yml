@@ -39,8 +39,8 @@ jobs:
           RUN_DATE=$(TZ=Asia/Bangkok date +%F-%H%M)
           BRIEF_PATH=$(python scripts/pick_topic.py --date "$RUN_DATE")
           OUTPUT_DIR=$(dirname "$BRIEF_PATH")
-          python scripts/generate_post.py --date "$RUN_DATE"
-          python scripts/export_assets.py --date "$RUN_DATE"
+          python scripts/generate_post_quality.py --date "$RUN_DATE"
+          python scripts/export_assets_quality.py --date "$RUN_DATE"
           echo "OUTPUT_DIR=$OUTPUT_DIR" >> "$GITHUB_ENV"
 
       - name: Generate images

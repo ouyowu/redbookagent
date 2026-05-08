@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
 import os
 import re
 import smtplib
@@ -15,6 +16,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BANGKOK = dt.timezone(dt.timedelta(hours=7))
+EXCLUDED_EMAIL_PATTERNS = (
+    "zh-Hant",
+    "繁体",
+    "繁體",
+)
+EXCLUDED_COMBINED_FILES = {
+    "image_prompts.md",
+    "notebooklm_image_pack.md",
+}
 
 
 def today_prefix() -> str:
@@ -51,6 +61,22 @@ def build_zip(output_dir: Path) -> Path:
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(output_dir.rglob("*")):
             if not path.is_file() or path == zip_path:
+                continue
+            relative_name = path.relative_to(output_dir).as_posix()
+            if any(pattern in relative_name for pattern in EXCLUDED_EMAIL_PATTERNS):
+                continue
+            if path.name in EXCLUDED_COMBINED_FILES:
+                continue
+            if path.name == "image_prompts.json":
+                prompts = json.loads(path.read_text(encoding="utf-8"))
+                prompts = [
+                    item for item in prompts
+                    if item.get("language") in {"zh-Hans", "en"}
+                ]
+                archive.writestr(
+                    relative_name,
+                    json.dumps(prompts, ensure_ascii=False, indent=2) + "\n",
+                )
                 continue
             archive.write(path, path.relative_to(output_dir))
     return zip_path

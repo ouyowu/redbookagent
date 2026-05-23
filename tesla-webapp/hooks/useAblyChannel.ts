@@ -27,15 +27,28 @@ export interface CodexMessage {
   ts: number
 }
 
+/** Voice overlay state — populated by S3XY Button → iOS Shortcut → /api/voice-input */
+export interface VoiceState {
+  query: string
+  model: ModelId
+  response: string
+  isStreaming: boolean
+  isError: boolean
+  ts: number
+}
+
 export type ConnectionState = 'connecting' | 'connected' | 'disconnected' | 'suspended'
 
 export interface AblyChannelResult {
   messages: CodexMessage[]
   connectionState: ConnectionState
   activeModel: ModelId
-  /** Publish a model-switch event so the other device sees the change */
+  /** Populated when a voice-input request arrives; null when overlay is dismissed */
+  voiceState: VoiceState | null
   broadcastModelSwitch: (model: ModelId) => void
   clearMessages: () => void
+  /** Call when the user dismisses the VoiceOverlay */
+  dismissVoice: () => void
 }
 
 // ─── Hook ──────────────────────────────────────────────────────────────────────
@@ -48,8 +61,8 @@ export function useAblyChannel(
   const [messages, setMessages] = useState<CodexMessage[]>([])
   const [connectionState, setConnectionState] = useState<ConnectionState>('connecting')
   const [activeModel, setActiveModel] = useState<ModelId>(initialModel)
+  const [voiceState, setVoiceState] = useState<VoiceState | null>(null)
 
-  // Refs keep closure-stable references without causing re-renders
   const ablyRef = useRef<import('ably').Realtime | null>(null)
   const channelRef = useRef<import('ably').RealtimeChannel | null>(null)
   const pendingMsgIdRef = useRef<string | null>(null)
@@ -147,6 +160,42 @@ export function useAblyChannel(
         const { model } = msg.data as { model: ModelId }
         if (model) setActiveModel(model)
       })
+
+      // ── voice-input events (S3XY Button → iOS Shortcut → /api/voice-input) ─
+      channel.subscribe('voice-start', (msg) => {
+        if (!alive) return
+        const { query, model, ts } = msg.data as { query: string; model: ModelId; ts: number }
+        setVoiceState({
+          query,
+          model: model ?? 'grok',
+          response: '',
+          isStreaming: true,
+          isError: false,
+          ts,
+        })
+      })
+
+      channel.subscribe('voice-chunk', (msg) => {
+        if (!alive) return
+        const { text } = msg.data as { text: string }
+        setVoiceState((prev) =>
+          prev ? { ...prev, response: prev.response + text } : prev,
+        )
+      })
+
+      channel.subscribe('voice-end', (msg) => {
+        if (!alive) return
+        void msg // ts available if needed
+        setVoiceState((prev) => (prev ? { ...prev, isStreaming: false } : null))
+      })
+
+      channel.subscribe('voice-error', (msg) => {
+        if (!alive) return
+        const { message } = msg.data as { message: string }
+        setVoiceState((prev) =>
+          prev ? { ...prev, isStreaming: false, isError: true, response: message } : null,
+        )
+      })
     }
 
     connect().catch(console.error)
@@ -166,6 +215,15 @@ export function useAblyChannel(
   }, [])
 
   const clearMessages = useCallback(() => setMessages([]), [])
+  const dismissVoice = useCallback(() => setVoiceState(null), [])
 
-  return { messages, connectionState, activeModel, broadcastModelSwitch, clearMessages }
+  return {
+    messages,
+    connectionState,
+    activeModel,
+    voiceState,
+    broadcastModelSwitch,
+    clearMessages,
+    dismissVoice,
+  }
 }

@@ -18,6 +18,7 @@
 import { useMemo, useState } from 'react'
 import { ChatPanel } from '@/components/ChatPanel'
 import { CodexMonitor } from '@/components/CodexMonitor'
+import { VoiceOverlay } from '@/components/VoiceOverlay'
 import { useAblyChannel } from '@/hooks/useAblyChannel'
 import type { ModelId } from '@/lib/models'
 
@@ -41,8 +42,15 @@ export default function TeslaConsole() {
   const roomId = useMemo(getRoomId, [])
   const clientId = useMemo(getClientId, [])
 
-  const { messages, connectionState, activeModel, broadcastModelSwitch, clearMessages } =
-    useAblyChannel(roomId, clientId)
+  const {
+    messages,
+    connectionState,
+    activeModel,
+    voiceState,
+    broadcastModelSwitch,
+    clearMessages,
+    dismissVoice,
+  } = useAblyChannel(roomId, clientId)
 
   const [localModel, setLocalModel] = useState<ModelId>(activeModel)
 
@@ -100,6 +108,9 @@ export default function TeslaConsole() {
           onClear={clearMessages}
         />
       </div>
+
+      {/* ── Voice overlay: pops up when S3XY Button triggers iOS Shortcut ── */}
+      <VoiceOverlay state={voiceState} onDismiss={dismissVoice} />
     </main>
   )
 }

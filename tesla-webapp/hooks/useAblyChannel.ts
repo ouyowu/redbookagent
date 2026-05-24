@@ -191,7 +191,7 @@ export function useAblyChannel(
       channelRef.current?.unsubscribe()
       ablyRef.current?.close()
     }
-  }, [roomId, clientId, initialModel])
+  }, [roomId, clientId])
 
   const clearMessages = useCallback(() => setMessages([]), [])
   const dismissVoice  = useCallback(() => setVoiceState(null), [])

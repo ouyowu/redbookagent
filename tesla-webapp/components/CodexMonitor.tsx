@@ -52,7 +52,7 @@ function parseSegments(raw: string): Segment[] {
 // ─── Single message bubble ─────────────────────────────────────────────────────
 
 function MessageBubble({ msg }: { msg: CodexMessage }) {
-  const meta = MODEL_META[msg.model as ModelId] ?? MODEL_META.chatgpt
+  const meta = MODEL_META[msg.model as ModelId] ?? MODEL_META.gemini
   const segments = parseSegments(msg.text)
 
   return (

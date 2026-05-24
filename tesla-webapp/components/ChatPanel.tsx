@@ -11,11 +11,10 @@ interface Message {
 
 interface Props {
   roomId: string
-  activeModel: ModelId
-  onModelChange: (model: ModelId) => void
 }
 
-export function ChatPanel({ roomId, activeModel, onModelChange }: Props) {
+export function ChatPanel({ roomId }: Props) {
+  const activeModel: ModelId = 'gemini'
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
@@ -115,18 +114,14 @@ export function ChatPanel({ roomId, activeModel, onModelChange }: Props) {
       {/* Top bar */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-tesla-border shrink-0">
         <span className="text-tesla-text text-mcu-lg font-bold">Chat</span>
-        <ModelSelector
-          value={activeModel}
-          onChange={onModelChange}
-          disabled={isStreaming}
-        />
+        <ModelSelector />
       </div>
 
       {/* Message history */}
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5">
         {messages.length === 0 && (
           <p className="text-tesla-muted text-mcu-base text-center mt-16">
-            选择模型，开始对话 ↓
+            开始对话 ↓
           </p>
         )}
 

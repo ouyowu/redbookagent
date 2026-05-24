@@ -1,31 +1,16 @@
 'use client'
 
-/**
- * Tesla Juniper AI Console — Main Screen
- *
- * Layout (landscape, 17" MCU):
- *   ┌──────────────────────┬──────────────────────────┐
- *   │   ChatPanel (45%)    │   CodexMonitor (55%)     │
- *   │  model selector      │  real-time Ably stream   │
- *   │  chat history        │  syntax-highlighted code │
- *   │  input box           │  streaming status        │
- *   └──────────────────────┴──────────────────────────┘
- *
- * Both panels share the same roomId and Ably channel via useAblyChannel.
- * Phone users can open the same URL with ?room=<id> to sync in real-time.
- */
-
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ChatPanel } from '@/components/ChatPanel'
 import { CodexMonitor } from '@/components/CodexMonitor'
 import { VoiceOverlay } from '@/components/VoiceOverlay'
 import { useAblyChannel } from '@/hooks/useAblyChannel'
-import type { ModelId } from '@/lib/models'
 
 function getRoomId(): string {
   if (typeof window === 'undefined') return 'tesla-main'
-  const params = new URLSearchParams(window.location.search)
-  return params.get('room') ?? process.env.NEXT_PUBLIC_DEFAULT_ROOM ?? 'tesla-main'
+  return new URLSearchParams(window.location.search).get('room')
+    ?? process.env.NEXT_PUBLIC_DEFAULT_ROOM
+    ?? 'tesla-main'
 }
 
 function getClientId(): string {
@@ -39,46 +24,29 @@ function getClientId(): string {
 }
 
 export default function TeslaConsole() {
-  const roomId = useMemo(getRoomId, [])
+  const roomId   = useMemo(getRoomId, [])
   const clientId = useMemo(getClientId, [])
 
-  const {
-    messages,
-    connectionState,
-    activeModel,
-    voiceState,
-    broadcastModelSwitch,
-    clearMessages,
-    dismissVoice,
-  } = useAblyChannel(roomId, clientId)
-
-  const [localModel, setLocalModel] = useState<ModelId>(activeModel)
-
-  const handleModelChange = (model: ModelId) => {
-    setLocalModel(model)
-    broadcastModelSwitch(model) // syncs to Tesla MCU if changed from phone
-  }
+  const { messages, connectionState, voiceState, clearMessages, dismissVoice } =
+    useAblyChannel(roomId, clientId)
 
   return (
     <main className="h-full flex flex-col bg-tesla-bg">
       {/* ── Status bar ─────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between px-6 py-2 bg-tesla-surface border-b border-tesla-border shrink-0">
         <div className="flex items-center gap-2">
-          {/* Tesla "T" wordmark */}
           <span className="text-tesla-accent font-bold text-mcu-lg tracking-wider">T</span>
           <span className="text-tesla-text text-mcu-base font-semibold">Model Y Juniper</span>
           <span className="text-tesla-muted text-mcu-sm">AI Console</span>
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Codex monitor shortcut */}
           <a
             href={`/codex?room=${roomId}`}
             className="flex items-center gap-1.5 text-tesla-muted text-mcu-sm border border-tesla-border px-3 py-1 rounded-lg hover:border-tesla-muted hover:text-tesla-text transition-colors"
           >
             ⚡ Codex
           </a>
-
           <span className="text-tesla-muted text-mcu-sm">
             Room: <code className="text-tesla-subtext">{roomId}</code>
           </span>
@@ -105,11 +73,7 @@ export default function TeslaConsole() {
 
       {/* ── Two-column layout ──────────────────────────────────────────────── */}
       <div className="flex-1 grid grid-cols-[45fr_55fr] min-h-0">
-        <ChatPanel
-          roomId={roomId}
-          activeModel={localModel}
-          onModelChange={handleModelChange}
-        />
+        <ChatPanel roomId={roomId} />
         <CodexMonitor
           messages={messages}
           isConnected={connectionState === 'connected'}
@@ -117,7 +81,6 @@ export default function TeslaConsole() {
         />
       </div>
 
-      {/* ── Voice overlay: pops up when S3XY Button triggers iOS Shortcut ── */}
       <VoiceOverlay state={voiceState} onDismiss={dismissVoice} />
     </main>
   )

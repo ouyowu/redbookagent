@@ -42,12 +42,8 @@ export type ConnectionState = 'connecting' | 'connected' | 'disconnected' | 'sus
 export interface AblyChannelResult {
   messages: CodexMessage[]
   connectionState: ConnectionState
-  activeModel: ModelId
-  /** Populated when a voice-input request arrives; null when overlay is dismissed */
   voiceState: VoiceState | null
-  broadcastModelSwitch: (model: ModelId) => void
   clearMessages: () => void
-  /** Call when the user dismisses the VoiceOverlay */
   dismissVoice: () => void
 }
 
@@ -56,11 +52,9 @@ export interface AblyChannelResult {
 export function useAblyChannel(
   roomId: string,
   clientId: string,
-  initialModel: ModelId = 'gemini',
 ): AblyChannelResult {
   const [messages, setMessages] = useState<CodexMessage[]>([])
   const [connectionState, setConnectionState] = useState<ConnectionState>('connecting')
-  const [activeModel, setActiveModel] = useState<ModelId>(initialModel)
   const [voiceState, setVoiceState] = useState<VoiceState | null>(null)
 
   const ablyRef = useRef<import('ably').Realtime | null>(null)
@@ -108,12 +102,11 @@ export function useAblyChannel(
         if (data.type === 'start') {
           const id = `msg-${data.ts}-${Math.random().toString(36).slice(2, 6)}`
           pendingMsgIdRef.current = id
-          if (data.model) setActiveModel(data.model)
           setMessages((prev) => [
             ...prev,
             {
               id,
-              model: data.model ?? initialModel,
+              model: 'gemini' as ModelId,
               text: '',
               isStreaming: true,
               isError: false,
@@ -152,13 +145,6 @@ export function useAblyChannel(
             m.id === pendingMsgIdRef.current ? { ...m, text: m.text + text } : m,
           ),
         )
-      })
-
-      // ── model-switch events (from other device) ───────────────────────────
-      channel.subscribe('switch', (msg) => {
-        if (!alive) return
-        const { model } = msg.data as { model: ModelId }
-        if (model) setActiveModel(model)
       })
 
       // ── voice-input events (S3XY Button → iOS Shortcut → /api/voice-input) ─
@@ -207,23 +193,8 @@ export function useAblyChannel(
     }
   }, [roomId, clientId, initialModel])
 
-  const broadcastModelSwitch = useCallback((model: ModelId) => {
-    setActiveModel(model)
-    channelRef.current
-      ?.publish('switch', { model, ts: Date.now() })
-      .catch(console.error)
-  }, [])
-
   const clearMessages = useCallback(() => setMessages([]), [])
-  const dismissVoice = useCallback(() => setVoiceState(null), [])
+  const dismissVoice  = useCallback(() => setVoiceState(null), [])
 
-  return {
-    messages,
-    connectionState,
-    activeModel,
-    voiceState,
-    broadcastModelSwitch,
-    clearMessages,
-    dismissVoice,
-  }
+  return { messages, connectionState, voiceState, clearMessages, dismissVoice }
 }

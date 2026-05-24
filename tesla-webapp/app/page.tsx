@@ -71,6 +71,14 @@ export default function TeslaConsole() {
         </div>
 
         <div className="flex items-center gap-4">
+          {/* Codex monitor shortcut */}
+          <a
+            href={`/codex?room=${roomId}`}
+            className="flex items-center gap-1.5 text-tesla-muted text-mcu-sm border border-tesla-border px-3 py-1 rounded-lg hover:border-tesla-muted hover:text-tesla-text transition-colors"
+          >
+            ⚡ Codex
+          </a>
+
           <span className="text-tesla-muted text-mcu-sm">
             Room: <code className="text-tesla-subtext">{roomId}</code>
           </span>

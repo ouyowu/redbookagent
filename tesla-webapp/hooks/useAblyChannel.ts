@@ -56,7 +56,7 @@ export interface AblyChannelResult {
 export function useAblyChannel(
   roomId: string,
   clientId: string,
-  initialModel: ModelId = 'chatgpt',
+  initialModel: ModelId = 'gemini',
 ): AblyChannelResult {
   const [messages, setMessages] = useState<CodexMessage[]>([])
   const [connectionState, setConnectionState] = useState<ConnectionState>('connecting')
@@ -167,7 +167,7 @@ export function useAblyChannel(
         const { query, model, ts } = msg.data as { query: string; model: ModelId; ts: number }
         setVoiceState({
           query,
-          model: model ?? 'chatgpt',
+          model: model ?? 'gemini',
           response: '',
           isStreaming: true,
           isError: false,

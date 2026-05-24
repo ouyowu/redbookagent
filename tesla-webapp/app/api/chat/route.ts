@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { messages, model = 'chatgpt', roomId = 'default' } = body
+  const { messages, model = 'gemini', roomId = 'default' } = body
   const config = MODELS[model]
 
   if (!config) {

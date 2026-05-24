@@ -115,7 +115,7 @@ export function VoiceOverlay({ state, onDismiss }: Props) {
 
   if (!state) return null
 
-  const meta = MODEL_META[state.model] ?? MODEL_META.grok
+  const meta = MODEL_META[state.model] ?? MODEL_META.chatgpt
   const segments = parseSegments(state.response)
 
   return (

@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
   }
 
   let query = ''
-  let model: ModelId = 'grok'
+  let model: ModelId = 'chatgpt'
   let roomId = 'tesla-main'
 
   const contentType = req.headers.get('content-type') ?? ''
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
     if (!audioFile) {
       return NextResponse.json({ error: 'Missing audio field in form data' }, { status: 400 })
     }
-    model = (form.get('model') as ModelId | null) ?? 'grok'
+    model = (form.get('model') as ModelId | null) ?? 'chatgpt'
     roomId = (form.get('roomId') as string | null) ?? 'tesla-main'
 
     try {
@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
       roomId?: string
     }
     query = body.text?.trim() ?? ''
-    model = body.model ?? 'grok'
+    model = body.model ?? 'chatgpt'
     roomId = body.roomId ?? 'tesla-main'
   }
 

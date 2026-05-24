@@ -21,8 +21,8 @@ interface ChatMessage {
 
 interface ChatRequest {
   messages: ChatMessage[]
-  model: ModelId
-  roomId: string
+  model?: ModelId
+  roomId?: string
 }
 
 export async function POST(req: NextRequest) {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
   }
 
-  const { messages, model = 'grok', roomId = 'default' } = body
+  const { messages, model = 'chatgpt', roomId = 'default' } = body
   const config = MODELS[model]
 
   if (!config) {

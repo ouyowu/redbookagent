@@ -1,59 +1,65 @@
-<view class="player-page" wx:if="{{!loading && player}}">
-  <!-- 球员头部 -->
-  <view class="player-hero">
-    <view class="player-top-row flex align-center">
-      <image class="hero-avatar" src="{{player.avatarUrl}}" mode="aspectFill" />
-      <view class="hero-info flex-1">
-        <view class="hero-name-row flex align-center">
-          <text class="hero-name">{{player.nickName}}</text>
-          <view wx:if="{{player.levelVerified}}" class="verified-tag">已认证</view>
+<view class="pp-page" wx:if="{{!loading && player}}">
+
+  <!-- ── 渐变 Hero ── -->
+  <view class="pp-hero">
+    <view class="pp-hero-user">
+      <view class="pp-avatar-wrap">
+        <view class="story-ring pp-ring" style="background:linear-gradient(135deg,{{levelInfo.color}},#667EEA)">
+          <image class="story-img pp-avatar" src="{{player.avatarUrl}}" mode="aspectFill"/>
         </view>
-        <view class="level-display" style="background:{{levelInfo.color}}">
-          <text class="level-code">{{player.level}}</text>
-          <text class="level-name">{{levelInfo.label}}</text>
+        <view wx:if="{{player.levelVerified}}" class="pp-verified">✓ 认证</view>
+      </view>
+
+      <view class="pp-info">
+        <text class="pp-name">{{player.nickName}}</text>
+        <view class="pp-level-chip" style="background:{{levelInfo.color}}">
+          <text class="pp-level-code">{{player.level}}</text>
+          <text class="pp-level-name">{{levelInfo.label}}</text>
         </view>
-        <text class="level-desc text-sm" style="color:{{levelInfo.color}}">{{levelInfo.desc}}</text>
+        <text class="pp-bio">{{player.bio || '这位球友很低调'}}</text>
       </view>
     </view>
 
-    <text class="hero-bio">{{player.bio || '这位球友很神秘，还没有填写简介'}}</text>
-
-    <!-- 统计 -->
-    <view class="hero-stats flex">
-      <view class="hero-stat flex-1">
-        <text class="stat-num">{{player.gamesPlayed}}</text>
-        <text class="stat-lab">总场次</text>
+    <view class="pp-stats">
+      <view class="pp-stat">
+        <text class="pp-stat-num">{{player.gamesPlayed}}</text>
+        <text class="pp-stat-lab">总场次</text>
       </view>
-      <view class="hero-stat flex-1" style="border-left:1rpx solid rgba(255,255,255,0.3)">
-        <text class="stat-num" style="color:{{creditLevel.color}}">{{player.creditScore}}</text>
-        <text class="stat-lab">信用分</text>
+      <view class="pp-stat-div"></view>
+      <view class="pp-stat">
+        <text class="pp-stat-num" style="color:{{creditLevel.color}}">{{player.creditScore}}</text>
+        <text class="pp-stat-lab">信用分</text>
       </view>
-      <view class="hero-stat flex-1" style="border-left:1rpx solid rgba(255,255,255,0.3)">
-        <text class="stat-num">{{player.city || '—'}}</text>
-        <text class="stat-lab">城市</text>
+      <view class="pp-stat-div"></view>
+      <view class="pp-stat">
+        <text class="pp-stat-num">{{player.city || '—'}}</text>
+        <text class="pp-stat-lab">城市</text>
       </view>
     </view>
   </view>
 
-  <!-- 信用等级展示 -->
-  <view class="credit-banner card" style="border-left:6rpx solid {{creditLevel.color}}">
-    <text class="credit-icon">{{creditLevel.icon}}</text>
-    <text class="credit-label" style="color:{{creditLevel.color}}">{{creditLevel.label}}</text>
-    <text class="credit-score-sm" style="color:{{creditLevel.color}}">{{player.creditScore}}分</text>
-  </view>
-
-  <!-- Tab -->
-  <view class="tab-bar">
-    <view
-      class="tab-item {{activeTab === 'reviews' ? 'active' : ''}}"
-      bindtap="onTabChange"
-      data-tab="reviews"
-    >
-      收到评价（{{reviews.length}}）
+  <!-- ── 信用卡片 ── -->
+  <view class="pp-credit-card">
+    <view class="ppcc-left">
+      <text class="ppcc-emoji">{{creditLevel.icon}}</text>
+      <view>
+        <text class="ppcc-score" style="color:{{creditLevel.color}}">{{player.creditScore}}</text>
+        <text class="ppcc-label" style="color:{{creditLevel.color}}"> {{creditLevel.label}}</text>
+      </view>
+    </view>
+    <view class="ppcc-bar-wrap">
+      <view class="ppcc-bar-track">
+        <view class="ppcc-bar-fill" style="width:{{player.creditScore}}%; background:{{creditLevel.color}}"></view>
+      </view>
     </view>
   </view>
 
-  <!-- 评价列表 -->
+  <!-- ── 收到评价 ── -->
+  <view class="pp-section-head">
+    <text class="pp-section-title">收到的评价</text>
+    <text class="pp-section-count">{{reviews.length}}条</text>
+  </view>
+
   <view wx:if="{{reviews.length === 0}}" class="empty-state">
     <text class="empty-icon">⭐</text>
     <text class="empty-text">暂无评价</text>
@@ -63,35 +69,41 @@
     wx:else
     wx:for="{{reviews}}"
     wx:key="_id"
-    class="review-card card"
+    class="pp-review-card"
     bindtap="onReviewTap"
     data-gameid="{{item.gameId}}"
   >
-    <view class="review-header flex align-center">
-      <image class="reviewer-avatar" src="{{item.reviewer.avatarUrl}}" mode="aspectFill" />
-      <view class="reviewer-info flex-1">
-        <text class="reviewer-name text-bold">{{item.reviewer.nickName}}</text>
-        <text class="review-date text-gray text-sm">{{item.createdAt}}</text>
+    <!-- 评价人 -->
+    <view class="pprc-header">
+      <view class="story-ring pprc-ring" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+        <image class="story-img pprc-avatar" src="{{item.reviewer.avatarUrl}}" mode="aspectFill"/>
       </view>
-      <view class="rating-stars">
-        <text wx:for="{{[1,2,3,4,5]}}" wx:key="index" class="star {{index < item.rating ? 'filled' : ''}}">★</text>
+      <view class="pprc-meta">
+        <text class="pprc-name">{{item.reviewer.nickName}}</text>
+        <text class="pprc-date">{{item.createdAt}}</text>
       </view>
-    </view>
-
-    <view class="review-tags mt-10">
-      <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index" class="tag tag-green mr-10">
-        {{tag}}
+      <view class="pprc-stars">
+        <text wx:for="{{[1,2,3,4,5]}}" wx:for-item="s" wx:key="index" class="pprc-star {{index < item.rating ? 'pprc-star-filled' : ''}}">★</text>
       </view>
     </view>
 
-    <text wx:if="{{item.comment}}" class="review-comment text-gray text-sm mt-10">
-      "{{item.comment}}"
-    </text>
+    <!-- 标签 -->
+    <view class="pprc-tags" wx:if="{{item.tags.length > 0}}">
+      <view
+        wx:for="{{item.tags}}"
+        wx:for-item="tag"
+        wx:key="index"
+        class="pprc-tag"
+      >{{tag}}</view>
+    </view>
+
+    <!-- 评语 -->
+    <text wx:if="{{item.comment}}" class="pprc-comment">"{{item.comment}}"</text>
   </view>
 
   <view class="safe-bottom"></view>
 </view>
 
-<view wx:if="{{loading}}" class="flex-center" style="height:100vh">
-  <text class="text-gray">加载中...</text>
+<view wx:if="{{loading}}" class="empty-state" style="height:60vh; justify-content:center">
+  <text class="empty-text">加载中...</text>
 </view>

@@ -11,6 +11,7 @@
     "pages/player-profile/player-profile",
     "pages/video-upload/video-upload",
     "pages/review/review",
+    "pages/membership/membership",
     "pages/login/login"
   ],
   "tabBar": {

@@ -1,0 +1,482 @@
+.membership-page {
+  background: #F7F8FA;
+  min-height: 100vh;
+}
+
+/* ── Nav ── */
+.mem-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 88rpx 28rpx 20rpx;
+  background: #FFFFFF;
+}
+
+.mem-nav-back {
+  font-size: 48rpx;
+  color: #1A1A2E;
+  font-weight: 300;
+  width: 60rpx;
+}
+
+.mem-nav-title {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #1A1A2E;
+}
+
+.mem-nav-share {
+  font-size: 26rpx;
+  color: #00B96B;
+  font-weight: 600;
+  width: 60rpx;
+  text-align: right;
+}
+
+/* ── Player Card ── */
+.player-card-wrap {
+  padding: 24rpx 24rpx 8rpx;
+}
+
+.player-card {
+  border-radius: 32rpx;
+  padding: 36rpx;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.18);
+}
+
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: -60rpx;
+  right: -60rpx;
+  width: 240rpx;
+  height: 240rpx;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+
+.player-card::after {
+  content: '';
+  position: absolute;
+  bottom: -80rpx;
+  left: -40rpx;
+  width: 300rpx;
+  height: 300rpx;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+
+/* Card Header */
+.pc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+}
+
+.pc-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.pc-logo-icon { font-size: 32rpx; }
+
+.pc-logo-text {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 2rpx;
+}
+
+.pc-card-type {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 4rpx;
+}
+
+/* Card Body */
+.pc-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 28rpx;
+  margin-bottom: 36rpx;
+}
+
+.pc-avatar-section {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pc-avatar-ring {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  border: 4rpx solid rgba(255,255,255,0.4);
+  overflow: hidden;
+  background: rgba(255,255,255,0.2);
+}
+
+.pc-avatar-img {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.pc-cert-badge {
+  position: absolute;
+  bottom: -8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00B96B;
+  color: #FFFFFF;
+  font-size: 16rpx;
+  font-weight: 700;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+  white-space: nowrap;
+  border: 2rpx solid rgba(255,255,255,0.3);
+}
+
+.pc-name-section {
+  flex: 1;
+  padding-top: 8rpx;
+}
+
+.pc-player-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin-bottom: 16rpx;
+}
+
+.pc-level-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  margin-bottom: 12rpx;
+  background: rgba(255,255,255,0.2);
+}
+
+.pc-level-code {
+  font-size: 26rpx;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+.pc-level-name-text {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.9);
+}
+
+.pc-level-desc {
+  display: block;
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+}
+
+/* Stats Row */
+.pc-stats-row {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.12);
+  border-radius: 16rpx;
+  padding: 20rpx 0;
+  margin-bottom: 28rpx;
+  border: 1rpx solid rgba(255,255,255,0.15);
+}
+
+.pc-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.pc-stat-num {
+  font-size: 32rpx;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+.pc-stat-lab {
+  font-size: 20rpx;
+  color: rgba(255,255,255,0.5);
+}
+
+.pc-stat-div {
+  width: 1rpx;
+  height: 40rpx;
+  background: rgba(255,255,255,0.2);
+}
+
+/* Card Footer */
+.pc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pc-id-text {
+  font-size: 18rpx;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1rpx;
+  font-family: monospace;
+}
+
+.pc-dots { display: flex; gap: 8rpx; align-items: center; }
+
+.pc-dot-circle {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+}
+
+.pc-dot-dark { background: rgba(255,255,255,0.6); }
+
+/* ── Section Card ── */
+.section-card {
+  background: #FFFFFF;
+  margin: 16rpx 24rpx;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+}
+
+.section-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #1A1A2E;
+  margin-bottom: 20rpx;
+}
+
+/* ── Level Detail ── */
+.level-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.level-detail-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  flex-shrink: 0;
+  gap: 4rpx;
+}
+
+.ldc-code {
+  font-size: 28rpx;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+.ldc-name {
+  font-size: 16rpx;
+  color: rgba(255,255,255,0.85);
+}
+
+.level-detail-info { flex: 1; }
+
+.ldi-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+
+.ldi-verified {
+  display: inline-block;
+  background: #E6FAF2;
+  color: #00B96B;
+  font-size: 22rpx;
+  font-weight: 700;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.ldi-unverified {
+  display: inline-block;
+  background: #FFF3E0;
+  color: #FF9500;
+  font-size: 22rpx;
+  font-weight: 700;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+/* Level Progress */
+.level-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8rpx;
+}
+
+.level-step {
+  flex: 1;
+  height: 52rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F0F0;
+  border: 2rpx solid transparent;
+}
+
+.level-step-reached {
+  background: #F0F0F0;
+  opacity: 0.6;
+}
+
+.level-step-active {
+  color: #FFFFFF;
+}
+
+.ls-code {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: #999;
+}
+
+.level-step-active .ls-code { color: #FFFFFF; }
+
+/* ── Credit Status ── */
+.credit-status-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.csr-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.csr-emoji { font-size: 48rpx; }
+
+.csr-score {
+  font-size: 48rpx;
+  font-weight: 900;
+}
+
+.csr-label {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.csr-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.csr-bar-track {
+  flex: 1;
+  height: 12rpx;
+  background: #F0F0F0;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.csr-bar-fill {
+  height: 100%;
+  border-radius: 12rpx;
+}
+
+.csr-bar-text {
+  font-size: 20rpx;
+  color: #AAA;
+}
+
+/* Credit Rules */
+.credit-rules {
+  background: #F9F9FB;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.cr-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.cr-icon {
+  font-size: 24rpx;
+  font-weight: 900;
+  width: 32rpx;
+  text-align: center;
+}
+
+.cr-positive .cr-icon { color: #00B96B; }
+.cr-negative .cr-icon { color: #FF4D4F; }
+
+.cr-text {
+  font-size: 22rpx;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* ── Badges ── */
+.badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24rpx;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  width: calc((100% - 72rpx) / 4);
+}
+
+.badge-locked { opacity: 0.35; }
+
+.badge-icon-wrap {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  background: #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+.badge-name {
+  font-size: 20rpx;
+  color: #555;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

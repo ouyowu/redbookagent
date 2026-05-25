@@ -1,79 +1,111 @@
-<view class="index-page">
-  <!-- 顶部用户信息栏 -->
-  <view class="header">
-    <view class="header-left" bindtap="onProfileTap">
-      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
-      <view class="user-info">
-        <view class="nickname">{{userInfo.nickName}}</view>
-        <view class="level-row">
-          <view class="level-badge" style="background:{{levelInfo.color}}">
-            {{userInfo.level}}
-          </view>
-          <view class="credit-badge" style="color:{{creditLevel.color}}">
-            {{creditLevel.icon}} {{userInfo.creditScore}}分
-          </view>
-          <view wx:if="{{!userInfo.levelVerified}}" class="unverified-tag">未认证</view>
+<view class="home">
+
+  <!-- ── 顶部 Header ── -->
+  <view class="home-header">
+    <view class="hd-left" bindtap="onProfileTap">
+      <view class="story-ring hd-avatar-ring">
+        <image class="hd-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+      </view>
+      <view>
+        <text class="hd-name">{{userInfo.nickName}}</text>
+        <view class="hd-badges">
+          <view class="level-badge" style="background:{{levelInfo.color}}">{{userInfo.level}}</view>
+          <text class="hd-credit" style="color:{{creditLevel.color}}">{{creditLevel.icon}} {{userInfo.creditScore}}</text>
         </view>
       </view>
     </view>
-    <view class="header-right">
-      <view class="location-btn">📍 {{userInfo.city || '选择城市'}}</view>
+    <view class="hd-right">
+      <view class="hd-icon-btn" bindtap="onGoFriends">👥</view>
+      <view class="hd-icon-btn" bindtap="onUploadVideo">🎥</view>
     </view>
   </view>
 
-  <!-- 认证提示横幅 -->
-  <view wx:if="{{!userInfo.levelVerified}}" class="verify-banner" bindtap="onBannerTap" data-id="1">
-    <text>🎥 上传球技视频，获取专属等级认证</text>
-    <text class="arrow">›</text>
-  </view>
+  <scroll-view scroll-y class="home-scroll" enable-flex>
 
-  <!-- 轮播横幅 -->
-  <swiper
-    class="banner-swiper"
-    indicator-dots="{{true}}"
-    autoplay="{{true}}"
-    interval="4000"
-    circular="{{true}}"
-    bindchange="onBannerChange"
-  >
-    <swiper-item wx:for="{{banners}}" wx:key="id">
-      <view class="banner-item" style="background:{{item.bg}}" bindtap="onBannerTap" data-id="{{item.id}}">
-        <text class="banner-icon">{{item.icon}}</text>
-        <text class="banner-title">{{item.title}}</text>
+    <!-- ── Hero 横幅 ── -->
+    <view class="hero-banner">
+      <view class="hero-text-block">
+        <text class="hero-line1">同城约球，</text>
+        <text class="hero-line2">随时开始！</text>
+        <text class="hero-sub">认证水平 · 信用约球 · 同城社区</text>
       </view>
-    </swiper-item>
-  </swiper>
+      <view class="hero-ball">🏓</view>
+      <view class="hero-stats-row">
+        <view class="hero-stat">
+          <text class="hs-num">{{userInfo.gamesPlayed}}</text>
+          <text class="hs-lab">已打场次</text>
+        </view>
+        <view class="hs-divider"></view>
+        <view class="hero-stat">
+          <text class="hs-num" style="color:#FFE566">{{userInfo.creditScore}}</text>
+          <text class="hs-lab">信用分</text>
+        </view>
+        <view class="hs-divider"></view>
+        <view class="hero-stat" bindtap="onUploadVideo">
+          <text class="hs-num">{{userInfo.levelVerified ? '已认证' : '去认证'}}</text>
+          <text class="hs-lab">等级状态</text>
+        </view>
+      </view>
+    </view>
 
-  <!-- 快捷操作 -->
-  <view class="quick-actions card">
-    <view class="action-item" bindtap="onCreateGame">
-      <view class="action-icon-wrap green">🏸</view>
-      <text class="action-label">发布球局</text>
+    <!-- ── Story 球友行 ── -->
+    <view class="stories-wrap">
+      <scroll-view scroll-x class="stories-scroll">
+        <!-- 发布球局 -->
+        <view class="story-item" bindtap="onCreateGame">
+          <view class="story-add-btn">
+            <text class="add-plus">+</text>
+          </view>
+          <text class="story-name">发球局</text>
+        </view>
+        <!-- 球友们 -->
+        <view
+          wx:for="{{nearbyPlayers}}"
+          wx:key="_id"
+          class="story-item"
+          bindtap="onPlayerTap"
+          data-id="{{item._id}}"
+        >
+          <view class="story-ring" style="background:linear-gradient(135deg, {{item.levelInfo.color}}, #667EEA)">
+            <image class="story-img" src="{{item.avatarUrl}}" mode="aspectFill"/>
+          </view>
+          <text class="story-name">{{item.nickName}}</text>
+        </view>
+      </scroll-view>
     </view>
-    <view class="action-item" bindtap="onMoreGames">
-      <view class="action-icon-wrap blue">🔍</view>
-      <text class="action-label">找球局</text>
-    </view>
-    <view class="action-item" bindtap="onGoFriends">
-      <view class="action-icon-wrap orange">👥</view>
-      <text class="action-label">找球友</text>
-    </view>
-    <view class="action-item" bindtap="onUploadVideo">
-      <view class="action-icon-wrap purple">🎥</view>
-      <text class="action-label">认证等级</text>
-    </view>
-  </view>
 
-  <!-- 附近球局 -->
-  <view class="section">
+    <!-- ── 快捷操作 ── -->
+    <view class="quick-row">
+      <view class="quick-item" bindtap="onCreateGame">
+        <view class="qi-icon qi-green">🏸</view>
+        <text class="qi-label">发布球局</text>
+      </view>
+      <view class="quick-item" bindtap="onMoreGames">
+        <view class="qi-icon qi-blue">📍</view>
+        <text class="qi-label">找球局</text>
+      </view>
+      <view class="quick-item" bindtap="onGoFriends">
+        <view class="qi-icon qi-orange">👥</view>
+        <text class="qi-label">找球友</text>
+      </view>
+      <view class="quick-item" bindtap="onUploadVideo">
+        <view class="qi-icon qi-purple">🎯</view>
+        <text class="qi-label">认证等级</text>
+      </view>
+    </view>
+
+    <!-- ── 附近球局 Feed ── -->
     <view class="section-header">
       <text class="section-title">附近球局</text>
-      <text class="section-more" bindtap="onMoreGames">查看全部 ›</text>
+      <view class="see-all-btn" bindtap="onMoreGames">
+        <text>查看全部</text>
+        <text class="arrow-r">›</text>
+      </view>
     </view>
 
-    <view wx:if="{{loading}}" class="loading-wrap">
-      <view class="loading-dot"></view>
-      <text class="text-gray text-sm">加载中...</text>
+    <view wx:if="{{loading}}" class="loading-placeholder">
+      <view class="skeleton-card"></view>
+      <view class="skeleton-card"></view>
     </view>
 
     <view wx:elif="{{nearbyGames.length === 0}}" class="empty-state">
@@ -85,40 +117,82 @@
       wx:else
       wx:for="{{nearbyGames}}"
       wx:key="_id"
-      class="game-card card"
-      bindtap="onGameTap"
-      data-id="{{item._id}}"
+      class="game-post"
     >
-      <view class="game-card-header flex-between">
-        <text class="game-title text-bold text-lg">{{item.title}}</text>
-        <view class="spots-badge" wx:if="{{item.spotsLeft > 0}}">
-          还差{{item.spotsLeft}}人
+      <!-- Post Header -->
+      <view class="post-hd flex-between">
+        <view class="flex align-center" bindtap="onPlayerTap" data-id="{{item.creator._id}}">
+          <image class="avatar-sm post-avatar" src="{{item.creator.avatarUrl}}" mode="aspectFill"/>
+          <view class="ml-12">
+            <view class="flex align-center">
+              <text class="post-uname text-bold">{{item.creator.nickName}}</text>
+              <view wx:if="{{item.creator.levelVerified}}" class="verified-dot">✓</view>
+              <view class="level-badge ml-8" style="background:{{item.creator.levelInfo.color}}">{{item.creator.level}}</view>
+            </view>
+            <text class="text-sm color-gray mt-4">{{item.formattedDate}} · {{item.district}}</text>
+          </view>
         </view>
-        <view class="full-badge" wx:else>已满员</view>
+        <view
+          wx:if="{{item.spotsLeft > 0}}"
+          class="join-pill"
+          catchtap="onQuickJoin"
+          data-id="{{item._id}}"
+          style="opacity: {{joiningId === item._id ? 0.6 : 1}}"
+        >加入</view>
+        <view wx:else class="full-pill">已满</view>
       </view>
 
-      <view class="game-meta mt-10">
-        <text class="meta-item">📅 {{item.formattedDate}} {{item.startTime}}</text>
-        <text class="meta-item">📍 {{item.venue}}</text>
-        <text class="meta-item">👥 {{item.currentPlayers}}/{{item.maxPlayers}}人</text>
+      <!-- Game Cover Card -->
+      <view
+        class="post-cover"
+        style="background: {{item.cardGradient}}"
+        bindtap="onGameTap"
+        data-id="{{item._id}}"
+      >
+        <view class="cover-top flex-between">
+          <text class="cover-title">{{item.title}}</text>
+          <view class="cover-fee">¥{{item.fee}}<text class="cover-fee-unit">/人</text></view>
+        </view>
+        <view class="cover-meta">
+          <view class="cover-meta-item">
+            <text>📅</text><text>{{item.formattedDate}} {{item.startTime}}</text>
+          </view>
+          <view class="cover-meta-item">
+            <text>📍</text><text>{{item.venue}}</text>
+          </view>
+        </view>
+        <view class="cover-bottom flex-between">
+          <view class="level-tag-white">{{item.minLevel}} ~ {{item.maxLevel}}</view>
+          <view class="spots-tag" wx:if="{{item.spotsLeft > 0}}">还差{{item.spotsLeft}}人</view>
+          <view class="full-tag" wx:else>已满员</view>
+        </view>
       </view>
 
-      <view class="game-footer flex-between mt-20">
-        <view class="level-range">
-          <view class="tag tag-green">{{item.minLevel}}~{{item.maxLevel}}</view>
+      <!-- Engagement Row -->
+      <view class="engagement-row">
+        <view class="eng-item">
+          <text class="eng-icon">👥</text>
+          <text class="eng-val">{{item.currentPlayers}}/{{item.maxPlayers}}人</text>
         </view>
-        <view class="fee-row">
-          <text class="fee-amount">¥{{item.fee}}</text>
-          <text class="text-gray text-sm">/人</text>
+        <view class="eng-divider"></view>
+        <view class="eng-item">
+          <text class="eng-icon">🎯</text>
+          <text class="eng-val">{{item.minLevel}}~{{item.maxLevel}}</text>
         </view>
-      </view>
-
-      <view class="creator-row mt-10 flex align-center">
-        <image class="creator-avatar" src="{{item.creator.avatarUrl}}" mode="aspectFill" />
-        <text class="creator-name text-gray text-sm">{{item.creator.nickName}} 发布</text>
+        <view class="eng-divider"></view>
+        <view class="eng-item" bindtap="onGameTap" data-id="{{item._id}}">
+          <text class="eng-icon">💬</text>
+          <text class="eng-val color-primary">查看详情</text>
+        </view>
       </view>
     </view>
+
+    <view class="safe-bottom"></view>
+  </scroll-view>
+
+  <!-- FAB -->
+  <view class="fab" bindtap="onCreateGame">
+    <text class="fab-plus">+</text>
   </view>
 
-  <view class="safe-bottom"></view>
 </view>

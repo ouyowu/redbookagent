@@ -2,20 +2,23 @@ const app = getApp();
 const api = require('../../utils/api');
 const { getLevelInfo, getCreditLevel, formatDate, showToast } = require('../../utils/util');
 
+const CARD_GRADIENTS = [
+  'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+  'linear-gradient(135deg, #F093FB 0%, #F5576C 100%)',
+  'linear-gradient(135deg, #43E97B 0%, #38A169 100%)',
+  'linear-gradient(135deg, #FA709A 0%, #FEE140 100%)',
+  'linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)',
+];
+
 Page({
   data: {
     userInfo: null,
     levelInfo: null,
     creditLevel: null,
     nearbyGames: [],
+    nearbyPlayers: [],
     loading: true,
-    banners: [
-      { id: 1, title: '上传球技视频，获得认证等级', bg: '#00B96B', icon: '🎥' },
-      { id: 2, title: '信用积分越高，约球越顺利', bg: '#2196F3', icon: '⭐' },
-      { id: 3, title: '同城球友，随时约战', bg: '#FF9800', icon: '📍' },
-    ],
-    bannerCurrent: 0,
-    stats: { gamesPlayed: 0, creditScore: 80, level: 'P1' },
+    joiningId: '',
   },
 
   onShow() {
@@ -25,47 +28,76 @@ Page({
       return;
     }
     this.setData({
-      userInfo,
+      userInfo: { ...userInfo },
       levelInfo: getLevelInfo(userInfo.level),
       creditLevel: getCreditLevel(userInfo.creditScore),
     });
-    this.loadNearbyGames();
+    this.loadData();
   },
 
-  async loadNearbyGames() {
+  async loadData() {
     this.setData({ loading: true });
     try {
-      const result = await api.getGames({ status: 'OPEN' });
-      const games = result.list.slice(0, 3).map(g => ({
+      const [gamesResult, playersResult] = await Promise.all([
+        api.getGames({ status: 'OPEN' }),
+        api.getPlayers(),
+      ]);
+
+      const currentUserId = app.globalData.userInfo?._id;
+
+      const games = gamesResult.list.slice(0, 5).map((g, i) => ({
         ...g,
         formattedDate: formatDate(g.date),
         spotsLeft: g.maxPlayers - g.currentPlayers,
+        cardGradient: CARD_GRADIENTS[i % CARD_GRADIENTS.length],
+        creator: {
+          ...g.creator,
+          levelInfo: getLevelInfo(g.creator.level),
+        },
       }));
-      this.setData({ nearbyGames: games });
+
+      const players = playersResult.list
+        .filter(u => u._id !== currentUserId)
+        .slice(0, 6)
+        .map(u => ({ ...u, levelInfo: getLevelInfo(u.level) }));
+
+      this.setData({ nearbyGames: games, nearbyPlayers: players });
     } catch (err) {
-      showToast('加载失败，请刷新');
+      showToast('加载失败，请下拉刷新');
     } finally {
       this.setData({ loading: false });
     }
   },
 
-  onBannerChange(e) {
-    this.setData({ bannerCurrent: e.detail.current });
-  },
-
-  onBannerTap(e) {
-    const { id } = e.currentTarget.dataset;
-    if (id === 1) wx.navigateTo({ url: '/pages/video-upload/video-upload' });
+  async onQuickJoin(e) {
+    const gameId = e.currentTarget.dataset.id;
+    if (this.data.joiningId) return;
+    this.setData({ joiningId: gameId });
+    try {
+      const result = await api.joinGame(gameId);
+      if (result.success) {
+        showToast('已加入！', 'success');
+        this.loadData();
+      } else {
+        showToast(result.message || '加入失败');
+      }
+    } catch (err) {
+      showToast('操作失败');
+    } finally {
+      this.setData({ joiningId: '' });
+    }
   },
 
   onGameTap(e) {
-    const { id } = e.currentTarget.dataset;
-    wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${id}` });
+    wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${e.currentTarget.dataset.id}` });
+  },
+
+  onPlayerTap(e) {
+    wx.navigateTo({ url: `/pages/player-profile/player-profile?id=${e.currentTarget.dataset.id}` });
   },
 
   onProfileTap() {
-    const userId = this.data.userInfo._id;
-    wx.navigateTo({ url: `/pages/player-profile/player-profile?id=${userId}` });
+    wx.switchTab({ url: '/pages/profile/profile' });
   },
 
   onCreateGame() {
@@ -84,11 +116,7 @@ Page({
     wx.navigateTo({ url: '/pages/video-upload/video-upload' });
   },
 
-  onRefresh() {
-    this.loadNearbyGames();
-  },
-
   onPullDownRefresh() {
-    this.loadNearbyGames().then(() => wx.stopPullDownRefresh());
+    this.loadData().then(() => wx.stopPullDownRefresh());
   },
 });

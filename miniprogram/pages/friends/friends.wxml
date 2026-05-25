@@ -1,34 +1,36 @@
 <view class="friends-page">
-  <!-- 搜索栏 -->
-  <view class="search-bar">
-    <view class="search-input-wrap">
-      <text class="search-icon">🔍</text>
+
+  <!-- ── Header ── -->
+  <view class="friends-header">
+    <text class="fh-title">球友广场</text>
+    <view class="fh-search-bar">
+      <text class="fs-icon">🔍</text>
       <input
-        class="search-input"
-        placeholder="搜索球友昵称、城市"
+        class="fs-input"
+        placeholder="搜索球友昵称..."
         value="{{searchValue}}"
         bindinput="onSearchInput"
         bindconfirm="onSearchConfirm"
+        confirm-type="search"
       />
     </view>
   </view>
 
-  <!-- 等级筛选 -->
-  <scroll-view class="level-filter" scroll-x>
+  <!-- ── 等级筛选 Chips ── -->
+  <scroll-view scroll-x class="level-chips-bar">
     <view
       wx:for="{{levelOptions}}"
       wx:key="key"
-      class="level-chip {{selectedLevel === item.key ? 'active' : ''}}"
+      class="lchip {{selectedLevel === item.key ? 'lchip-active' : ''}}"
       bindtap="onLevelSelect"
       data-level="{{item.key}}"
     >
-      {{item.label}}
+      <text>{{item.label}}</text>
     </view>
   </scroll-view>
 
-  <!-- 球友列表 -->
-  <view wx:if="{{loading}}" class="loading-wrap flex-center" style="padding:80rpx">
-    <text class="text-gray">加载中...</text>
+  <view wx:if="{{loading}}" class="loading-center">
+    <text class="color-gray">加载中...</text>
   </view>
 
   <view wx:elif="{{players.length === 0}}" class="empty-state">
@@ -36,40 +38,46 @@
     <text class="empty-text">暂无球友</text>
   </view>
 
-  <scroll-view wx:else scroll-y class="player-list">
+  <scroll-view wx:else scroll-y class="players-list">
     <view
       wx:for="{{players}}"
       wx:key="_id"
-      class="player-card card"
+      class="player-card"
       bindtap="onPlayerTap"
       data-id="{{item._id}}"
     >
-      <view class="player-left">
-        <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
-        <view wx:if="{{item.levelVerified}}" class="verified-dot">✓</view>
+      <!-- 左侧：头像 + 认证圆点 -->
+      <view class="pc-avatar-wrap">
+        <view class="story-ring" style="background:linear-gradient(135deg,{{item.levelInfo.color}},#667EEA)">
+          <image class="story-img pc-img" src="{{item.avatarUrl}}" mode="aspectFill"/>
+        </view>
+        <view wx:if="{{item.levelVerified}}" class="verified-badge">✓</view>
       </view>
 
-      <view class="player-info flex-1">
-        <view class="player-top flex-between">
+      <!-- 右侧：信息 -->
+      <view class="pc-info flex-1">
+        <view class="flex-between">
           <view class="flex align-center">
-            <text class="player-name text-bold mr-10">{{item.nickName}}</text>
-            <view class="level-badge" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+            <text class="pc-name">{{item.nickName}}</text>
+            <view class="level-badge ml-8" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
           </view>
-          <view class="credit-chip" style="color:{{item.creditLevel.color}}">
-            {{item.creditLevel.icon}} {{item.creditScore}}
+          <view class="credit-display" style="color:{{item.creditLevel.color}}">
+            <text class="cd-icon">{{item.creditLevel.icon}}</text>
+            <text class="cd-score">{{item.creditScore}}</text>
           </view>
         </view>
 
-        <view class="player-meta mt-10">
-          <text class="meta-text text-gray text-sm">📍 {{item.city}} {{item.district}}</text>
-          <text class="meta-dot">·</text>
-          <text class="meta-text text-gray text-sm">🏸 {{item.gamesPlayed}}场</text>
+        <view class="pc-meta">
+          <text class="pc-meta-text">📍 {{item.city}} {{item.district}}</text>
+          <text class="pc-dot">·</text>
+          <text class="pc-meta-text">🏸 {{item.gamesPlayed}}场</text>
         </view>
 
-        <text class="player-bio text-sm text-gray mt-10 text-ellipsis">{{item.bio}}</text>
+        <text class="pc-bio">{{item.bio || '这位球友很低调'}}</text>
       </view>
     </view>
 
     <view class="safe-bottom"></view>
   </scroll-view>
+
 </view>

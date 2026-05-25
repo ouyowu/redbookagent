@@ -1,109 +1,148 @@
 <view class="profile-page" wx:if="{{userInfo}}">
-  <!-- 个人信息头部 -->
-  <view class="profile-header">
-    <view class="header-actions">
-      <view class="edit-btn" bindtap="onEditProfile">编辑资料</view>
+
+  <!-- ── 渐变 Hero ── -->
+  <view class="profile-hero">
+    <!-- 操作 -->
+    <view class="ph-actions">
+      <view class="ph-action-btn" bindtap="onEditProfile">编辑</view>
+      <view class="ph-action-btn" bindtap="onGoMembership">🎖 球员档案</view>
     </view>
 
-    <view class="user-section">
-      <view class="avatar-wrap">
-        <image class="avatar-lg" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
-        <view wx:if="{{userInfo.levelVerified}}" class="verified-badge">已认证</view>
-      </view>
-      <view class="user-details">
-        <text class="user-name">{{userInfo.nickName}}</text>
-        <view class="user-tags">
-          <view class="level-chip" style="background:{{levelInfo.color}}">{{userInfo.level}} {{levelInfo.label}}</view>
+    <!-- 用户信息 -->
+    <view class="ph-user">
+      <view class="ph-avatar-wrap">
+        <view class="story-ring ph-ring">
+          <image class="ph-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
         </view>
-        <text class="user-bio text-gray text-sm">{{userInfo.bio || '还没有填写简介'}}</text>
+        <view wx:if="{{userInfo.levelVerified}}" class="ph-verified">已认证</view>
+      </view>
+      <view class="ph-info">
+        <text class="ph-name">{{userInfo.nickName}}</text>
+        <view class="ph-level-row">
+          <view class="ph-level-chip" style="background:{{levelInfo.color}}">
+            <text class="ph-level-code">{{userInfo.level}}</text>
+            <text class="ph-level-name">{{levelInfo.label}}</text>
+          </view>
+        </view>
+        <text class="ph-bio">{{userInfo.bio || '还没有填写简介，点击编辑'}}</text>
       </view>
     </view>
 
-    <!-- 统计栏 -->
-    <view class="stats-row">
-      <view class="stat-item">
-        <text class="stat-value">{{userInfo.gamesPlayed}}</text>
-        <text class="stat-label">场次</text>
+    <!-- 统计 -->
+    <view class="ph-stats">
+      <view class="phs-item">
+        <text class="phs-num">{{userInfo.gamesPlayed}}</text>
+        <text class="phs-lab">总场次</text>
       </view>
-      <view class="stat-divider"></view>
-      <view class="stat-item" bindtap="onTabChange" data-tab="credit">
-        <text class="stat-value" style="color:{{creditLevel.color}}">{{userInfo.creditScore}}</text>
-        <text class="stat-label">信用分</text>
+      <view class="phs-divider"></view>
+      <view class="phs-item" bindtap="onTabChange" data-tab="credit">
+        <text class="phs-num" style="color:#FFE566">{{userInfo.creditScore}}</text>
+        <text class="phs-lab">信用分</text>
       </view>
-      <view class="stat-divider"></view>
-      <view class="stat-item">
-        <text class="stat-value">{{userInfo.city || '—'}}</text>
-        <text class="stat-label">城市</text>
+      <view class="phs-divider"></view>
+      <view class="phs-item">
+        <text class="phs-num">{{userInfo.city || '—'}}</text>
+        <text class="phs-lab">城市</text>
       </view>
     </view>
   </view>
 
-  <!-- 未认证提示 -->
-  <view wx:if="{{!userInfo.levelVerified}}" class="verify-prompt card" bindtap="onUploadVideo">
-    <view class="verify-left">
-      <text class="verify-icon">🎥</text>
+  <!-- ── 认证提示卡 ── -->
+  <view wx:if="{{!userInfo.levelVerified}}" class="verify-cta" bindtap="onUploadVideo">
+    <view class="vcta-left">
+      <view class="vcta-icon-wrap">🎥</view>
       <view>
-        <text class="verify-title text-bold">上传球技认证视频</text>
-        <text class="verify-desc text-gray text-sm">获取 P1~P6 专属等级认证</text>
+        <text class="vcta-title">上传球技认证视频</text>
+        <text class="vcta-sub">获取 P1~P6 专属等级认证</text>
       </view>
     </view>
-    <text class="arrow text-gray">›</text>
+    <text class="vcta-arrow">›</text>
   </view>
 
-  <!-- Tab 切换 -->
-  <view class="tab-bar">
+  <!-- ── 快捷入口 ── -->
+  <view class="profile-menu-row">
+    <view class="pmenu-item" bindtap="onGoMembership">
+      <view class="pmenu-icon" style="background:#EDF2FF">🎖</view>
+      <text class="pmenu-label">球员档案</text>
+    </view>
+    <view class="pmenu-item" bindtap="onUploadVideo">
+      <view class="pmenu-icon" style="background:#E6FAF2">🎥</view>
+      <text class="pmenu-label">等级认证</text>
+    </view>
+    <view class="pmenu-item" bindtap="onMyGamesTab">
+      <view class="pmenu-icon" style="background:#FFF3E0">🏸</view>
+      <text class="pmenu-label">我的球局</text>
+    </view>
+    <view class="pmenu-item" bindtap="onCreditTab">
+      <view class="pmenu-icon" style="background:#F3EDFF">⭐</view>
+      <text class="pmenu-label">信用记录</text>
+    </view>
+  </view>
+
+  <!-- ── Tab 切换 ── -->
+  <view class="profile-tabs">
     <view
-      class="tab-item {{activeTab === 'games' ? 'active' : ''}}"
+      class="ptab {{activeTab === 'games' ? 'ptab-active' : ''}}"
       bindtap="onTabChange"
       data-tab="games"
     >我的球局</view>
     <view
-      class="tab-item {{activeTab === 'credit' ? 'active' : ''}}"
+      class="ptab {{activeTab === 'credit' ? 'ptab-active' : ''}}"
       bindtap="onTabChange"
       data-tab="credit"
     >信用记录</view>
   </view>
 
-  <!-- 我的球局 -->
+  <!-- ── 我的球局 ── -->
   <view wx:if="{{activeTab === 'games'}}">
     <view wx:if="{{myGames.length === 0}}" class="empty-state">
       <text class="empty-icon">🏸</text>
-      <text class="empty-text">还没有参加过球局</text>
+      <text class="empty-text">还没参加过球局</text>
     </view>
     <view
       wx:else
       wx:for="{{myGames}}"
       wx:key="_id"
-      class="game-row card"
+      class="my-game-row"
       bindtap="onGameTap"
       data-id="{{item._id}}"
     >
-      <view class="flex-between">
-        <text class="game-name text-bold">{{item.title}}</text>
-        <view class="game-status {{item.status}}">{{item.status === 'OPEN' ? '招募中' : item.status === 'COMPLETED' ? '已结束' : '已满员'}}</view>
+      <view class="mgr-left">
+        <view class="mgr-status-dot {{item.status}}"></view>
+        <view>
+          <text class="mgr-title">{{item.title}}</text>
+          <text class="mgr-date">📅 {{item.formattedDate}} {{item.startTime}} · {{item.venue}}</text>
+        </view>
       </view>
-      <text class="game-date text-gray text-sm mt-10">📅 {{item.formattedDate}} {{item.startTime}} · {{item.venue}}</text>
+      <view class="mgr-badge {{item.status}}">
+        {{item.status === 'OPEN' ? '招募中' : item.status === 'COMPLETED' ? '已结束' : '已满员'}}
+      </view>
     </view>
   </view>
 
-  <!-- 信用记录 -->
+  <!-- ── 信用记录 ── -->
   <view wx:if="{{activeTab === 'credit'}}">
-    <!-- 信用分总览 -->
-    <view class="credit-overview card">
-      <view class="credit-score-row flex-between">
-        <view>
-          <text class="credit-score-label text-gray text-sm">当前信用分</text>
-          <view class="flex align-center mt-10">
-            <text class="credit-score-num" style="color:{{creditLevel.color}}">{{userInfo.creditScore}}</text>
-            <text class="credit-level-label" style="color:{{creditLevel.color}}">{{creditLevel.label}}</text>
+    <!-- 信用分概览卡 -->
+    <view class="credit-overview-card">
+      <view class="coc-left">
+        <text class="coc-label">当前信用分</text>
+        <view class="flex align-center mt-8">
+          <text class="coc-score" style="color:{{creditLevel.color}}">{{userInfo.creditScore}}</text>
+          <view class="coc-level-tag" style="background:{{creditLevel.color}}20; color:{{creditLevel.color}}">
+            {{creditLevel.label}}
           </view>
         </view>
-        <view class="credit-gauge">
-          <text class="gauge-icon">{{creditLevel.icon}}</text>
+        <view class="credit-bar-wrap">
+          <view class="credit-bar-track">
+            <view class="credit-bar-fill" style="width:{{userInfo.creditScore}}%; background:{{creditLevel.color}}"></view>
+          </view>
+          <text class="credit-bar-label">/ 100</text>
         </view>
       </view>
+      <text class="coc-emoji">{{creditLevel.icon}}</text>
     </view>
 
+    <!-- 日志列表 -->
     <view wx:if="{{creditLogs.length === 0}}" class="empty-state">
       <text class="empty-icon">📊</text>
       <text class="empty-text">暂无信用记录</text>
@@ -113,24 +152,27 @@
       wx:else
       wx:for="{{creditLogs}}"
       wx:key="_id"
-      class="credit-log card"
+      class="credit-log-row"
     >
-      <view class="flex-between">
-        <text class="log-reason">{{item.reason}}</text>
-        <text class="log-change {{item.change > 0 ? 'positive' : 'negative'}}">
+      <view class="clr-icon-wrap {{item.change > 0 ? 'clr-pos' : 'clr-neg'}}">
+        <text>{{item.change > 0 ? '↑' : '↓'}}</text>
+      </view>
+      <view class="flex-1">
+        <text class="clr-reason">{{item.reason}}</text>
+        <text class="clr-date">{{item.createdAt}}</text>
+      </view>
+      <view>
+        <text class="clr-change {{item.change > 0 ? 'clr-pos-text' : 'clr-neg-text'}}">
           {{item.change > 0 ? '+' : ''}}{{item.change}}
         </text>
-      </view>
-      <view class="flex-between mt-10">
-        <text class="log-date text-gray text-sm">{{item.createdAt}}</text>
-        <text class="log-score text-gray text-sm">变更后: {{item.newScore}}分</text>
+        <text class="clr-new">→ {{item.newScore}}</text>
       </view>
     </view>
   </view>
 
   <!-- 退出登录 -->
-  <view class="logout-section">
-    <button class="logout-btn" bindtap="onLogout">退出登录</button>
+  <view class="logout-wrap">
+    <view class="logout-btn" bindtap="onLogout">退出登录</view>
   </view>
 
   <view class="safe-bottom"></view>

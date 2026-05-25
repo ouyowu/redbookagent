@@ -62,6 +62,18 @@ Page({
     wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${id}` });
   },
 
+  onGoMembership() {
+    wx.navigateTo({ url: '/pages/membership/membership' });
+  },
+
+  onMyGamesTab() {
+    this.setData({ activeTab: 'games' });
+  },
+
+  onCreditTab() {
+    this.setData({ activeTab: 'credit' });
+  },
+
   onLogout() {
     wx.showModal({
       title: '确认退出',

@@ -1,0 +1,159 @@
+<view class="membership-page" wx:if="{{userInfo}}">
+
+  <!-- ── 导航栏 ── -->
+  <view class="mem-nav">
+    <view class="mem-nav-back" bindtap="onBack">‹</view>
+    <text class="mem-nav-title">球员档案</text>
+    <view class="mem-nav-share" bindtap="onShare">分享</view>
+  </view>
+
+  <!-- ── 球员证卡片 ── -->
+  <view class="player-card-wrap">
+    <view class="player-card" style="background:{{cardGradient}}">
+      <!-- 卡片头部 -->
+      <view class="pc-header">
+        <view class="pc-logo-row">
+          <view class="pc-logo-icon">🏸</view>
+          <text class="pc-logo-text">匹克约球</text>
+        </view>
+        <text class="pc-card-type">PLAYER CARD</text>
+      </view>
+
+      <!-- 球员信息 -->
+      <view class="pc-body">
+        <view class="pc-avatar-section">
+          <view class="pc-avatar-ring">
+            <image class="pc-avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+          </view>
+          <view wx:if="{{userInfo.levelVerified}}" class="pc-cert-badge">
+            <text>✓ 认证球员</text>
+          </view>
+        </view>
+
+        <view class="pc-name-section">
+          <text class="pc-player-name">{{userInfo.nickName}}</text>
+          <view class="pc-level-display" style="background:{{levelInfo.color}}">
+            <text class="pc-level-code">{{userInfo.level}}</text>
+            <text class="pc-level-name-text">{{levelInfo.label}}</text>
+          </view>
+          <text class="pc-level-desc">{{levelInfo.desc}}</text>
+        </view>
+      </view>
+
+      <!-- 数据行 -->
+      <view class="pc-stats-row">
+        <view class="pc-stat">
+          <text class="pc-stat-num">{{userInfo.gamesPlayed}}</text>
+          <text class="pc-stat-lab">总场次</text>
+        </view>
+        <view class="pc-stat-div"></view>
+        <view class="pc-stat">
+          <text class="pc-stat-num">{{userInfo.creditScore}}</text>
+          <text class="pc-stat-lab">信用分</text>
+        </view>
+        <view class="pc-stat-div"></view>
+        <view class="pc-stat">
+          <text class="pc-stat-num">{{userInfo.city || '—'}}</text>
+          <text class="pc-stat-lab">城市</text>
+        </view>
+      </view>
+
+      <!-- 卡片底部装饰 -->
+      <view class="pc-footer">
+        <text class="pc-id-text">ID: {{userInfo._id}}</text>
+        <view class="pc-dots">
+          <view class="pc-dot-circle"></view>
+          <view class="pc-dot-circle"></view>
+          <view class="pc-dot-circle pc-dot-dark"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 等级说明 ── -->
+  <view class="section-card">
+    <text class="section-title">我的等级</text>
+    <view class="level-detail-row">
+      <view class="level-detail-chip" style="background:{{levelInfo.color}}">
+        <text class="ldc-code">{{userInfo.level}}</text>
+        <text class="ldc-name">{{levelInfo.label}}</text>
+      </view>
+      <view class="level-detail-info">
+        <text class="ldi-desc">{{levelInfo.desc}}</text>
+        <view wx:if="{{userInfo.levelVerified}}" class="ldi-verified">
+          <text>✓ 已通过视频认证</text>
+        </view>
+        <view wx:else class="ldi-unverified" bindtap="onUploadVideo">
+          <text>上传认证视频 →</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 等级进度 -->
+    <view class="level-progress-row">
+      <view
+        wx:for="{{allLevels}}"
+        wx:key="key"
+        class="level-step {{userInfo.level === item.key ? 'level-step-active' : (item.reached ? 'level-step-reached' : '')}}"
+        style="{{userInfo.level === item.key ? 'background:' + item.color + ';border-color:' + item.color : ''}}"
+      >
+        <text class="ls-code">{{item.key}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 信用状态 ── -->
+  <view class="section-card">
+    <text class="section-title">信用状态</text>
+    <view class="credit-status-row">
+      <view class="csr-left">
+        <text class="csr-emoji">{{creditLevel.icon}}</text>
+        <view>
+          <text class="csr-score" style="color:{{creditLevel.color}}">{{userInfo.creditScore}}</text>
+          <text class="csr-label" style="color:{{creditLevel.color}}"> {{creditLevel.label}}</text>
+        </view>
+      </view>
+      <view class="csr-bar-wrap">
+        <view class="csr-bar-track">
+          <view class="csr-bar-fill" style="width:{{userInfo.creditScore}}%; background:{{creditLevel.color}}"></view>
+        </view>
+        <text class="csr-bar-text">/ 100</text>
+      </view>
+    </view>
+
+    <!-- 信用规则说明 -->
+    <view class="credit-rules">
+      <view class="cr-row cr-positive">
+        <text class="cr-icon">↑</text>
+        <text class="cr-text">准时出场 +2 · 连续3次 +5 · 好评 +2</text>
+      </view>
+      <view class="cr-row cr-negative">
+        <text class="cr-icon">↓</text>
+        <text class="cr-text">迟到15分 -5 · 2小时内取消 -10 · 未到场 -20</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 成就徽章 ── -->
+  <view class="section-card">
+    <text class="section-title">成就徽章</text>
+    <view class="badges-grid">
+      <view
+        wx:for="{{badges}}"
+        wx:key="id"
+        class="badge-item {{item.earned ? '' : 'badge-locked'}}"
+      >
+        <view class="badge-icon-wrap" style="{{item.earned ? 'background:' + item.bg : ''}}">
+          <text class="badge-icon">{{item.icon}}</text>
+        </view>
+        <text class="badge-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view wx:if="{{!userInfo}}" class="flex-center" style="height:100vh">
+  <text class="text-gray">加载中...</text>
+</view>

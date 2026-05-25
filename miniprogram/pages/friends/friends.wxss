@@ -2,122 +2,159 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #F5F5F5;
+  background: #F7F8FA;
 }
 
-.search-bar {
+/* ── Header ── */
+.friends-header {
   background: #FFFFFF;
+  padding: 100rpx 28rpx 20rpx;
+}
+
+.fh-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #1A1A2E;
+  margin-bottom: 16rpx;
+}
+
+.fh-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: #F5F5F7;
+  border-radius: 50rpx;
   padding: 16rpx 24rpx;
 }
 
-.search-input-wrap {
-  background: #F5F5F5;
-  border-radius: 50rpx;
-  display: flex;
-  align-items: center;
-  padding: 12rpx 24rpx;
-  gap: 12rpx;
-}
+.fs-icon { font-size: 28rpx; }
 
-.search-icon { font-size: 28rpx; }
-
-.search-input {
+.fs-input {
   flex: 1;
   font-size: 28rpx;
-  color: #333333;
+  color: #1A1A2E;
+  height: 44rpx;
 }
 
-.level-filter {
+/* ── Level Chips ── */
+.level-chips-bar {
   background: #FFFFFF;
   white-space: nowrap;
-  padding: 16rpx 20rpx;
-  border-bottom: 1rpx solid #F0F0F0;
+  padding: 16rpx 20rpx 20rpx;
+  border-bottom: 1rpx solid #F2F2F2;
 }
 
-.level-chip {
-  display: inline-block;
+.lchip {
+  display: inline-flex;
+  align-items: center;
   padding: 10rpx 28rpx;
   border-radius: 30rpx;
   font-size: 26rpx;
-  color: #666666;
+  color: #666;
   background: #F5F5F5;
   margin-right: 12rpx;
   font-weight: 500;
 }
 
-.level-chip.active {
-  background: #00B96B;
+.lchip-active {
+  background: #1A1A2E;
   color: #FFFFFF;
   font-weight: 700;
 }
 
-.player-list {
+/* ── Players List ── */
+.players-list {
   flex: 1;
-  overflow: hidden;
-  padding-top: 10rpx;
+  height: 0;
 }
 
+/* ── Player Card ── */
 .player-card {
   display: flex;
   align-items: center;
   gap: 20rpx;
-  margin: 20rpx 24rpx;
+  background: #FFFFFF;
+  margin: 16rpx 24rpx 0;
+  border-radius: 24rpx;
   padding: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.05);
 }
 
-.player-left {
+.pc-avatar-wrap {
   position: relative;
+  flex-shrink: 0;
 }
 
-.player-avatar {
-  width: 96rpx;
-  height: 96rpx;
+/* story-ring is from app.wxss but override size here */
+.player-card .story-ring {
+  width: 104rpx;
+  height: 104rpx;
+  padding: 3rpx;
   border-radius: 50%;
-  background: #E0E0E0;
 }
 
-.verified-dot {
+.pc-img {
+  width: 98rpx !important;
+  height: 98rpx !important;
+}
+
+.verified-badge {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 32rpx;
-  height: 32rpx;
+  width: 34rpx;
+  height: 34rpx;
   background: #00B96B;
   border-radius: 50%;
   color: #FFFFFF;
   font-size: 18rpx;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2rpx solid #FFFFFF;
+  border: 3rpx solid #FFFFFF;
 }
 
-.player-top { }
-
-.player-name { font-size: 30rpx; }
-
-.level-badge {
-  font-size: 20rpx;
+/* ── Player Info ── */
+.pc-name {
+  font-size: 30rpx;
   font-weight: 700;
-  color: #FFFFFF;
-  padding: 4rpx 12rpx;
-  border-radius: 16rpx;
+  color: #1A1A2E;
 }
 
-.credit-chip {
-  font-size: 24rpx;
-  font-weight: 600;
-}
-
-.player-meta {
+.credit-display {
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  gap: 4rpx;
 }
 
-.meta-dot { color: #CCCCCC; }
+.cd-icon { font-size: 22rpx; }
+.cd-score { font-size: 26rpx; font-weight: 700; }
 
-.player-bio {
-  display: block;
+.pc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
   margin-top: 8rpx;
+}
+
+.pc-meta-text { font-size: 22rpx; color: #888; }
+.pc-dot { color: #CCC; font-size: 20rpx; }
+
+.pc-bio {
+  display: block;
+  font-size: 24rpx;
+  color: #AAA;
+  margin-top: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loading-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx;
 }

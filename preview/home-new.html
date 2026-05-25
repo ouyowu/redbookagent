@@ -4,179 +4,237 @@
 <meta charset="UTF-8">
 <title>首页 — 匹克约球</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;0,9..40,900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #1A2A35; display: flex; gap: 40px; padding: 40px; justify-content: center; }
+body {
+  font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif;
+  background: #0E1C24;
+  display: flex; gap: 40px; padding: 40px; justify-content: center;
+}
 
 .phone {
-  width: 375px; height: 812px; background: #F5F6FF;
+  width: 375px; height: 812px;
+  background: #F4F5FC;
   border-radius: 44px; overflow: hidden;
-  box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+  box-shadow: 0 32px 96px rgba(0,0,0,0.7);
   display: flex; flex-direction: column;
-  position: relative;
 }
 
 /* ── Header ── */
 .home-hd {
-  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 60%, #3298C8 100%);
-  padding: 44px 16px 16px;
+  background: linear-gradient(155deg, #6CCFF0 0%, #4BADD8 55%, #2F8FC0 100%);
+  padding: 44px 18px 18px;
   display: flex; align-items: flex-start; justify-content: space-between;
   flex-shrink: 0;
 }
-.hd-greeting { flex: 1; }
-.hd-hi { display: block; font-size: 21px; font-weight: 900; color: #FFF; margin-bottom: 5px; }
-.hd-lv-chip {
-  display: inline-flex; align-items: center; gap: 3px;
-  background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.45);
-  border-radius: 20px; padding: 3px 10px;
-  font-size: 11px; color: #FFF; font-weight: 700; letter-spacing: 0.3px;
+.hd-left { flex: 1; }
+.hd-hi {
+  display: block; font-size: 22px; font-weight: 900; color: #FFF;
+  line-height: 1.2; margin-bottom: 6px;
 }
-.hd-actions { display: flex; align-items: center; gap: 8px; }
+.hd-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px; padding: 4px 11px;
+  font-size: 11px; font-weight: 700; color: #FFF; letter-spacing: 0.3px;
+}
+.hd-right { display: flex; align-items: center; gap: 9px; }
 .hd-bell {
-  width: 34px; height: 34px; background: rgba(255,255,255,0.2);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
 }
 .hd-av {
-  width: 38px; height: 38px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   border: 2.5px solid #FFF;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
-  overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+  background: #43A047;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 900; color: #FFF;
 }
-.hd-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
 /* ── Scroll ── */
 .scroll { flex: 1; overflow-y: auto; }
 .scroll::-webkit-scrollbar { display: none; }
 
-/* ── Hero section ── */
-.hero-block { padding: 18px 16px 4px; }
-.hero-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
-.hero-main { font-size: 32px; font-weight: 900; color: #0D0D1A; line-height: 1.1; }
-.hero-count { font-size: 36px; font-weight: 900; color: #4BADD8; line-height: 1.1; font-family: 'DM Sans', sans-serif; }
-.hero-sub { font-size: 12px; color: #8B8FA8; }
+/* ── Section heading — editorial ── */
+.page-heading { padding: 20px 18px 6px; }
+.ph-row { display: flex; align-items: baseline; gap: 5px; }
+.ph-text {
+  font-size: 36px; font-weight: 900; color: #0D0D1A; line-height: 1.1;
+}
+.ph-count {
+  font-size: 36px; font-weight: 900; color: #4BADD8; line-height: 1.1;
+  font-family: 'DM Sans', sans-serif;
+}
+.ph-sub { display: block; font-size: 12px; color: #9AAABB; margin-top: 4px; }
 
 /* ── Filters ── */
-.filters { display: flex; gap: 6px; padding: 10px 14px 8px; overflow-x: auto; }
+.filters {
+  display: flex; gap: 7px; padding: 10px 16px 10px;
+  overflow-x: auto;
+}
 .filters::-webkit-scrollbar { display: none; }
 .fpill {
-  white-space: nowrap; padding: 7px 16px; border-radius: 20px;
-  font-size: 12px; color: #666; border: 1.5px solid #DDE0F5; background: #FFF;
-  font-weight: 600;
+  white-space: nowrap; padding: 7px 17px; border-radius: 20px;
+  font-size: 12px; font-weight: 600;
+  color: #666; border: 1.5px solid #DDE0F5; background: #FFF;
+  flex-shrink: 0;
 }
 .fpill.on { background: #4BADD8; color: #FFF; border-color: #4BADD8; }
 
-/* ── Featured hero card ── */
+/* ── Featured hero card — dark, commands attention ── */
 .feat-card {
-  margin: 2px 12px 10px;
-  border-radius: 18px;
-  padding: 16px;
-  background: #E4E0FF;
-  display: flex; align-items: flex-start; gap: 10px;
-  min-height: 128px;
+  margin: 2px 14px 12px;
+  background: #12103A;
+  border-radius: 22px;
+  padding: 22px 20px;
+  display: flex; gap: 14px;
+  min-height: 164px;
+  position: relative; overflow: hidden;
 }
-.fc-left { flex: 1; display: flex; flex-direction: column; }
-.fc-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 9px; }
-.fc-level {
-  font-size: 10px; font-weight: 900; color: #FFF;
-  padding: 3px 8px; border-radius: 8px; background: #4682D4; flex-shrink: 0;
+/* Decorative background geometry — not glassmorphism, just shape */
+.feat-card::before {
+  content: '';
+  position: absolute; right: -36px; top: -36px;
+  width: 150px; height: 150px;
+  background: rgba(75,173,216,0.15);
+  border-radius: 50%;
+  pointer-events: none;
 }
-.fc-status { font-size: 11px; color: #666; }
-.fc-title { font-size: 22px; font-weight: 900; color: #0D0D1A; line-height: 1.25; margin-bottom: 7px; }
-.fc-meta { display: flex; flex-direction: column; gap: 2px; }
-.fc-meta span { font-size: 11px; color: #555; }
-.fc-spots-bar { margin-top: 10px; height: 4px; background: rgba(0,0,0,0.12); border-radius: 2px; overflow: hidden; }
+.feat-card::after {
+  content: '';
+  position: absolute; right: 30px; bottom: -40px;
+  width: 90px; height: 90px;
+  background: rgba(75,173,216,0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fc-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; z-index: 1; }
+.fc-level-tag {
+  display: inline-block; width: fit-content;
+  font-size: 10px; font-weight: 900;
+  color: #4BADD8; letter-spacing: 0.3px;
+  padding: 3px 9px; border-radius: 8px;
+  background: rgba(75,173,216,0.18);
+  border: 1px solid rgba(75,173,216,0.35);
+  margin-bottom: 10px;
+}
+.fc-title {
+  font-size: 22px; font-weight: 900; color: #FFFFFF;
+  line-height: 1.3; margin-bottom: 10px;
+}
+.fc-meta { display: flex; flex-direction: column; gap: 3px; margin-bottom: 14px; }
+.fc-meta span { font-size: 11px; color: rgba(255,255,255,0.55); }
+.fc-bottom { display: flex; align-items: center; gap: 10px; }
+.fc-spots-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.14); border-radius: 2px; overflow: hidden; }
 .fc-spots-fill { height: 100%; background: #4BADD8; border-radius: 2px; width: 75%; }
+.fc-spots-label { font-size: 10px; color: rgba(255,255,255,0.45); white-space: nowrap; }
 
-.fc-right { display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 62px; padding-top: 4px; }
-.fc-sport { font-size: 48px; line-height: 1; display: block; }
-.fc-join {
-  background: #0D0D1A; color: #FFF;
-  font-size: 12px; font-weight: 700;
-  padding: 7px 14px; border-radius: 12px;
-  white-space: nowrap;
-}
-
-/* ── Regular game cards ── */
-.game-card {
-  margin: 0 12px 10px; border-radius: 14px; padding: 14px;
-  display: flex; align-items: flex-start; gap: 8px;
-}
-.gc-mint  { background: #C8F7EE; }
-.gc-peach { background: #FFE4D4; }
-
-.gc-body { flex: 1; }
-.gc-top { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-.gc-level { font-size: 10px; font-weight: 900; color: #FFF; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; }
-.gc-status { font-size: 11px; color: #555; flex: 1; }
-
-.gc-title { display: block; font-size: 20px; font-weight: 900; color: #0D0D1A; margin-bottom: 7px; line-height: 1.25; }
-.gc-meta { display: flex; flex-direction: column; gap: 2px; }
-.gc-meta span { font-size: 11px; color: #555; }
-
-.gc-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-.gc-cname { font-size: 11px; color: #555; }
-.gc-price-wrap { display: flex; align-items: center; gap: 5px; }
-.gc-price { font-size: 20px; font-weight: 900; color: #0D0D1A; font-family: 'DM Sans', sans-serif; }
-.gc-price-u { font-size: 11px; font-weight: 500; }
-.gc-arrow {
-  background: rgba(0,0,0,0.1); color: #0D0D1A;
-  font-size: 12px; font-weight: 700;
-  width: 28px; height: 28px; border-radius: 50%;
+.fc-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; z-index: 1; min-width: 80px; }
+.fc-icon-ring {
+  width: 72px; height: 72px;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.14);
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
+  font-size: 38px;
+}
+.fc-cta-block { text-align: right; }
+.fc-price {
+  display: block; font-size: 24px; font-weight: 900;
+  color: #FFF; font-family: 'DM Sans', sans-serif;
+  line-height: 1;
+}
+.fc-price-u { font-size: 10px; color: rgba(255,255,255,0.5); }
+.fc-join-btn {
+  display: inline-block; margin-top: 7px;
+  background: #4BADD8; color: #FFF;
+  font-size: 12px; font-weight: 900;
+  padding: 8px 17px; border-radius: 12px;
 }
 
-.gc-sport-col { font-size: 32px; line-height: 1; padding-top: 2px; }
+/* ── More games label ── */
+.more-hd {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 4px 18px 8px;
+}
+.mh-left { display: flex; align-items: baseline; gap: 4px; }
+.mh-title { font-size: 20px; font-weight: 900; color: #0D0D1A; }
+.mh-count { font-size: 16px; font-weight: 900; color: #4BADD8; font-family: 'DM Sans', sans-serif; }
+.mh-all { font-size: 12px; color: #4BADD8; font-weight: 600; }
+
+/* ── Compact game rows — leading badge, no side-stripe ── */
+.compact-card {
+  margin: 0 14px 8px;
+  background: #FFF;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 13px;
+  box-shadow: 0 1px 5px rgba(0,30,80,0.06);
+}
+.cc-badge {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: #FFF; flex-shrink: 0;
+}
+.cc-body { flex: 1; min-width: 0; }
+.cc-title { font-size: 16px; font-weight: 900; color: #0D0D1A; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-meta { font-size: 11px; color: #8B8FA8; }
+.cc-right { flex-shrink: 0; text-align: right; }
+.cc-price { display: block; font-size: 16px; font-weight: 900; color: #0D0D1A; font-family: 'DM Sans', sans-serif; }
+.cc-spots { display: block; font-size: 10px; color: #BBB; margin-top: 1px; }
 
 /* ── Players section ── */
-.section-hd {
+.players-hd {
   display: flex; align-items: baseline; justify-content: space-between;
-  padding: 6px 16px 10px;
+  padding: 10px 18px 10px;
 }
-.sh-left { display: flex; align-items: baseline; gap: 3px; }
-.sh-title { font-size: 22px; font-weight: 900; color: #0D0D1A; }
-.sh-count { font-size: 18px; font-weight: 900; color: #4BADD8; }
-.sh-more { font-size: 12px; color: #4BADD8; font-weight: 600; }
-
-.players { display: flex; gap: 12px; padding: 0 12px 22px; overflow-x: auto; }
+.players { display: flex; gap: 13px; padding: 0 16px 24px; overflow-x: auto; }
 .players::-webkit-scrollbar { display: none; }
 .player-item { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
-.pi-wrap { position: relative; width: 50px; height: 50px; }
+.pi-wrap { position: relative; width: 52px; height: 52px; }
 .pi-av {
-  width: 50px; height: 50px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   border: 3px solid #FFF;
   box-shadow: 0 0 0 2px #4BADD8;
-  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; color: #FFF;
 }
-.pi-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .pi-badge {
   position: absolute; bottom: -3px; right: -3px;
   font-size: 8px; font-weight: 900; color: #FFF;
-  padding: 2px 5px; border-radius: 6px; border: 1.5px solid #FFF;
+  padding: 2px 5px; border-radius: 6px; border: 2px solid #F4F5FC;
 }
-.pi-name { font-size: 10px; color: #555; max-width: 52px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pi-name { font-size: 10px; color: #666; max-width: 54px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ── Tab bar ── */
 .tab-bar {
-  height: 58px; background: #FFF; border-top: 1px solid #ECEEF8;
+  height: 58px; background: #FFF;
+  border-top: 1px solid #E8EAF5;
   display: flex; align-items: center; justify-content: space-around;
   flex-shrink: 0; padding-bottom: 4px;
 }
-.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; }
+.tb-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2px; position: relative; padding: 0 8px;
+}
 .tb-icon { font-size: 20px; }
 .tb-label { font-size: 10px; color: #8B8FA8; }
 .tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
 .tb-item.active::after {
-  content: ''; position: absolute; bottom: -6px;
-  width: 20px; height: 3px; background: #4BADD8;
-  border-radius: 2px;
+  content: ''; position: absolute; bottom: -5px;
+  width: 18px; height: 3px; background: #4BADD8; border-radius: 2px;
 }
 .tb-fab {
-  width: 46px; height: 46px; background: #0D0D1A;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 22px; color: #FFF; font-weight: 300;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+  width: 48px; height: 48px; background: #0D0D1A; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: #FFF;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 </style>
 </head>
@@ -185,25 +243,25 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background
 
   <!-- Header -->
   <div class="home-hd">
-    <div class="hd-greeting">
+    <div class="hd-left">
       <span class="hd-hi">嗨，李明 ✦！👋</span>
-      <div class="hd-lv-chip">⚡ P4 进阶高手 · 北京</div>
+      <div class="hd-badge">⚡ P4 进阶高手 · 北京</div>
     </div>
-    <div class="hd-actions">
+    <div class="hd-right">
       <div class="hd-bell">🔔</div>
-      <div class="hd-av"><img src="https://placehold.co/38x38/4CAF50/FFF?text=李"></div>
+      <div class="hd-av">李</div>
     </div>
   </div>
 
   <div class="scroll">
 
-    <!-- Hero -->
-    <div class="hero-block">
-      <div class="hero-row">
-        <span class="hero-main">今日球局</span>
-        <span class="hero-count">&thinsp;(5)</span>
+    <!-- Editorial heading -->
+    <div class="page-heading">
+      <div class="ph-row">
+        <span class="ph-text">今日球局</span>
+        <span class="ph-count">(5)</span>
       </div>
-      <span class="hero-sub">北京同城 · 为你推荐 · 周日</span>
+      <span class="ph-sub">📍 北京同城 · 5月25日 周日 · 为你推荐</span>
     </div>
 
     <!-- Filters -->
@@ -214,111 +272,105 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background
       <div class="fpill">高手局</div>
     </div>
 
-    <!-- Featured hero card -->
+    <!-- Dark featured card — the one thing that deserves your attention -->
     <div class="feat-card">
       <div class="fc-left">
-        <div class="fc-tag-row">
-          <div class="fc-level">P3~P4</div>
-          <span class="fc-status">招募中 · 3/4 人</span>
-        </div>
+        <div class="fc-level-tag">P3 · P4 开放</div>
         <span class="fc-title">周末友谊赛·四人单打</span>
         <div class="fc-meta">
           <span>📍 朝阳体育馆</span>
           <span>📅 5月28日 周三 09:00</span>
         </div>
-        <div class="fc-spots-bar"><div class="fc-spots-fill"></div></div>
+        <div class="fc-bottom">
+          <div class="fc-spots-bar"><div class="fc-spots-fill"></div></div>
+          <span class="fc-spots-label">3/4 人</span>
+        </div>
       </div>
       <div class="fc-right">
-        <span class="fc-sport">🏓</span>
-        <div class="fc-join">¥30 →</div>
+        <div class="fc-icon-ring">🏓</div>
+        <div class="fc-cta-block">
+          <span class="fc-price">¥30<span class="fc-price-u">/人</span></span>
+          <span class="fc-join-btn">加入 →</span>
+        </div>
       </div>
     </div>
 
-    <!-- Card 2 -->
-    <div class="game-card gc-mint">
-      <div class="gc-body">
-        <div class="gc-top">
-          <div class="gc-level" style="background:#E67D22">P4~P5</div>
-          <span class="gc-status">招募中 · 2/4 人</span>
-        </div>
-        <span class="gc-title">高手切磋·混合双打</span>
-        <div class="gc-meta">
-          <span>📍 国贸体育馆 &nbsp;📅 5月29日 19:00</span>
-        </div>
-        <div class="gc-foot">
-          <span class="gc-cname">橙子赵四 发起</span>
-          <div class="gc-price-wrap">
-            <span class="gc-price">¥50<span class="gc-price-u">/人</span></span>
-            <div class="gc-arrow">→</div>
-          </div>
-        </div>
+    <!-- More games -->
+    <div class="more-hd">
+      <div class="mh-left">
+        <span class="mh-title">更多球局</span>
+        <span class="mh-count">&thinsp;(4)</span>
       </div>
-      <span class="gc-sport-col">🎾</span>
+      <span class="mh-all">全部 ›</span>
     </div>
 
-    <!-- Card 3 -->
-    <div class="game-card gc-peach">
-      <div class="gc-body">
-        <div class="gc-top">
-          <div class="gc-level" style="background:#8B3DBF">P5~P6</div>
-          <span class="gc-status">招募中 · 1/4 人</span>
-        </div>
-        <span class="gc-title">精英挑战赛·大师局</span>
-        <div class="gc-meta">
-          <span>📍 望京球馆 &nbsp;📅 5月30日 20:00</span>
-        </div>
-        <div class="gc-foot">
-          <span class="gc-cname">快手小陈 发起</span>
-          <div class="gc-price-wrap">
-            <span class="gc-price">¥80<span class="gc-price-u">/人</span></span>
-            <div class="gc-arrow">→</div>
-          </div>
-        </div>
+    <!-- Compact row 2 — leading badge, NOT side-stripe -->
+    <div class="compact-card">
+      <div class="cc-badge" style="background:#00A882">P5</div>
+      <div class="cc-body">
+        <div class="cc-title">高手切磋·混合双打</div>
+        <span class="cc-meta">📍 国贸体育馆 &nbsp;·&nbsp; 明天 19:00 &nbsp;·&nbsp; 2/4 人</span>
       </div>
-      <span class="gc-sport-col">🏅</span>
+      <div class="cc-right">
+        <span class="cc-price">¥50</span>
+        <span class="cc-spots">/人 →</span>
+      </div>
+    </div>
+
+    <!-- Compact row 3 -->
+    <div class="compact-card">
+      <div class="cc-badge" style="background:#7B3DBF">P6</div>
+      <div class="cc-body">
+        <div class="cc-title">精英挑战赛·大师局</div>
+        <span class="cc-meta">📍 望京球馆 &nbsp;·&nbsp; 后天 20:00 &nbsp;·&nbsp; 1/4 人</span>
+      </div>
+      <div class="cc-right">
+        <span class="cc-price">¥80</span>
+        <span class="cc-spots">/人 →</span>
+      </div>
     </div>
 
     <!-- Players -->
-    <div class="section-hd">
-      <div class="sh-left">
-        <span class="sh-title">活跃球友</span>
-        <span class="sh-count">&thinsp;(6)</span>
+    <div class="players-hd">
+      <div class="mh-left">
+        <span class="mh-title">活跃球友</span>
+        <span class="mh-count">&thinsp;(6)</span>
       </div>
-      <span class="sh-more">全部 ›</span>
+      <span class="mh-all">全部 ›</span>
     </div>
     <div class="players">
       <div class="player-item">
         <div class="pi-wrap">
-          <div class="pi-av"><img src="https://placehold.co/50x50/E91E63/FFF?text=王"></div>
-          <div class="pi-badge" style="background:#4682D4">P3</div>
+          <div class="pi-av" style="background:#D81B60">王</div>
+          <div class="pi-badge" style="background:#3D7BE8">P3</div>
         </div>
         <span class="pi-name">网球王子</span>
       </div>
       <div class="player-item">
         <div class="pi-wrap">
-          <div class="pi-av"><img src="https://placehold.co/50x50/9C27B0/FFF?text=陈"></div>
-          <div class="pi-badge" style="background:#9C27B0">P4</div>
+          <div class="pi-av" style="background:#8E24AA">陈</div>
+          <div class="pi-badge" style="background:#8E24AA">P4</div>
         </div>
         <span class="pi-name">快手小陈</span>
       </div>
       <div class="player-item">
         <div class="pi-wrap">
-          <div class="pi-av"><img src="https://placehold.co/50x50/E67D22/FFF?text=赵"></div>
-          <div class="pi-badge" style="background:#E67D22">P5</div>
+          <div class="pi-av" style="background:#D84315">赵</div>
+          <div class="pi-badge" style="background:#D84315">P5</div>
         </div>
         <span class="pi-name">橙子赵四</span>
       </div>
       <div class="player-item">
         <div class="pi-wrap">
-          <div class="pi-av"><img src="https://placehold.co/50x50/F44336/FFF?text=林"></div>
-          <div class="pi-badge" style="background:#D32F2F">P6</div>
+          <div class="pi-av" style="background:#B71C1C">林</div>
+          <div class="pi-badge" style="background:#B71C1C">P6</div>
         </div>
         <span class="pi-name">球王小林</span>
       </div>
       <div class="player-item">
         <div class="pi-wrap">
-          <div class="pi-av"><img src="https://placehold.co/50x50/009688/FFF?text=刘"></div>
-          <div class="pi-badge" style="background:#00897B">P2</div>
+          <div class="pi-av" style="background:#00695C">刘</div>
+          <div class="pi-badge" style="background:#00695C">P2</div>
         </div>
         <span class="pi-name">刘小侠</span>
       </div>
@@ -328,7 +380,10 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background
 
   <!-- Tab bar -->
   <div class="tab-bar">
-    <div class="tb-item active"><span class="tb-icon">🏠</span><span class="tb-label" style="color:#4BADD8">首页</span></div>
+    <div class="tb-item active">
+      <span class="tb-icon">🏠</span>
+      <span class="tb-label" style="color:#4BADD8">首页</span>
+    </div>
     <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>
     <div class="tb-fab">+</div>
     <div class="tb-item"><span class="tb-icon">💬</span><span class="tb-label">消息</span></div>

@@ -4,191 +4,220 @@
 <meta charset="UTF-8">
 <title>个人资料 — 匹克约球</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #1A2A35; display: flex; padding: 40px; justify-content: center; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #0E1C24; display: flex; padding: 40px; justify-content: center; }
 
-.phone { width: 375px; height: 812px; background: #F5F6FF; border-radius: 44px; overflow: hidden; box-shadow: 0 28px 80px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+.phone { width: 375px; height: 812px; background: #F4F5FC; border-radius: 44px; overflow: hidden; box-shadow: 0 32px 96px rgba(0,0,0,0.7); display: flex; flex-direction: column; }
 
 /* ── Scroll ── */
 .scroll { flex: 1; overflow-y: auto; }
 .scroll::-webkit-scrollbar { display: none; }
 
-/* ── Top hero section ── */
+/* ── Hero — sky blue, generous ── */
 .profile-hero {
-  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 60%, #3298C8 100%);
-  padding: 44px 16px 20px;
+  background: linear-gradient(155deg, #6CCFF0 0%, #4BADD8 55%, #2F8FC0 100%);
+  padding: 44px 18px 22px;
+  flex-shrink: 0;
 }
-.ph-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
-.ph-text { flex: 1; }
-.ph-hi { display: block; font-size: 22px; font-weight: 900; color: #FFF; margin-bottom: 6px; }
-.ph-level-badge {
+.ph-row1 { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.ph-names { flex: 1; }
+.ph-hi { display: block; font-size: 24px; font-weight: 900; color: #FFF; margin-bottom: 7px; }
+.ph-badge {
   display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.45);
-  border-radius: 20px; padding: 4px 12px;
-  font-size: 12px; color: #FFF; font-weight: 700;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 20px; padding: 4px 11px;
+  font-size: 11px; font-weight: 700; color: #FFF;
 }
-.ph-av-wrap { position: relative; margin-left: 12px; }
+.ph-av-wrap { position: relative; margin-left: 14px; }
 .ph-av {
-  width: 60px; height: 60px; border-radius: 50%;
+  width: 62px; height: 62px; border-radius: 50%;
   border: 3px solid #FFF;
-  box-shadow: 0 0 0 2.5px rgba(255,255,255,0.5);
-  overflow: hidden;
+  box-shadow: 0 0 0 2.5px rgba(255,255,255,0.4);
+  background: #43A047;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 900; color: #FFF;
 }
-.ph-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .ph-online {
-  position: absolute; bottom: 2px; right: 2px;
+  position: absolute; bottom: 3px; right: 3px;
   width: 13px; height: 13px; background: #22D68A;
-  border-radius: 50%; border: 2px solid #4BADD8;
+  border-radius: 50%; border: 2.5px solid #4BADD8;
 }
 
-/* Progress to P5 */
-.level-progress { margin-top: 14px; }
-.lp-labels { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-.lp-cur { font-size: 12px; color: rgba(255,255,255,0.9); }
-.lp-next { font-size: 12px; color: rgba(255,255,255,0.6); }
-.lp-bar { height: 6px; background: rgba(255,255,255,0.25); border-radius: 3px; overflow: hidden; }
-.lp-fill { height: 100%; background: #FFF; border-radius: 3px; width: 72%; }
+/* Level journey strip */
+.level-strip { display: flex; align-items: center; gap: 0; }
+.ls-step {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.ls-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900;
+}
+.ls-dot.done { background: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+.ls-dot.current {
+  background: #FFF; color: #4BADD8;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+  font-size: 11px;
+}
+.ls-dot.next { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); }
+.ls-label { font-size: 9px; color: rgba(255,255,255,0.7); font-weight: 700; }
+.ls-label.current { color: #FFF; }
+.ls-line { flex: 1; height: 2px; background: rgba(255,255,255,0.25); margin: 0 4px; margin-bottom: 14px; }
+
+/* Progress bar toward P5 */
+.level-bar { margin-top: 14px; }
+.lb-meta { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.lb-cur { font-size: 11px; color: rgba(255,255,255,0.85); }
+.lb-goal { font-size: 11px; color: rgba(255,255,255,0.55); }
+.lb-track { height: 5px; background: rgba(255,255,255,0.22); border-radius: 3px; overflow: hidden; }
+.lb-fill { height: 100%; background: #FFF; border-radius: 3px; width: 72%; }
 
 /* ── Stat chips ── */
-.stats-row { display: flex; gap: 8px; padding: 12px 12px 6px; }
-.stat-chip { flex: 1; border-radius: 14px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.s-blue  { background: #C8E8FF; }
-.s-mint  { background: #C8F7EE; }
-.s-lav   { background: #E4E0FF; }
-.sc-num { font-size: 28px; font-weight: 900; color: #0D0D1A; line-height: 1; font-family: 'DM Sans', sans-serif; }
-.sc-lab { font-size: 10px; color: #555; margin-top: 1px; text-align: center; }
+.stats-row { display: flex; gap: 9px; padding: 14px 14px 6px; }
+.stat-chip {
+  flex: 1; border-radius: 16px; padding: 15px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.sc-blue  { background: #C8E8FF; }
+.sc-mint  { background: #C8F7EE; }
+.sc-lav   { background: #E4E0FF; }
+.sc-num { font-size: 30px; font-weight: 900; color: #0D0D1A; line-height: 1; font-family: 'DM Sans', sans-serif; }
+.sc-lab { font-size: 10px; color: #666; margin-top: 2px; text-align: center; }
 
-/* ── Journey card ── */
-.journey-card {
-  margin: 4px 12px 8px;
-  background: #0D0D1A; border-radius: 16px; padding: 16px;
-  display: flex; align-items: center; gap: 12px;
+/* ── Dark player card ── */
+.player-card {
+  margin: 4px 14px 10px;
+  background: #12103A;
+  border-radius: 20px; padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  position: relative; overflow: hidden;
 }
-.jc-left { flex: 1; }
-.jc-tag { display: block; font-size: 10px; color: rgba(255,255,255,0.45); margin-bottom: 5px; letter-spacing: 0.5px; }
-.jc-title { display: block; font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 5px; }
-.jc-steps { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
-.jc-step {
-  font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 700;
-  padding: 2px 8px; border-radius: 8px;
+.player-card::before {
+  content: ''; position: absolute; right: -20px; top: -20px;
+  width: 100px; height: 100px;
+  background: rgba(75,173,216,0.15); border-radius: 50%;
+  pointer-events: none;
 }
-.jc-step.done { color: rgba(255,255,255,0.6); }
-.jc-step.current { color: #4BADD8; background: rgba(75,173,216,0.18); }
-.jc-step.next { color: rgba(255,255,255,0.3); }
-.jc-dot { width: 14px; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
-.jc-right { text-align: right; }
-.jc-lv { font-size: 38px; font-weight: 900; color: #4BADD8; line-height: 1; font-family: 'DM Sans', sans-serif; }
-.jc-arrow { font-size: 13px; color: rgba(255,255,255,0.35); display: block; text-align: center; margin-top: 2px; }
+.pc-left { flex: 1; z-index: 1; }
+.pc-tag { display: block; font-size: 10px; color: rgba(255,255,255,0.45); margin-bottom: 5px; letter-spacing: 0.5px; }
+.pc-name { display: block; font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
+.pc-desc { display: block; font-size: 11px; color: rgba(255,255,255,0.5); }
+.pc-right { z-index: 1; text-align: right; }
+.pc-level { display: block; font-size: 44px; font-weight: 900; color: #4BADD8; line-height: 1; font-family: 'DM Sans', sans-serif; }
+.pc-arrow { font-size: 14px; color: rgba(255,255,255,0.35); display: block; text-align: center; margin-top: 3px; }
 
 /* ── Tabs ── */
-.ptabs { display: flex; gap: 6px; padding: 10px 12px 6px; }
-.ptab { padding: 8px 18px; border-radius: 20px; font-size: 12px; color: #666; border: 1.5px solid #DDE0F5; background: #FFF; font-weight: 600; }
+.ptabs { display: flex; gap: 7px; padding: 10px 14px 6px; }
+.ptab { padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #666; border: 1.5px solid #DDE0F5; background: #FFF; }
 .ptab.on { background: #0D0D1A; color: #FFF; border-color: #0D0D1A; }
 
-/* ── Game cards ── */
-.game-card { margin: 0 12px 8px; border-radius: 14px; padding: 14px; display: flex; align-items: flex-start; gap: 8px; }
-.gc-lav   { background: #E4E0FF; }
-.gc-mint  { background: #C8F7EE; }
-.gc-peach { background: #FFE4D4; }
-
-.gc-body { flex: 1; }
-.gc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.gc-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: rgba(0,185,107,0.15); color: #00875A; }
-.gc-chip.full { background: rgba(150,150,150,0.15); color: #888; }
-.gc-date { font-size: 10px; color: #666; font-family: 'DM Sans', sans-serif; }
-.gc-title { display: block; font-size: 18px; font-weight: 900; color: #0D0D1A; margin-bottom: 4px; }
-.gc-venue { font-size: 11px; color: #555; }
-.gc-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; }
-.gc-foot-l { font-size: 11px; color: #555; }
-.gc-arrow-btn {
-  width: 28px; height: 28px; background: rgba(0,0,0,0.1);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: #0D0D1A;
+/* ── Game cards — same compact-row style as home ── */
+.compact-card {
+  margin: 0 14px 8px;
+  background: #FFF; border-radius: 16px; padding: 14px 16px;
+  display: flex; align-items: center; gap: 13px;
+  box-shadow: 0 1px 5px rgba(0,30,80,0.06);
 }
-
-.gc-sport { font-size: 28px; padding-top: 2px; }
+.cc-badge { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: #E4E0FF; flex-shrink: 0; }
+.cc-badge.mint { background: #C8F7EE; }
+.cc-badge.peach { background: #FFE4D4; }
+.cc-body { flex: 1; min-width: 0; }
+.cc-title { font-size: 16px; font-weight: 900; color: #0D0D1A; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cc-meta { font-size: 11px; color: #8B8FA8; }
+.cc-right { flex-shrink: 0; text-align: right; }
+.cc-status { display: block; font-size: 11px; font-weight: 700; }
+.cc-status.open { color: #00A882; }
+.cc-status.closed { color: #9AAABB; }
+.cc-date { display: block; font-size: 10px; color: #BBB; margin-top: 2px; }
 
 /* ── Tab bar ── */
-.tab-bar {
-  height: 58px; background: #FFF; border-top: 1px solid #ECEEF8;
-  display: flex; align-items: center; justify-content: space-around;
-  flex-shrink: 0; padding-bottom: 4px;
-}
-.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; }
+.tab-bar { height: 58px; background: #FFF; border-top: 1px solid #E8EAF5; display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; padding-bottom: 4px; }
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; padding: 0 8px; }
 .tb-icon { font-size: 20px; }
 .tb-label { font-size: 10px; color: #8B8FA8; }
 .tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
-.tb-item.active::after {
-  content: ''; position: absolute; bottom: -6px;
-  width: 20px; height: 3px; background: #4BADD8; border-radius: 2px;
-}
-.tb-fab {
-  width: 46px; height: 46px; background: #0D0D1A;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 22px; color: #FFF; box-shadow: 0 4px 16px rgba(0,0,0,0.28);
-}
+.tb-item.active::after { content: ''; position: absolute; bottom: -5px; width: 18px; height: 3px; background: #4BADD8; border-radius: 2px; }
+.tb-fab { width: 48px; height: 48px; background: #0D0D1A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
 </style>
 </head>
 <body>
 <div class="phone">
   <div class="scroll">
 
-    <!-- Hero -->
+    <!-- Hero section -->
     <div class="profile-hero">
-      <div class="ph-top">
-        <div class="ph-text">
+      <div class="ph-row1">
+        <div class="ph-names">
           <span class="ph-hi">嗨，李明 ✦！👋</span>
-          <div class="ph-level-badge">⚡ P4 进阶高手 · 北京</div>
+          <div class="ph-badge">⚡ P4 进阶高手 · 北京</div>
         </div>
         <div class="ph-av-wrap">
-          <div class="ph-av"><img src="https://placehold.co/60x60/4CAF50/FFF?text=李"></div>
+          <div class="ph-av">李</div>
           <div class="ph-online"></div>
         </div>
       </div>
-      <div class="level-progress">
-        <div class="lp-labels">
-          <span class="lp-cur">当前 P4 · 信用分 88/120</span>
-          <span class="lp-next">↑ 升P5</span>
+
+      <!-- Level journey -->
+      <div class="level-strip">
+        <div class="ls-step">
+          <div class="ls-dot done">P3</div>
+          <span class="ls-label">已达</span>
         </div>
-        <div class="lp-bar"><div class="lp-fill"></div></div>
+        <div class="ls-line"></div>
+        <div class="ls-step">
+          <div class="ls-dot current">P4</div>
+          <span class="ls-label current">当前</span>
+        </div>
+        <div class="ls-line"></div>
+        <div class="ls-step">
+          <div class="ls-dot next">P5</div>
+          <span class="ls-label">下一级</span>
+        </div>
+        <div class="ls-line"></div>
+        <div class="ls-step">
+          <div class="ls-dot next">P6</div>
+          <span class="ls-label">大神</span>
+        </div>
+      </div>
+
+      <div class="level-bar">
+        <div class="lb-meta">
+          <span class="lb-cur">P4 · 信用分 88/120</span>
+          <span class="lb-goal">还差 32 分升 P5</span>
+        </div>
+        <div class="lb-track"><div class="lb-fill"></div></div>
       </div>
     </div>
 
-    <!-- Stats -->
+    <!-- Stat chips -->
     <div class="stats-row">
-      <div class="stat-chip s-blue">
+      <div class="stat-chip sc-blue">
         <span class="sc-num">23</span>
         <span class="sc-lab">参与球局</span>
       </div>
-      <div class="stat-chip s-mint">
+      <div class="stat-chip sc-mint">
         <span class="sc-num">92</span>
         <span class="sc-lab">信用分</span>
       </div>
-      <div class="stat-chip s-lav">
+      <div class="stat-chip sc-lav">
         <span class="sc-num">P4</span>
         <span class="sc-lab">认证等级</span>
       </div>
     </div>
 
-    <!-- Journey card -->
-    <div class="journey-card">
-      <div class="jc-left">
-        <span class="jc-tag">球员成长档案</span>
-        <span class="jc-title">已认证 P4 球员 ✓</span>
-        <span style="font-size:11px;color:rgba(255,255,255,0.5)">能主导比赛节奏，打法稳定有力</span>
-        <div class="jc-steps">
-          <span class="jc-step done">P3</span>
-          <div class="jc-dot"></div>
-          <span class="jc-step current">P4</span>
-          <div class="jc-dot"></div>
-          <span class="jc-step next">P5</span>
-        </div>
+    <!-- Dark player card -->
+    <div class="player-card">
+      <div class="pc-left">
+        <span class="pc-tag">球员档案</span>
+        <span class="pc-name">已认证 P4 球员 ✓</span>
+        <span class="pc-desc">能主导比赛节奏，打法稳定有力</span>
       </div>
-      <div class="jc-right">
-        <span class="jc-lv">P4</span>
-        <span class="jc-arrow">→</span>
+      <div class="pc-right">
+        <span class="pc-level">P4</span>
+        <span class="pc-arrow">→ 档案</span>
       </div>
     </div>
 
@@ -198,55 +227,41 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background
       <div class="ptab">信用记录</div>
     </div>
 
-    <!-- Game card 1 -->
-    <div class="game-card gc-lav">
-      <div class="gc-body">
-        <div class="gc-top">
-          <div class="gc-chip">招募中</div>
-          <span class="gc-date">5月28日</span>
-        </div>
-        <span class="gc-title">周末友谊赛·四人单打</span>
-        <span class="gc-venue">📍 朝阳体育馆 · 09:00</span>
-        <div class="gc-foot">
-          <span class="gc-foot-l">3/4 人 · ¥30/人</span>
-          <div class="gc-arrow-btn">→</div>
-        </div>
+    <!-- Compact game rows — consistent with home secondary cards -->
+    <div class="compact-card">
+      <div class="cc-badge">🏓</div>
+      <div class="cc-body">
+        <div class="cc-title">周末友谊赛·四人单打</div>
+        <span class="cc-meta">📍 朝阳体育馆 · 09:00 · 3/4 人</span>
       </div>
-      <span class="gc-sport">🏓</span>
+      <div class="cc-right">
+        <span class="cc-status open">招募中</span>
+        <span class="cc-date">5月28日</span>
+      </div>
     </div>
 
-    <!-- Game card 2 -->
-    <div class="game-card gc-mint">
-      <div class="gc-body">
-        <div class="gc-top">
-          <div class="gc-chip">招募中</div>
-          <span class="gc-date">5月29日</span>
-        </div>
-        <span class="gc-title">高手切磋·混合双打</span>
-        <span class="gc-venue">📍 国贸体育馆 · 19:00</span>
-        <div class="gc-foot">
-          <span class="gc-foot-l">2/4 人 · ¥50/人</span>
-          <div class="gc-arrow-btn">→</div>
-        </div>
+    <div class="compact-card">
+      <div class="cc-badge mint">🎾</div>
+      <div class="cc-body">
+        <div class="cc-title">高手切磋·混合双打</div>
+        <span class="cc-meta">📍 国贸体育馆 · 19:00 · 2/4 人</span>
       </div>
-      <span class="gc-sport">🎾</span>
+      <div class="cc-right">
+        <span class="cc-status open">招募中</span>
+        <span class="cc-date">5月29日</span>
+      </div>
     </div>
 
-    <!-- Game card 3 -->
-    <div class="game-card gc-peach">
-      <div class="gc-body">
-        <div class="gc-top">
-          <div class="gc-chip full">已结束</div>
-          <span class="gc-date">5月21日</span>
-        </div>
-        <span class="gc-title">朝阳公园早场球局</span>
-        <span class="gc-venue">📍 朝阳公园球场 · 08:00</span>
-        <div class="gc-foot">
-          <span class="gc-foot-l">4/4 · 已完赛</span>
-          <div class="gc-arrow-btn">→</div>
-        </div>
+    <div class="compact-card">
+      <div class="cc-badge peach">🏅</div>
+      <div class="cc-body">
+        <div class="cc-title">朝阳公园早场球局</div>
+        <span class="cc-meta">📍 朝阳公园球场 · 08:00 · 4/4 人</span>
       </div>
-      <span class="gc-sport">🏅</span>
+      <div class="cc-right">
+        <span class="cc-status closed">已结束</span>
+        <span class="cc-date">5月21日</span>
+      </div>
     </div>
 
   </div>

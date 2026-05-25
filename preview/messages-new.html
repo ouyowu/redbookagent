@@ -4,139 +4,144 @@
 <meta charset="UTF-8">
 <title>消息页 — 匹克约球</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #1A2A35; display: flex; padding: 40px; justify-content: center; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #0E1C24; display: flex; padding: 40px; justify-content: center; }
 
-.phone { width: 375px; height: 812px; background: #F5F6FF; border-radius: 44px; overflow: hidden; box-shadow: 0 28px 80px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+.phone { width: 375px; height: 812px; background: #F4F5FC; border-radius: 44px; overflow: hidden; box-shadow: 0 32px 96px rgba(0,0,0,0.7); display: flex; flex-direction: column; }
 
 /* ── Header ── */
 .msg-hd {
-  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 60%, #3298C8 100%);
-  padding: 44px 16px 14px;
+  background: linear-gradient(155deg, #6CCFF0 0%, #4BADD8 55%, #2F8FC0 100%);
+  padding: 44px 18px 16px;
   display: flex; align-items: flex-end; justify-content: space-between;
   flex-shrink: 0;
 }
-.msg-hd-left { flex: 1; }
-.msg-hd-title { display: block; font-size: 28px; font-weight: 900; color: #FFF; margin-bottom: 3px; }
-.msg-hd-date { display: block; font-size: 12px; color: rgba(255,255,255,0.75); }
+.msg-hd-left {}
+.msg-hd-title { display: block; font-size: 30px; font-weight: 900; color: #FFF; margin-bottom: 3px; }
+.msg-hd-date { display: block; font-size: 12px; color: rgba(255,255,255,0.7); }
 .msg-hd-edit {
-  font-size: 12px; color: rgba(255,255,255,0.9);
-  padding: 5px 12px; background: rgba(255,255,255,0.2);
-  border-radius: 12px; border: 1px solid rgba(255,255,255,0.35);
-  font-weight: 600;
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9);
+  padding: 5px 13px; background: rgba(255,255,255,0.18);
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.32);
 }
 
-/* ── Unread hero ── */
-.unread-hero {
-  background: #E4E0FF;
-  padding: 18px 16px 14px;
-  display: flex; align-items: center; gap: 14px;
+/* ── Dark unread alert block ── */
+.unread-block {
+  background: #12103A;
+  padding: 20px 20px 18px;
+  display: flex; align-items: center; gap: 16px;
   flex-shrink: 0;
+  position: relative; overflow: hidden;
 }
-.uh-num {
-  font-size: 80px; font-weight: 900; color: #0D0D1A;
-  line-height: 1; font-family: 'DM Sans', sans-serif;
-  flex-shrink: 0;
+.unread-block::before {
+  content: '';
+  position: absolute; right: -24px; top: -24px;
+  width: 110px; height: 110px;
+  background: rgba(75,173,216,0.15); border-radius: 50%;
+  pointer-events: none;
 }
-.uh-text { flex: 1; }
-.uh-label { display: block; font-size: 18px; font-weight: 900; color: #0D0D1A; margin-bottom: 3px; }
-.uh-sub { display: block; font-size: 12px; color: #666; }
+.ub-num {
+  font-size: 72px; font-weight: 900;
+  color: #FFF; line-height: 1;
+  font-family: 'DM Sans', sans-serif; flex-shrink: 0;
+  z-index: 1;
+}
+.ub-text { flex: 1; z-index: 1; }
+.ub-label { display: block; font-size: 16px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
+.ub-sub { display: block; font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+.ub-action {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #4BADD8; color: #FFF;
+  font-size: 12px; font-weight: 900;
+  padding: 7px 14px; border-radius: 12px;
+}
 
 /* ── Scroll ── */
 .scroll { flex: 1; overflow-y: auto; }
 .scroll::-webkit-scrollbar { display: none; }
 
 /* ── Section label ── */
-.msg-section { padding: 14px 14px 6px; }
-.ms-label { display: block; font-size: 11px; font-weight: 700; color: #9AAABB; letter-spacing: 0.8px; text-transform: uppercase; }
+.sec-label { display: block; font-size: 11px; font-weight: 700; color: #9AAABB; letter-spacing: 0.8px; padding: 14px 18px 6px; }
 
-/* ── Unread color cards ── */
-.msg-color-card {
-  margin: 0 12px 8px;
-  border-radius: 14px; padding: 14px;
-  display: flex; align-items: flex-start; gap: 10px;
+/* ── Unread cards — colored bg, NO side-stripe ── */
+.unread-card {
+  margin: 0 14px 9px;
+  border-radius: 18px; padding: 15px 16px;
+  display: flex; align-items: flex-start; gap: 12px;
 }
-.c-lavender { background: #E4E0FF; }
-.c-mint     { background: #C8F7EE; }
+.uc-lav  { background: #E4E0FF; }
+.uc-mint { background: #C8F7EE; }
 
-.mcc-av {
-  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+.uc-av {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 900; color: #FFF;
   border: 2.5px solid #FFF;
-  box-shadow: 0 0 0 2px rgba(75,173,216,0.4);
-  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(75,173,216,0.35);
 }
-.mcc-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.mcc-av-icon {
-  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+.uc-av-sys {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
   background: rgba(255,255,255,0.6);
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; border: 2px solid rgba(255,255,255,0.8);
+  font-size: 20px;
+  border: 2px solid rgba(255,255,255,0.8);
 }
-.mcc-body { flex: 1; min-width: 0; }
-.mcc-top-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 5px; }
-.mcc-name { font-size: 14px; font-weight: 900; color: #0D0D1A; flex: 1; }
-.mcc-time { font-size: 10px; color: rgba(0,0,0,0.4); white-space: nowrap; margin-left: 6px; font-family: 'DM Sans', sans-serif; }
-.mcc-msg { font-size: 12px; color: #444; line-height: 1.5; }
-.mcc-action-row { display: flex; gap: 6px; margin-top: 10px; }
-.mcc-btn-dark {
+
+.uc-body { flex: 1; min-width: 0; }
+.uc-row1 { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+.uc-name { font-size: 14px; font-weight: 900; color: #0D0D1A; flex: 1; line-height: 1.3; }
+.uc-time { font-size: 10px; color: rgba(0,0,0,0.4); white-space: nowrap; margin-left: 6px; font-family: 'DM Sans', sans-serif; }
+.uc-msg { display: block; font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 10px; }
+.uc-btns { display: flex; gap: 7px; }
+.uc-btn-dark {
   background: #0D0D1A; color: #FFF;
   font-size: 11px; font-weight: 700;
-  padding: 5px 14px; border-radius: 10px;
+  padding: 6px 15px; border-radius: 10px;
 }
-.mcc-btn-ghost {
-  background: rgba(0,0,0,0.08); color: #555;
+.uc-btn-ghost {
+  background: rgba(0,0,0,0.09); color: #555;
   font-size: 11px; font-weight: 600;
-  padding: 5px 12px; border-radius: 10px;
+  padding: 6px 13px; border-radius: 10px;
 }
 
-/* ── Read list ── */
-.read-list { margin: 0 12px 12px; background: #FFF; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 8px rgba(0,50,120,0.06); }
-.read-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
-.read-row + .read-row { border-top: 1px solid #F2F4FC; }
-
+/* ── Read list — white card, leading icon circles, NO side-stripe ── */
+.read-card {
+  margin: 0 14px 12px;
+  background: #FFF; border-radius: 18px;
+  overflow: hidden; box-shadow: 0 1px 6px rgba(0,30,80,0.06);
+}
+.read-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px;
+}
+.read-row + .read-row { border-top: 1px solid #F0F2FA; }
 .rr-icon {
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
 }
-.rr-icon.review { background: #FFF3E0; }
-.rr-icon.approved { background: #E8F5E9; }
-.rr-icon.system { background: #E3F4FB; }
-
-.rr-left-bar {
-  width: 3px; height: 36px; border-radius: 2px; flex-shrink: 0; margin-right: -2px;
-}
-.rr-bar-orange { background: #FF9800; }
-.rr-bar-green  { background: #4CAF50; }
-.rr-bar-blue   { background: #4BADD8; }
-
+.rr-orange { background: #FFE4D4; }
+.rr-green  { background: #C8F7EE; }
+.rr-blue   { background: #C8E8FF; }
 .rr-body { flex: 1; min-width: 0; }
-.rr-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
-.rr-title { font-size: 13px; font-weight: 700; color: #444; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 6px; }
-.rr-time { font-size: 10px; color: #BBB; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
-.rr-preview { display: block; font-size: 11px; color: #AAA; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rr-row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+.rr-title { font-size: 13px; font-weight: 700; color: #555; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 6px; }
+.rr-time { font-size: 10px; color: #C0C4D0; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.rr-preview { display: block; font-size: 11px; color: #AAAFBE; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ── Tab bar ── */
 .tab-bar {
-  height: 58px; background: #FFF; border-top: 1px solid #ECEEF8;
+  height: 58px; background: #FFF; border-top: 1px solid #E8EAF5;
   display: flex; align-items: center; justify-content: space-around;
   flex-shrink: 0; padding-bottom: 4px;
 }
-.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; }
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; padding: 0 8px; }
 .tb-icon { font-size: 20px; }
 .tb-label { font-size: 10px; color: #8B8FA8; }
 .tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
-.tb-item.active::after {
-  content: ''; position: absolute; bottom: -6px;
-  width: 20px; height: 3px; background: #4BADD8; border-radius: 2px;
-}
-.tb-fab {
-  width: 46px; height: 46px; background: #0D0D1A;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 22px; color: #FFF; box-shadow: 0 4px 16px rgba(0,0,0,0.28);
-}
+.tb-item.active::after { content: ''; position: absolute; bottom: -5px; width: 18px; height: 3px; background: #4BADD8; border-radius: 2px; }
+.tb-fab { width: 48px; height: 48px; background: #0D0D1A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
 </style>
 </head>
 <body>
@@ -151,84 +156,89 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background
     <div class="msg-hd-edit">编辑</div>
   </div>
 
-  <!-- Unread hero -->
-  <div class="unread-hero">
-    <span class="uh-num">2</span>
-    <div class="uh-text">
-      <span class="uh-label">条未读消息</span>
-      <span class="uh-sub">请及时处理，别让球友等</span>
+  <!-- Dark unread alert block -->
+  <div class="unread-block">
+    <span class="ub-num">2</span>
+    <div class="ub-text">
+      <span class="ub-label">条未读消息</span>
+      <span class="ub-sub">请及时处理，别让球友等</span>
+      <div class="ub-action">立即查看 →</div>
     </div>
   </div>
 
   <div class="scroll">
 
-    <!-- Unread section -->
-    <div class="msg-section"><span class="ms-label">未读</span></div>
+    <span class="sec-label">未读</span>
 
-    <!-- Unread card 1 - join request -->
-    <div class="msg-color-card c-lavender">
-      <div class="mcc-av"><img src="https://placehold.co/38x38/E91E63/FFF?text=王"></div>
-      <div class="mcc-body">
-        <div class="mcc-top-row">
-          <span class="mcc-name">网球王子 申请加入</span>
-          <span class="mcc-time">10:24</span>
+    <!-- Unread card 1 -->
+    <div class="unread-card uc-lav">
+      <div class="uc-av" style="background:#D81B60">王</div>
+      <div class="uc-body">
+        <div class="uc-row1">
+          <span class="uc-name">网球王子 申请加入</span>
+          <span class="uc-time">10:24</span>
         </div>
-        <span class="mcc-msg">周末友谊赛·四人单打 — 求带，愿意补位！😄</span>
-        <div class="mcc-action-row">
-          <div class="mcc-btn-dark">✓ 同意</div>
-          <div class="mcc-btn-ghost">查看球局</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Unread card 2 - system notification -->
-    <div class="msg-color-card c-mint">
-      <div class="mcc-av-icon">🔔</div>
-      <div class="mcc-body">
-        <div class="mcc-top-row">
-          <span class="mcc-name">系统通知</span>
-          <span class="mcc-time">09:15</span>
-        </div>
-        <span class="mcc-msg">你的球局「高手切磋」已获 3 人报名，还差 1 人就满了！</span>
-        <div class="mcc-action-row">
-          <div class="mcc-btn-dark">查看球局 →</div>
+        <span class="uc-msg">周末友谊赛·四人单打 — 求带，愿意补位！😄</span>
+        <div class="uc-btns">
+          <div class="uc-btn-dark">✓ 同意加入</div>
+          <div class="uc-btn-ghost">查看球局</div>
         </div>
       </div>
     </div>
 
-    <!-- Read section -->
-    <div class="msg-section"><span class="ms-label">已读</span></div>
+    <!-- Unread card 2 -->
+    <div class="unread-card uc-mint">
+      <div class="uc-av-sys">🔔</div>
+      <div class="uc-body">
+        <div class="uc-row1">
+          <span class="uc-name">系统通知</span>
+          <span class="uc-time">09:15</span>
+        </div>
+        <span class="uc-msg">你的球局「高手切磋」已获 3 人报名，还差 1 人就满了！</span>
+        <div class="uc-btns">
+          <div class="uc-btn-dark">查看球局 →</div>
+        </div>
+      </div>
+    </div>
 
-    <div class="read-list">
+    <span class="sec-label">已读</span>
+
+    <!-- Read list — leading colored circle icons, NO stripe -->
+    <div class="read-card">
       <div class="read-row">
-        <div class="rr-left-bar rr-bar-orange"></div>
-        <div class="rr-icon review">⭐</div>
+        <div class="rr-icon rr-orange">⭐</div>
         <div class="rr-body">
-          <div class="rr-top-row"><span class="rr-title">快手小陈 评价了你</span><span class="rr-time">昨天</span></div>
+          <div class="rr-row1">
+            <span class="rr-title">快手小陈 评价了你</span>
+            <span class="rr-time">昨天</span>
+          </div>
           <span class="rr-preview">对方给你 +5 信用分，感谢友谊赛！</span>
         </div>
       </div>
       <div class="read-row">
-        <div class="rr-left-bar rr-bar-green"></div>
-        <div class="rr-icon approved">✅</div>
+        <div class="rr-icon rr-green">✅</div>
         <div class="rr-body">
-          <div class="rr-top-row"><span class="rr-title">申请已通过</span><span class="rr-time">5月23日</span></div>
+          <div class="rr-row1">
+            <span class="rr-title">申请已通过</span>
+            <span class="rr-time">5月23日</span>
+          </div>
           <span class="rr-preview">你已成功加入「朝阳公园早场」球局</span>
         </div>
       </div>
       <div class="read-row">
-        <div class="rr-left-bar rr-bar-blue"></div>
-        <div class="rr-icon system">🏆</div>
+        <div class="rr-icon rr-blue">🏆</div>
         <div class="rr-body">
-          <div class="rr-top-row"><span class="rr-title">每周挑战</span><span class="rr-time">5月20日</span></div>
-          <span class="rr-preview">本周约球达人 Top 10 已更新，你排第 5！</span>
+          <div class="rr-row1">
+            <span class="rr-title">每周挑战更新</span>
+            <span class="rr-time">5月20日</span>
+          </div>
+          <span class="rr-preview">约球达人 Top 10 更新，你排第 5！</span>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Tab bar -->
   <div class="tab-bar">
     <div class="tb-item"><span class="tb-icon">🏠</span><span class="tb-label">首页</span></div>
     <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>

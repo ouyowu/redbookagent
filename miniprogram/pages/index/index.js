@@ -19,6 +19,7 @@ Page({
     nearbyPlayers: [],
     loading: true,
     joiningId: '',
+    feedTab: 'recommend',
   },
 
   onShow() {
@@ -86,6 +87,14 @@ Page({
     } finally {
       this.setData({ joiningId: '' });
     }
+  },
+
+  onFeedTab(e) {
+    this.setData({ feedTab: e.currentTarget.dataset.tab });
+  },
+
+  onGoMessages() {
+    wx.switchTab({ url: '/pages/messages/messages' });
   },
 
   onGameTap(e) {

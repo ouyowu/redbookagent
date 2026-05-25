@@ -1,13 +1,12 @@
-// 模拟数据 - 开发阶段使用，正式版替换为真实 API 调用
+// 模拟数据 - 头像使用本地 PNG，无需网络
 
 const mockUsers = [
   {
     _id: 'user_001',
     openid: 'mock_openid_001',
     nickName: '球神小李',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Li',
+    avatarUrl: '/images/avatar-1.png',
     gender: 1,
-    phone: '138****8888',
     city: '上海',
     district: '浦东新区',
     level: 'P4',
@@ -21,9 +20,8 @@ const mockUsers = [
     _id: 'user_002',
     openid: 'mock_openid_002',
     nickName: '娜娜球球',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Nana',
+    avatarUrl: '/images/avatar-2.png',
     gender: 2,
-    phone: '139****9999',
     city: '上海',
     district: '徐汇区',
     level: 'P3',
@@ -37,7 +35,7 @@ const mockUsers = [
     _id: 'user_003',
     openid: 'mock_openid_003',
     nickName: '老王打球',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Wang',
+    avatarUrl: '/images/avatar-3.png',
     gender: 1,
     city: '上海',
     district: '静安区',
@@ -52,7 +50,7 @@ const mockUsers = [
     _id: 'user_004',
     openid: 'mock_openid_004',
     nickName: '小白一枚',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bai',
+    avatarUrl: '/images/avatar-4.png',
     gender: 1,
     city: '上海',
     district: '长宁区',
@@ -67,7 +65,7 @@ const mockUsers = [
     _id: 'user_005',
     openid: 'mock_openid_005',
     nickName: '陈教练',
-    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chen',
+    avatarUrl: '/images/avatar-5.png',
     gender: 1,
     city: '上海',
     district: '杨浦区',
@@ -169,12 +167,35 @@ const mockGames = [
     participants: [mockUsers[1]],
     createdAt: '2026-05-21',
   },
+  {
+    _id: 'game_005',
+    creatorId: 'user_003',
+    creator: mockUsers[2],
+    title: '上周四夜场对打（已结束）',
+    description: '四人单循环，氛围很好，下次继续！',
+    venue: '静安体育中心',
+    address: '上海市静安区江宁路166号',
+    city: '上海',
+    district: '静安区',
+    date: '2026-05-22',
+    startTime: '19:00',
+    endTime: '21:00',
+    maxPlayers: 4,
+    currentPlayers: 4,
+    minLevel: 'P3',
+    maxLevel: 'P5',
+    fee: 50,
+    status: 'COMPLETED',
+    participants: [mockUsers[0], mockUsers[1], mockUsers[2], mockUsers[3]],
+    createdAt: '2026-05-18',
+  },
 ];
 
 const mockCreditLogs = [
-  { _id: 'log_001', userId: 'user_001', change: 2, reason: '准时到场', gameId: 'game_001', newScore: 92, createdAt: '2026-05-10' },
-  { _id: 'log_002', userId: 'user_001', change: 5, reason: '连续3次准时', gameId: 'game_002', newScore: 90, createdAt: '2026-05-08' },
-  { _id: 'log_003', userId: 'user_001', change: 2, reason: '获得好评', gameId: 'game_003', newScore: 85, createdAt: '2026-05-05' },
+  { _id: 'log_001', userId: 'user_001', change: 2, reason: '准时到场', gameId: 'game_005', newScore: 92, createdAt: '2026-05-22' },
+  { _id: 'log_002', userId: 'user_001', change: 5, reason: '连续3次准时奖励', gameId: 'game_003', newScore: 90, createdAt: '2026-05-15' },
+  { _id: 'log_003', userId: 'user_001', change: 2, reason: '获得好评', gameId: 'game_002', newScore: 85, createdAt: '2026-05-10' },
+  { _id: 'log_004', userId: 'user_001', change: -5, reason: '迟到15分钟以上', gameId: 'game_001', newScore: 83, createdAt: '2026-05-05' },
 ];
 
 const mockMessages = [
@@ -182,7 +203,7 @@ const mockMessages = [
     _id: 'msg_001',
     type: 'system',
     title: '球局提醒',
-    content: '您的球局「周末双打友谊赛」将于明天09:00开始，请准时到场！',
+    content: '您的球局「周末双打友谊赛」将于5月31日09:00开始，请准时到场！',
     gameId: 'game_001',
     isRead: false,
     createdAt: '2026-05-30 08:00',
@@ -206,7 +227,7 @@ const mockMessages = [
     fromUserId: 'user_003',
     fromUser: mockUsers[2],
     isRead: true,
-    createdAt: '2026-05-20 20:00',
+    createdAt: '2026-05-22 21:00',
   },
   {
     _id: 'msg_004',
@@ -222,7 +243,7 @@ const mockMessages = [
 const mockReviews = [
   {
     _id: 'review_001',
-    gameId: 'game_003',
+    gameId: 'game_005',
     reviewerId: 'user_003',
     reviewer: mockUsers[2],
     revieweeId: 'user_001',
@@ -230,7 +251,7 @@ const mockReviews = [
     tags: ['准时守信', '球技出色', '态度友好'],
     comment: '小李打球很稳，也很守时，下次还要一起！',
     isPunctual: true,
-    createdAt: '2026-05-20',
+    createdAt: '2026-05-22',
   },
   {
     _id: 'review_002',
@@ -242,11 +263,14 @@ const mockReviews = [
     tags: ['球技出色', '遵守规则'],
     comment: '技术不错，继续保持！',
     isPunctual: true,
-    createdAt: '2026-05-08',
+    createdAt: '2026-05-15',
   },
 ];
 
-// 当前登录用户（模拟）
+// 记录已提交的评价（用于判断是否已评价）
+const submittedReviews = {};
+
+// 当前登录用户（user_001 = 球神小李）
 const currentUser = mockUsers[0];
 
 module.exports = {
@@ -255,5 +279,6 @@ module.exports = {
   mockCreditLogs,
   mockMessages,
   mockReviews,
+  submittedReviews,
   currentUser,
 };

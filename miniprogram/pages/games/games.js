@@ -64,7 +64,9 @@ Page({
   },
 
   onLevelFilter(e) {
-    this.setData({ 'filters.level': e.detail.value });
+    const idx = parseInt(e.detail.value);
+    const level = this.data.levelOptions[idx].key;
+    this.setData({ 'filters.level': level });
     this.loadGames();
   },
 

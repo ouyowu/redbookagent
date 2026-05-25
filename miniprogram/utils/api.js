@@ -146,9 +146,19 @@ const api = {
   },
 
   // ===== 评价相关 =====
+  hasReviewed(gameId, revieweeId) {
+    if (!USE_MOCK) return false;
+    const key = `${mock.currentUser._id}_${gameId}_${revieweeId}`;
+    return !!mock.submittedReviews[key];
+  },
+
   async submitReview(data) {
     if (USE_MOCK) {
       await delay();
+      const key = `${mock.currentUser._id}_${data.gameId}_${data.revieweeId}`;
+      if (mock.submittedReviews[key]) return { success: false, message: '已评价过该球友' };
+
+      mock.submittedReviews[key] = true;
       const newReview = {
         _id: `review_${Date.now()}`,
         reviewerId: mock.currentUser._id,
@@ -157,10 +167,14 @@ const api = {
         ...data,
       };
       mock.mockReviews.push(newReview);
-      // 更新信用分
+
+      // 更新被评价者信用分
       const reviewee = mock.mockUsers.find(u => u._id === data.revieweeId);
       if (reviewee) {
-        const change = data.rating >= 4 ? CREDIT_RULES.GOOD_REVIEW.change : CREDIT_RULES.BAD_REVIEW.change;
+        let change = 0;
+        if (data.isPunctual) change += CREDIT_RULES.PUNCTUAL.change;
+        if (data.rating >= 4) change += CREDIT_RULES.GOOD_REVIEW.change;
+        else if (data.rating <= 2) change += CREDIT_RULES.BAD_REVIEW.change;
         reviewee.creditScore = Math.max(0, Math.min(100, reviewee.creditScore + change));
       }
       return { success: true };

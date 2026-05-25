@@ -1,17 +1,17 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
     "pages/games/games",
-    "pages/game-detail/game-detail",
-    "pages/game-create/game-create",
     "pages/friends/friends",
     "pages/messages/messages",
     "pages/profile/profile",
+    "pages/game-detail/game-detail",
+    "pages/game-create/game-create",
     "pages/profile-edit/profile-edit",
     "pages/player-profile/player-profile",
     "pages/video-upload/video-upload",
-    "pages/review/review"
+    "pages/review/review",
+    "pages/login/login"
   ],
   "tabBar": {
     "color": "#999999",

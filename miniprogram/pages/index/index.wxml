@@ -54,11 +54,11 @@
       <view class="action-icon-wrap blue">🔍</view>
       <text class="action-label">找球局</text>
     </view>
-    <view class="action-item" bindtap="{{() => wx.switchTab({ url: '/pages/friends/friends' })}}">
+    <view class="action-item" bindtap="onGoFriends">
       <view class="action-icon-wrap orange">👥</view>
       <text class="action-label">找球友</text>
     </view>
-    <view class="action-item" bindtap="{{() => wx.navigateTo({ url: '/pages/video-upload/video-upload' })}}">
+    <view class="action-item" bindtap="onUploadVideo">
       <view class="action-icon-wrap purple">🎥</view>
       <text class="action-label">认证等级</text>
     </view>

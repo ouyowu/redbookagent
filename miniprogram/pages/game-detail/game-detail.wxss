@@ -236,9 +236,42 @@
 
 .cancel-btn::after { border: none; }
 
-.creator-action, .full-action {
+.creator-action, .full-action, .completed-action {
   flex: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.review-hint {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+/* 评价区 */
+.review-section { border-top: 4rpx solid #00B96B; }
+
+.review-player-row {
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.review-player-row:last-child { border-bottom: none; }
+
+.reviewed-tag {
+  font-size: 22rpx;
+  color: #9E9E9E;
+  background: #F5F5F5;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.review-btn-sm {
+  font-size: 26rpx;
+  color: #00B96B;
+  font-weight: 600;
 }
 
 .loading-wrap { height: 100vh; }

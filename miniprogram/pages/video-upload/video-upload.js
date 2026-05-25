@@ -27,25 +27,32 @@ Page({
   },
 
   onChooseVideo() {
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['video'],
+    // 使用 chooseVideo（兼容性更好）
+    wx.chooseVideo({
       sourceType: ['album', 'camera'],
       maxDuration: 20,
       camera: 'back',
       success: (res) => {
-        const video = res.tempFiles[0];
-        if (video.duration > 20) {
-          showToast('视频不超过20秒');
+        if (res.duration > 20) {
+          showToast('视频时长不能超过20秒');
           return;
         }
         this.setData({
-          videoPath: video.tempFilePath,
-          thumbPath: video.thumbTempFilePath,
-          duration: Math.round(video.duration),
+          videoPath: res.tempFilePath,
+          thumbPath: res.thumbTempFilePath || '',
+          duration: Math.round(res.duration) || 10,
         });
       },
+      fail: (err) => {
+        if (err.errMsg && err.errMsg.indexOf('cancel') === -1) {
+          showToast('选择视频失败，请重试');
+        }
+      },
     });
+  },
+
+  onGoBack() {
+    wx.navigateBack();
   },
 
   onLevelSelect(e) {

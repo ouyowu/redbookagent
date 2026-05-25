@@ -76,7 +76,19 @@ Page({
     wx.switchTab({ url: '/pages/games/games' });
   },
 
+  onGoFriends() {
+    wx.switchTab({ url: '/pages/friends/friends' });
+  },
+
+  onUploadVideo() {
+    wx.navigateTo({ url: '/pages/video-upload/video-upload' });
+  },
+
   onRefresh() {
     this.loadNearbyGames();
+  },
+
+  onPullDownRefresh() {
+    this.loadNearbyGames().then(() => wx.stopPullDownRefresh());
   },
 });

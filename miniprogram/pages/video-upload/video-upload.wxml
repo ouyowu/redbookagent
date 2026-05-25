@@ -4,7 +4,7 @@
     <text class="success-icon">🎉</text>
     <text class="success-title text-bold">提交成功！</text>
     <text class="success-desc text-gray">审核团队将在24小时内评定您的等级，结果会通过消息通知您</text>
-    <button class="back-btn btn-primary" bindtap="{{() => wx.navigateBack()}}">返回</button>
+    <button class="back-btn btn-primary" bindtap="onGoBack">返回</button>
   </view>
 
   <view wx:else>
@@ -30,10 +30,10 @@
           class="video-player"
           src="{{videoPath}}"
           poster="{{thumbPath}}"
-          controls
-          show-fullscreen-btn
-          show-play-btn
-          show-center-play-btn
+          controls="{{true}}"
+          show-fullscreen-btn="{{true}}"
+          show-play-btn="{{true}}"
+          show-center-play-btn="{{true}}"
         />
         <view class="video-info flex-between mt-20">
           <text class="text-gray text-sm">时长：{{duration}}秒</text>

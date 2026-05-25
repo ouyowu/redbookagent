@@ -112,6 +112,28 @@
     </view>
   </view>
 
+  <!-- 评价区域（球局已结束且当前用户参与过） -->
+  <view wx:if="{{canReview}}" class="card mt-20 review-section">
+    <view class="section-title text-bold mb-20">⭐ 为球友评价</view>
+    <view
+      wx:for="{{reviewablePlayers}}"
+      wx:key="_id"
+      class="review-player-row flex align-center"
+      bindtap="onReviewPlayer"
+      data-id="{{item._id}}"
+    >
+      <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+      <view class="player-info flex-1">
+        <view class="flex align-center">
+          <text class="player-name text-bold mr-10">{{item.nickName}}</text>
+          <view class="level-dot" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+        </view>
+      </view>
+      <view wx:if="{{item.hasReviewed}}" class="reviewed-tag">已评价</view>
+      <view wx:else class="review-btn-sm">去评价 ›</view>
+    </view>
+  </view>
+
   <view class="safe-bottom"></view>
   <view style="height:160rpx"></view>
 </view>
@@ -135,18 +157,23 @@
   </button>
 
   <button
-    wx:elif="{{isParticipant && !isCreator}}"
+    wx:elif="{{isParticipant && !isCreator && game.status !== 'COMPLETED'}}"
     class="cancel-btn"
     bindtap="onCancelJoin"
   >
     取消参加
   </button>
 
-  <view wx:elif="{{isCreator}}" class="creator-action">
+  <view wx:elif="{{isCreator && game.status !== 'COMPLETED'}}" class="creator-action">
     <text class="text-gray text-sm">您发起的球局</text>
   </view>
 
-  <view wx:elif="{{game.status === 'FULL'}}" class="full-action">
+  <view wx:elif="{{game.status === 'FULL' && !isParticipant}}" class="full-action">
     <text class="text-gray">已满员，期待下次</text>
+  </view>
+
+  <view wx:elif="{{game.status === 'COMPLETED'}}" class="completed-action">
+    <text class="text-gray text-sm">球局已结束</text>
+    <text wx:if="{{canReview}}" class="review-hint primary-color">↑ 为球友评价</text>
   </view>
 </view>

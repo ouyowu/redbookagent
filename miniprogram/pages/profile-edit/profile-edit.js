@@ -33,9 +33,15 @@ Page({
     });
   },
 
-  onChooseAvatar(e) {
-    const { avatarUrl } = e.detail;
-    this.setData({ 'form.avatarUrl': avatarUrl });
+  onChooseAvatar() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        this.setData({ 'form.avatarUrl': res.tempFilePaths[0] });
+      },
+    });
   },
 
   onInput(e) {

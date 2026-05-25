@@ -17,6 +17,13 @@ App({
     this.globalData.isLoggedIn = true;
     wx.setStorageSync('token', 'mock_token_dev');
     wx.setStorageSync('userInfo', currentUser);
+    // 加载圆体字体
+    wx.loadFontFace({
+      family: 'ZCOOL QingKe HuangYou',
+      source: "url('https://fonts.gstatic.com/s/zcoolqingkehuangyou/v17/2Eb5L_R5IXJEWhD3I_5rZCBUPMoLoMbnBfJWf_-1.woff2')",
+      success: () => {},
+      fail: () => {},
+    });
   },
 
   updateUserInfo(data) {

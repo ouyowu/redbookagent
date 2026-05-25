@@ -4,7 +4,7 @@
 
 page {
   background-color: #F7F8FA;
-  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-family: 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Helvetica Neue', sans-serif;
   font-size: 28rpx;
   color: #1A1A2E;
   box-sizing: border-box;

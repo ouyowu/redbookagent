@@ -5,7 +5,7 @@
 
 /* ── Hero ── */
 .profile-hero {
-  background: linear-gradient(160deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%);
+  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 60%, #2E94C8 100%);
   padding: 80rpx 32rpx 36rpx;
 }
 
@@ -61,7 +61,7 @@
   font-weight: 700;
   padding: 4rpx 12rpx;
   border-radius: 20rpx;
-  border: 3rpx solid #1A1A2E;
+  border: 3rpx solid #4BADD8;
   white-space: nowrap;
 }
 
@@ -246,7 +246,7 @@
 }
 
 .ptab-active {
-  background: #1A1A2E;
+  background: #4BADD8;
   color: #FFFFFF;
   font-weight: 700;
 }

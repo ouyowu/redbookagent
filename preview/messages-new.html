@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>消息页 — 匹克约球</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;700;900&display=swap">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif; background: #1C3A4A; display: flex; padding: 40px; justify-content: center; align-items: flex-start; }
+
+.phone {
+  width: 375px;
+  height: 812px;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #EEF6FC;
+}
+
+/* Header */
+.msg-hd {
+  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 100%);
+  padding: 44px 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.msg-hd-title { font-size: 22px; font-weight: 900; color: #FFF; letter-spacing: 1px; }
+.msg-hd-edit { font-size: 13px; color: rgba(255,255,255,0.85); padding: 4px 10px; background: rgba(255,255,255,0.18); border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); }
+
+/* Active users */
+.active-section {
+  background: #FFF;
+  border-bottom: 1px solid #EEF2F7;
+  padding: 10px 8px 12px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.active-section::-webkit-scrollbar { display: none; }
+
+.au-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.au-ring { position: relative; width: 44px; height: 44px; }
+.au-avatar { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(91,196,237,0.5); }
+.au-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.au-online { position: absolute; bottom: 1px; right: 1px; width: 11px; height: 11px; background: #22D68A; border-radius: 50%; border: 1.5px solid #FFF; }
+.au-name { font-size: 10px; color: #555; max-width: 44px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+
+/* Scroll */
+.msg-scroll { flex: 1; overflow-y: auto; }
+.msg-scroll::-webkit-scrollbar { display: none; }
+
+/* Section */
+.msg-section { padding: 12px 10px 4px; }
+.section-label { display: block; font-size: 11px; font-weight: 700; color: #9AAABB; letter-spacing: 0.5px; margin-bottom: 6px; padding-left: 2px; }
+
+.msg-card { background: #FFF; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 8px rgba(0,80,140,0.07); }
+
+.msg-row { display: flex; align-items: center; gap: 10px; padding: 12px; }
+.msg-row.has-border { border-bottom: 1px solid #F4F7FA; }
+
+.msg-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.msg-icon.system { background: #E3F4FB; }
+.msg-icon.join_request { background: #E8F5E9; }
+.msg-icon.review { background: #FFF8E1; }
+.msg-icon.approved { background: #E8F5E9; }
+.msg-icon.muted { opacity: 0.6; }
+
+.msg-body { flex: 1; min-width: 0; }
+.msg-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+.msg-title { font-size: 13px; font-weight: 700; color: #1A1A2E; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 6px; }
+.msg-title.muted { color: #666; font-weight: 500; }
+.msg-time { font-size: 10px; color: #AAB; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.msg-preview { font-size: 12px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msg-preview.muted { color: #AAA; }
+
+.unread-badge { min-width: 20px; height: 20px; background: #4BADD8; color: #FFF; border-radius: 10px; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 5px; flex-shrink: 0; }
+
+/* Tab bar */
+.tab-bar { height: 56px; background: #FFF; border-top: 1px solid #ECEEF8; display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; padding-bottom: 4px; }
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tb-icon { font-size: 20px; }
+.tb-label { font-size: 10px; color: #8B8FA8; }
+.tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
+.tb-center-btn { width: 44px; height: 44px; background: linear-gradient(135deg, #4BADD8, #2E94C8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; font-weight: 300; box-shadow: 0 4px 14px rgba(75,173,216,0.45); }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <!-- Header -->
+  <div class="msg-hd">
+    <span class="msg-hd-title">消息</span>
+    <div class="msg-hd-edit">编辑</div>
+  </div>
+
+  <!-- Active users -->
+  <div class="active-section">
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/E91E63/FFF?text=王"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">网球王子</span>
+    </div>
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/9C27B0/FFF?text=陈"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">快手小陈</span>
+    </div>
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/FF9800/FFF?text=赵"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">橙子赵四</span>
+    </div>
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/2196F3/FFF?text=张"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">蓝鸟张飞</span>
+    </div>
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/009688/FFF?text=林"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">球王小林</span>
+    </div>
+    <div class="au-item">
+      <div class="au-ring">
+        <div class="au-avatar"><img src="https://placehold.co/44x44/F44336/FFF?text=刘"></div>
+        <div class="au-online"></div>
+      </div>
+      <span class="au-name">刘小侠</span>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="msg-scroll">
+
+    <!-- Unread -->
+    <div class="msg-section">
+      <span class="section-label">未读</span>
+      <div class="msg-card">
+        <div class="msg-row has-border">
+          <div class="msg-icon join_request">🙋</div>
+          <div class="msg-body">
+            <div class="msg-top-row">
+              <span class="msg-title">网球王子 申请加入球局</span>
+              <span class="msg-time">10:24</span>
+            </div>
+            <span class="msg-preview">周末友谊赛 · 四人单打 — 求带！</span>
+          </div>
+          <div class="unread-badge">1</div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-icon system">🔔</div>
+          <div class="msg-body">
+            <div class="msg-top-row">
+              <span class="msg-title">系统通知</span>
+              <span class="msg-time">09:15</span>
+            </div>
+            <span class="msg-preview">你的球局「高手切磋」已获 3 人报名</span>
+          </div>
+          <div class="unread-badge">2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Read -->
+    <div class="msg-section">
+      <span class="section-label">已读</span>
+      <div class="msg-card">
+        <div class="msg-row has-border">
+          <div class="msg-icon review muted">⭐</div>
+          <div class="msg-body">
+            <div class="msg-top-row">
+              <span class="msg-title muted">快手小陈 评价了你</span>
+              <span class="msg-time">昨天</span>
+            </div>
+            <span class="msg-preview muted">对方给你 +5 信用分，感谢友谊赛！</span>
+          </div>
+        </div>
+        <div class="msg-row has-border">
+          <div class="msg-icon approved muted">✅</div>
+          <div class="msg-body">
+            <div class="msg-top-row">
+              <span class="msg-title muted">申请已通过</span>
+              <span class="msg-time">5月23日</span>
+            </div>
+            <span class="msg-preview muted">你已成功加入「朝阳公园早场」球局</span>
+          </div>
+        </div>
+        <div class="msg-row">
+          <div class="msg-icon system muted">🔔</div>
+          <div class="msg-body">
+            <div class="msg-top-row">
+              <span class="msg-title muted">每周挑战</span>
+              <span class="msg-time">5月20日</span>
+            </div>
+            <span class="msg-preview muted">本周约球达人 Top 10 已更新，你排第 5！</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <div class="tb-item">
+      <span class="tb-icon">🏠</span>
+      <span class="tb-label">首页</span>
+    </div>
+    <div class="tb-item">
+      <span class="tb-icon">🏸</span>
+      <span class="tb-label">球局</span>
+    </div>
+    <div class="tb-center-btn">+</div>
+    <div class="tb-item active">
+      <span class="tb-icon">💬</span>
+      <span class="tb-label" style="color:#4BADD8">消息</span>
+    </div>
+    <div class="tb-item">
+      <span class="tb-icon">👤</span>
+      <span class="tb-label">我的</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

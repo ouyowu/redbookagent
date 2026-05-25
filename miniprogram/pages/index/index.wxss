@@ -7,12 +7,11 @@
 
 /* ── Header ── */
 .home-hd {
-  background: #FFFFFF;
+  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 100%);
   padding: 88rpx 28rpx 20rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1rpx solid #ECEEF8;
   flex-shrink: 0;
 }
 
@@ -27,8 +26,9 @@
 .hd-logo-text {
   font-size: 32rpx;
   font-weight: 900;
-  color: #1A1A2E;
+  color: #FFFFFF;
   letter-spacing: 1rpx;
+  text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.15);
 }
 
 .hd-right {
@@ -40,7 +40,7 @@
 .hd-btn {
   width: 64rpx;
   height: 64rpx;
-  background: #F5F7FF;
+  background: rgba(255,255,255,0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -52,7 +52,7 @@
   width: 64rpx;
   height: 64rpx;
   border-radius: 50%;
-  border: 2rpx solid #ECEEF8;
+  border: 2rpx solid rgba(255,255,255,0.6);
   background: #E0E0E0;
 }
 
@@ -75,7 +75,7 @@
 }
 
 .ftab-active {
-  background: #1A1A2E;
+  background: #4BADD8;
   color: #FFFFFF;
   font-weight: 700;
 }

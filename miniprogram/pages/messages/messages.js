@@ -1,11 +1,14 @@
+const app = getApp();
 const api = require('../../utils/api');
 const { showToast } = require('../../utils/util');
+const { mockUsers } = require('../../utils/mock');
 
 Page({
   data: {
-    messages: [],
+    unreadMessages: [],
+    readMessages: [],
+    activeUsers: [],
     loading: false,
-    unreadCount: 0,
   },
 
   onShow() {
@@ -16,9 +19,30 @@ Page({
     this.setData({ loading: true });
     try {
       const messages = await api.getMessages();
-      const unreadCount = messages.filter(m => !m.isRead).length;
-      this.setData({ messages, unreadCount });
-      // 更新 tabBar 角标
+
+      const unreadMessages = messages.filter(m => !m.isRead);
+      const readMessages = messages.filter(m => m.isRead);
+
+      // 取有 fromUser 的消息发送者去重作为活跃用户，补充固定球友
+      const seenIds = new Set();
+      const activeUsers = [];
+      messages.forEach(m => {
+        if (m.fromUser && !seenIds.has(m.fromUser._id)) {
+          seenIds.add(m.fromUser._id);
+          activeUsers.push(m.fromUser);
+        }
+      });
+      // 补充更多活跃球友
+      mockUsers.slice(0, 6).forEach(u => {
+        if (!seenIds.has(u._id)) {
+          seenIds.add(u._id);
+          activeUsers.push(u);
+        }
+      });
+
+      const unreadCount = unreadMessages.length;
+      this.setData({ unreadMessages, readMessages, activeUsers });
+
       if (unreadCount > 0) {
         wx.showTabBarRedDot({ index: 3 });
       } else {
@@ -33,21 +57,19 @@ Page({
 
   async onMessageTap(e) {
     const { id, type, gameid } = e.currentTarget.dataset;
-    // 标记已读
     await api.markMessageRead(id);
 
-    // 根据消息类型跳转
-    if (type === 'join_request' && gameid) {
-      wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${gameid}` });
-    } else if (type === 'system' && gameid) {
-      wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${gameid}` });
-    } else if (type === 'approved' && gameid) {
+    if ((type === 'join_request' || type === 'system' || type === 'approved') && gameid) {
       wx.navigateTo({ url: `/pages/game-detail/game-detail?id=${gameid}` });
     } else if (type === 'review') {
       wx.switchTab({ url: '/pages/profile/profile' });
     }
 
     this.loadMessages();
+  },
+
+  onPlayerTap(e) {
+    wx.navigateTo({ url: `/pages/player-profile/player-profile?id=${e.currentTarget.dataset.id}` });
   },
 
   onPullDownRefresh() {

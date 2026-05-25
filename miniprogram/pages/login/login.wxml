@@ -1,48 +1,40 @@
 <view class="login-page">
-  <!-- 背景装饰 -->
-  <view class="bg-decoration">
-    <view class="circle circle-1"></view>
-    <view class="circle circle-2"></view>
-    <view class="circle circle-3"></view>
-  </view>
 
-  <!-- Logo & 标题 -->
-  <view class="logo-section">
-    <view class="logo-icon">🏓</view>
-    <view class="app-name">匹克约球</view>
-    <view class="app-slogan">认证水平 · 信用约球 · 同城社区</view>
-  </view>
+  <!-- 上半部：天蓝色背景 + 漂浮标签 -->
+  <view class="login-top">
+    <view class="pill-deco pd-1">P4 认证球员</view>
+    <view class="pill-deco pd-2">信用分 92 ⭐</view>
+    <view class="pill-deco pd-3">🏸 北京同城</view>
+    <view class="pill-deco pd-4">P6 大神级</view>
+    <view class="pill-deco pd-5">约球中 🏓</view>
+    <view class="pill-deco pd-6">低门槛入门</view>
 
-  <!-- 功能亮点 -->
-  <view class="features">
-    <view class="feature-item">
-      <text class="feature-icon">🎯</text>
-      <text class="feature-text">真实水平认证</text>
-    </view>
-    <view class="feature-item">
-      <text class="feature-icon">⭐</text>
-      <text class="feature-text">信用评价体系</text>
-    </view>
-    <view class="feature-item">
-      <text class="feature-icon">📍</text>
-      <text class="feature-text">同城精准匹配</text>
+    <!-- App 图标 -->
+    <view class="login-icon-box">
+      <text class="login-icon-emoji">🏓</text>
     </view>
   </view>
 
-  <!-- 登录按钮 -->
-  <view class="login-section">
+  <!-- 下半部：白色面板 -->
+  <view class="login-bottom">
+    <text class="login-hl">同城约球，</text>
+    <text class="login-hl">随时开始！</text>
+    <text class="login-sub">认证水平 · 信用约球 · 同城社区</text>
+
     <button
-      class="btn-wx-login"
+      class="btn-dark-cta"
       loading="{{loading}}"
-      bindtap="onWxLogin"
-    >
-      <text class="wx-icon">💬</text>
-      <text>微信一键登录</text>
-    </button>
+      bindtap="onMockLogin"
+    >💬  微信一键登录</button>
 
-    <!-- 开发调试按钮 -->
-    <button class="btn-mock-login" bindtap="onMockLogin">
-      开发调试登录（Mock）
+    <view class="login-divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">或</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <button class="btn-ghost-cta" bindtap="onMockLogin">
+      访客体验（Mock）
     </button>
 
     <view class="agreement">
@@ -52,4 +44,5 @@
       <text class="link">《隐私政策》</text>
     </view>
   </view>
+
 </view>

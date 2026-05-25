@@ -1,161 +1,142 @@
 .login-page {
-  min-height: 100vh;
-  background: linear-gradient(160deg, #E8F5E9 0%, #FFFFFF 50%, #E3F2FD 100%);
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0 60rpx;
-  position: relative;
   overflow: hidden;
+  background: #5BC4ED;
 }
 
-.bg-decoration {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.15;
-}
-
-.circle-1 {
-  width: 400rpx;
-  height: 400rpx;
-  background: #00B96B;
-  top: -100rpx;
-  right: -100rpx;
-}
-
-.circle-2 {
-  width: 300rpx;
-  height: 300rpx;
-  background: #2196F3;
-  bottom: 200rpx;
-  left: -80rpx;
-}
-
-.circle-3 {
-  width: 200rpx;
-  height: 200rpx;
-  background: #FF9800;
-  top: 400rpx;
-  right: 60rpx;
-}
-
-.logo-section {
-  margin-top: 200rpx;
-  text-align: center;
-  z-index: 1;
-}
-
-.logo-icon {
-  font-size: 120rpx;
-  margin-bottom: 20rpx;
-  display: block;
-}
-
-.app-name {
-  font-size: 60rpx;
-  font-weight: 800;
-  color: #1A1A2E;
-  letter-spacing: 4rpx;
-  margin-bottom: 16rpx;
-}
-
-.app-slogan {
-  font-size: 26rpx;
-  color: #666666;
-  letter-spacing: 2rpx;
-}
-
-.features {
-  margin-top: 80rpx;
-  display: flex;
-  gap: 40rpx;
-  z-index: 1;
-}
-
-.feature-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12rpx;
-}
-
-.feature-icon {
-  font-size: 48rpx;
-  width: 100rpx;
-  height: 100rpx;
+/* ── 上半：天蓝色区域 ── */
+.login-top {
+  height: 55vh;
+  background: linear-gradient(155deg, #7DD6F5 0%, #4BADD8 55%, #3298C8 100%);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.feature-text {
-  font-size: 22rpx;
-  color: #666666;
-  text-align: center;
+/* 漂浮装饰 pills */
+.pill-deco {
+  position: absolute;
+  background: rgba(255,255,255,0.22);
+  color: #FFFFFF;
+  font-size: 24rpx;
+  font-weight: 600;
+  padding: 14rpx 30rpx;
+  border-radius: 40rpx;
+  border: 1.5rpx solid rgba(255,255,255,0.45);
+  letter-spacing: 0.5rpx;
+  white-space: nowrap;
 }
 
-.login-section {
-  width: 100%;
-  margin-top: auto;
-  padding-bottom: calc(60rpx + env(safe-area-inset-bottom));
+.pd-1 { top: 12%;  left: 6%;  transform: rotate(-9deg); }
+.pd-2 { top: 18%;  right: 8%; transform: rotate(7deg);  }
+.pd-3 { top: 44%;  left: 4%;  transform: rotate(-4deg); }
+.pd-4 { bottom: 18%; right: 6%;  transform: rotate(11deg); }
+.pd-5 { bottom: 28%; left: 22%; transform: rotate(-6deg); }
+.pd-6 { top: 60%;  right: 12%; transform: rotate(5deg);  }
+
+/* App 图标盒子 */
+.login-icon-box {
+  width: 160rpx;
+  height: 160rpx;
+  background: rgba(255,255,255,0.28);
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(255,255,255,0.5);
+  box-shadow: 0 12rpx 40rpx rgba(0,0,0,0.15);
   z-index: 1;
 }
 
-.btn-wx-login {
+.login-icon-emoji {
+  font-size: 80rpx;
+  line-height: 1;
+}
+
+/* ── 下半：白色面板 ── */
+.login-bottom {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 48rpx 48rpx 0 0;
+  margin-top: -48rpx;
+  padding: 56rpx 48rpx calc(40rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.login-hl {
+  display: block;
+  font-size: 64rpx;
+  font-weight: 900;
+  color: #1A1A2E;
+  line-height: 1.2;
+  letter-spacing: 2rpx;
+}
+
+.login-sub {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 16rpx;
+  margin-bottom: 56rpx;
+  letter-spacing: 1rpx;
+}
+
+/* 深色主按钮 */
+.btn-dark-cta {
   width: 100%;
-  height: 96rpx;
-  background: linear-gradient(135deg, #07C160, #00875A);
+  height: 100rpx;
+  background: #1A1A2E;
   color: #FFFFFF;
   border-radius: 50rpx;
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12rpx;
   border: none;
-  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.35);
   letter-spacing: 2rpx;
+  box-shadow: 0 8rpx 28rpx rgba(26,26,46,0.3);
 }
+.btn-dark-cta::after { border: none; }
 
-.btn-wx-login::after { border: none; }
-
-.wx-icon {
-  font-size: 40rpx;
+/* 分割线 */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 32rpx 0;
 }
+.divider-line { flex: 1; height: 1rpx; background: #EBEBEB; }
+.divider-text { font-size: 24rpx; color: #BBB; white-space: nowrap; }
 
-.btn-mock-login {
+/* 幽灵按钮 */
+.btn-ghost-cta {
   width: 100%;
-  height: 72rpx;
+  height: 88rpx;
   background: transparent;
-  color: #999999;
-  border: 2rpx dashed #DDDDDD;
+  color: #888;
+  border: 2rpx solid #DCDCDC;
   border-radius: 50rpx;
-  font-size: 26rpx;
-  margin-top: 24rpx;
+  font-size: 28rpx;
+  font-weight: 500;
 }
+.btn-ghost-cta::after { border: none; }
 
-.btn-mock-login::after { border: none; }
-
+/* 协议 */
 .agreement {
   text-align: center;
   font-size: 22rpx;
   color: #BBBBBB;
-  margin-top: 30rpx;
+  margin-top: auto;
+  padding-top: 24rpx;
+  line-height: 1.6;
 }
-
-.agreement .link {
-  color: #00B96B;
-}
+.agreement .link { color: #4BADD8; }

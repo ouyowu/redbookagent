@@ -9,14 +9,15 @@ const browser = await chromium.launch({
 });
 
 const pages = [
-  { file: 'home-new.html',     out: 'home-new.png',     w: 500,  h: 900  },
-  { file: 'login-new.html',    out: 'login-new.png',    w: 500,  h: 900  },
-  { file: 'messages-new.html', out: 'messages-new.png', w: 500,  h: 900  },
+  { file: 'login-new.html',    out: 'login-new.png'    },
+  { file: 'home-new.html',     out: 'home-new.png'     },
+  { file: 'messages-new.html', out: 'messages-new.png' },
+  { file: 'profile-new.html',  out: 'profile-new.png'  },
 ];
 
 for (const p of pages) {
   const page = await browser.newPage();
-  await page.setViewportSize({ width: p.w, height: p.h });
+  await page.setViewportSize({ width: 500, height: 900 });
   await page.goto(`file://${path.join(__dirname, p.file)}`);
   await page.waitForTimeout(3500);
   await page.locator('.phone').screenshot({ path: path.join(__dirname, 'screenshots', p.out) });

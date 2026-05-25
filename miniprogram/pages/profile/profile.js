@@ -2,6 +2,8 @@ const app = getApp();
 const api = require('../../utils/api');
 const { getLevelInfo, getCreditLevel, formatDate, showToast } = require('../../utils/util');
 
+const CARD_COLORS = ['c-lavender', 'c-mint', 'c-peach', 'c-yellow', 'c-blue'];
+
 Page({
   data: {
     userInfo: null,
@@ -35,7 +37,11 @@ Page({
         api.getCreditLogs(this.data.userInfo._id),
       ]);
       this.setData({
-        myGames: gamesResult.list.map(g => ({ ...g, formattedDate: formatDate(g.date) })),
+        myGames: gamesResult.list.map((g, i) => ({
+          ...g,
+          formattedDate: formatDate(g.date),
+          cardColor: CARD_COLORS[i % CARD_COLORS.length],
+        })),
         creditLogs: logs,
       });
     } catch (err) {

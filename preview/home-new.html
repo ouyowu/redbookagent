@@ -4,157 +4,90 @@
 <meta charset="UTF-8">
 <title>首页 — 匹克约球</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;0,9..40,900&display=swap">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif; background: #1C3A4A; display: flex; gap: 40px; padding: 40px; justify-content: center; align-items: flex-start; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #1A2A35; display: flex; gap: 40px; padding: 40px; justify-content: center; }
 
 .phone {
-  width: 375px;
-  height: 812px;
-  background: #EEF6FC;
-  border-radius: 44px;
-  overflow: hidden;
+  width: 375px; height: 812px; background: #F5F6FF;
+  border-radius: 44px; overflow: hidden;
   box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+  display: flex; flex-direction: column;
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
-
-.page-label {
-  position: absolute;
-  bottom: -32px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255,255,255,0.4);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-/* Status bar */
-.status-bar {
-  height: 44px;
-  background: transparent;
-  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 100%);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-.sb-time { font-size: 14px; font-weight: 700; color: #FFF; font-family: 'DM Sans', sans-serif; }
-.sb-icons { font-size: 11px; color: #FFF; display: flex; gap: 4px; align-items: center; font-family: 'DM Sans', sans-serif; }
 
 /* Header */
 .home-hd {
-  background: linear-gradient(160deg, #6CCFF0 0%, #4BADD8 100%);
-  padding: 0 14px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background: linear-gradient(160deg, #6CCFF0, #4BADD8);
+  padding: 44px 16px 14px;
+  display: flex; align-items: flex-start; justify-content: space-between;
   flex-shrink: 0;
 }
-.hd-logo { display: flex; align-items: center; gap: 5px; }
-.hd-logo-icon { font-size: 17px; }
-.hd-logo-text { font-size: 18px; font-weight: 900; color: #FFF; letter-spacing: 1px; text-shadow: 0 1px 4px rgba(0,0,0,0.15); }
-.hd-right { display: flex; align-items: center; gap: 6px; }
-.hd-btn {
-  width: 32px; height: 32px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-}
-.hd-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.6);
-  overflow: hidden;
-}
-.hd-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Feed Tabs */
-.feed-tabs {
-  background: #FFF;
-  display: flex;
-  padding: 6px 10px 8px;
-  gap: 4px;
-  border-bottom: 1px solid #ECEEF8;
-  flex-shrink: 0;
-}
-.ftab {
-  padding: 5px 14px;
-  border-radius: 15px;
-  font-size: 12px;
-  color: #8B8FA8;
-  font-weight: 500;
-}
-.ftab.active { background: #4BADD8; color: #FFF; font-weight: 700; }
+.hd-greeting { flex: 1; }
+.hd-hi { display: block; font-size: 20px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
+.hd-sub { display: block; font-size: 12px; color: rgba(255,255,255,0.8); }
+.hd-actions { display: flex; align-items: center; gap: 7px; }
+.hd-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.hd-av { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.6); overflow: hidden; }
+.hd-av img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Scroll */
-.home-scroll { flex: 1; overflow-y: auto; }
-.home-scroll::-webkit-scrollbar { display: none; }
+.scroll { flex: 1; overflow-y: auto; }
+.scroll::-webkit-scrollbar { display: none; }
 
-/* Reels */
-.reels-section {
-  background: #FFF;
-  border-bottom: 1px solid #ECEEF8;
-  padding: 8px 8px 10px;
-  display: flex;
-  gap: 7px;
-  overflow-x: auto;
-}
-.reels-section::-webkit-scrollbar { display: none; }
+/* Page title */
+.pt-block { padding: 16px 14px 6px; }
+.pt-row { display: flex; align-items: baseline; gap: 2px; margin-bottom: 3px; }
+.pt-main { font-size: 28px; font-weight: 900; color: #0D0D1A; }
+.pt-count { font-size: 24px; font-weight: 900; color: #4BADD8; }
+.pt-sub { font-size: 12px; color: #888; }
 
-.reel-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
-.reel-thumb-wrap { width: 40px; height: 56px; border-radius: 8px; overflow: hidden; position: relative; border: 1.5px solid transparent; }
-.reel-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.reel-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55)); }
-.reel-lvl { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 7px; font-weight: 900; color: #FFF; padding: 1px 4px; border-radius: 4px; white-space: nowrap; }
-.reel-name { font-size: 10px; color: #555; text-align: center; max-width: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Filters */
+.filters { display: flex; gap: 6px; padding: 6px 12px 10px; overflow-x: auto; }
+.filters::-webkit-scrollbar { display: none; }
+.fpill { white-space: nowrap; padding: 6px 14px; border-radius: 16px; font-size: 12px; color: #666; border: 1px solid #DDE0F5; background: #FFF; }
+.fpill.on { background: #0D0D1A; color: #FFF; border-color: #0D0D1A; font-weight: 700; }
 
-.reel-add-thumb { width: 40px; height: 56px; border-radius: 8px; background: linear-gradient(135deg, #E0F3FB, #C8EAFA); border: 1.5px dashed #4BADD8; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #4BADD8; font-weight: 300; }
+/* Game cards */
+.game-card { margin: 0 10px 10px; border-radius: 14px; padding: 14px; }
+.gc-lavender { background: #E4E0FF; }
+.gc-mint     { background: #C8F7EE; }
+.gc-peach    { background: #FFE4D4; }
 
-/* Post Prompt */
-.post-prompt { background: #FFF; margin: 8px 8px 0; border-radius: 8px; padding: 8px 10px; display: flex; align-items: center; gap: 7px; box-shadow: 0 1px 6px rgba(0,60,100,0.06); border: 1px solid #E8F4FC; }
-.pp-avatar { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; overflow: hidden; }
-.pp-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.pp-fake { flex: 1; font-size: 12px; color: #C0C4D8; }
-.pp-actions { display: flex; gap: 4px; border-left: 1px solid #ECEEF8; padding-left: 7px; font-size: 14px; }
+.gc-top { display: flex; align-items: center; gap: 6px; margin-bottom: 9px; }
+.gc-level { font-size: 10px; font-weight: 900; color: #FFF; padding: 2px 7px; border-radius: 8px; flex-shrink: 0; }
+.gc-status { font-size: 11px; color: #555; flex: 1; }
+.gc-cta { background: #0D0D1A; color: #FFF; font-size: 11px; font-weight: 700; padding: 5px 13px; border-radius: 11px; flex-shrink: 0; }
 
-/* Post Card */
-.post-card { background: #FFF; margin: 8px 8px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 8px rgba(0,60,100,0.07); }
-.pcard-hd { display: flex; align-items: center; gap: 7px; padding: 8px 10px 6px; }
-.pcard-av-wrap { position: relative; flex-shrink: 0; }
-.pcard-avatar { width: 36px; height: 36px; border-radius: 50%; }
-.pcard-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.pcard-verified { position: absolute; bottom: 0; right: -1px; width: 12px; height: 12px; background: #00B96B; border-radius: 50%; border: 1px solid #FFF; color: #FFF; font-size: 7px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.pcard-info { flex: 1; }
-.pcard-name-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
-.pcard-name { font-size: 13px; font-weight: 700; color: #1A1A2E; }
-.pcard-level { font-size: 9px; font-weight: 800; color: #FFF; padding: 1px 5px; border-radius: 5px; }
-.pcard-time { font-size: 11px; color: #8B8FA8; }
-.pcard-join { background: linear-gradient(135deg, #4BADD8, #2E94C8); color: #FFF; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 10px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(75,173,216,0.35); }
+.gc-title { display: block; font-size: 20px; font-weight: 900; color: #0D0D1A; margin-bottom: 8px; line-height: 1.25; }
 
-.pcard-cover { width: 100%; height: 100px; position: relative; }
-.pcard-cover-inner { position: absolute; inset: 0; background: rgba(0,0,0,0.12); padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; }
-.pcc-top { display: flex; align-items: flex-start; justify-content: space-between; }
-.pcc-title { font-size: 14px; font-weight: 800; color: #FFF; flex: 1; margin-right: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); line-height: 1.3; }
-.pcc-chip { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; white-space: nowrap; background: rgba(0,200,107,0.3); color: #7FFFD4; }
-.pcc-bottom { display: flex; align-items: flex-end; justify-content: space-between; }
-.pcc-fee { font-size: 15px; font-weight: 900; color: #FFE566; font-family: 'DM Sans', sans-serif; }
-.pcc-tags { display: flex; gap: 4px; }
-.pcc-tag { background: rgba(255,255,255,0.2); color: #FFF; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 6px; }
+.gc-meta { display: flex; flex-direction: column; gap: 3px; margin-bottom: 12px; }
+.gc-meta span { font-size: 11px; color: #555; }
 
-.pcard-caption { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 2px; }
-.pcard-cap-text { font-size: 11px; color: #555; flex: 1; }
-.pcard-spots { background: #E0F5FF; color: #4BADD8; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 7px; margin-left: 4px; }
+.gc-bottom { display: flex; align-items: center; justify-content: space-between; }
+.gc-creator { display: flex; align-items: center; gap: 5px; }
+.gc-cav { width: 22px; height: 22px; border-radius: 50%; }
+.gc-cav img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.gc-cname { font-size: 11px; color: #555; }
+.gc-price { font-size: 20px; font-weight: 900; color: #0D0D1A; font-family: 'DM Sans', sans-serif; }
+.gc-price-u { font-size: 11px; font-weight: 500; }
 
-.pcard-eng { display: flex; align-items: center; padding: 7px 10px 8px; border-top: 1px solid #F0F7FB; }
-.peng-item { display: flex; align-items: center; gap: 3px; margin-right: 16px; }
-.peng-bookmark { margin-left: auto; }
-.peng-icon { font-size: 14px; }
-.peng-val { font-size: 11px; color: #8B8FA8; }
+/* Players section */
+.section-hd { display: flex; align-items: baseline; justify-content: space-between; padding: 6px 14px 8px; }
+.sh-left { display: flex; align-items: baseline; gap: 2px; }
+.sh-title { font-size: 22px; font-weight: 900; color: #0D0D1A; }
+.sh-count { font-size: 18px; font-weight: 900; color: #4BADD8; }
+.sh-more { font-size: 12px; color: #4BADD8; }
+
+.players { display: flex; gap: 10px; padding: 0 10px 20px; overflow-x: auto; }
+.players::-webkit-scrollbar { display: none; }
+.player-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.pi-wrap { position: relative; width: 48px; height: 48px; }
+.pi-av { width: 48px; height: 48px; border-radius: 50%; border: 2px solid #FFF; }
+.pi-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.pi-badge { position: absolute; bottom: -2px; right: -2px; font-size: 8px; font-weight: 900; color: #FFF; padding: 1px 4px; border-radius: 6px; border: 1.5px solid #FFF; }
+.pi-name { font-size: 10px; color: #555; max-width: 48px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Tab bar */
 .tab-bar { height: 56px; background: #FFF; border-top: 1px solid #ECEEF8; display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; padding-bottom: 4px; }
@@ -162,188 +95,152 @@ body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans
 .tb-icon { font-size: 20px; }
 .tb-label { font-size: 10px; color: #8B8FA8; }
 .tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
-.tb-center-btn { width: 44px; height: 44px; background: linear-gradient(135deg, #4BADD8, #2E94C8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; font-weight: 300; box-shadow: 0 4px 14px rgba(75,173,216,0.45); }
+.tb-fab { width: 44px; height: 44px; background: #0D0D1A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #FFF; font-weight: 300; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
 </style>
 </head>
 <body>
-
 <div class="phone">
-  <div class="status-bar">
-    <span class="sb-time">9:41</span>
-    <div class="sb-icons"><span>●●●</span><span>WiFi</span><span>🔋</span></div>
-  </div>
-
   <div class="home-hd">
-    <div class="hd-logo">
-      <span class="hd-logo-icon">🏸</span>
-      <span class="hd-logo-text">匹克约球</span>
+    <div class="hd-greeting">
+      <span class="hd-hi">嗨，李明！👋</span>
+      <span class="hd-sub">今天有 5 场球局等你</span>
     </div>
-    <div class="hd-right">
-      <div class="hd-btn">🔔</div>
-      <div class="hd-btn">🔍</div>
-      <div class="hd-avatar"><img src="https://placehold.co/32x32/4CAF50/FFF?text=李"></div>
+    <div class="hd-actions">
+      <div class="hd-icon">🔔</div>
+      <div class="hd-av"><img src="https://placehold.co/32x32/4CAF50/FFF?text=李"></div>
     </div>
   </div>
 
-  <div class="feed-tabs">
-    <div class="ftab active">推荐</div>
-    <div class="ftab">最新</div>
-    <div class="ftab">附近</div>
-  </div>
+  <div class="scroll">
+    <div class="pt-block">
+      <div class="pt-row">
+        <span class="pt-main">今日球局</span>
+        <span class="pt-count">(5)</span>
+      </div>
+      <span class="pt-sub">找到适合你的球局</span>
+    </div>
 
-  <div class="home-scroll">
-    <div class="reels-section">
-      <div class="reel-item">
-        <div class="reel-add-thumb">+</div>
-        <span class="reel-name">发球局</span>
+    <div class="filters">
+      <div class="fpill on">推荐</div>
+      <div class="fpill">最新</div>
+      <div class="fpill">附近</div>
+      <div class="fpill">高手局</div>
+    </div>
+
+    <!-- Card 1 -->
+    <div class="game-card gc-lavender">
+      <div class="gc-top">
+        <div class="gc-level" style="background:#2196F3">P3~P4</div>
+        <span class="gc-status">招募中 · 3/4人</span>
+        <div class="gc-cta">加入 →</div>
       </div>
-      <div class="reel-item">
-        <div class="reel-thumb-wrap" style="border-color:#E91E63">
-          <img src="https://placehold.co/40x56/E91E63/FFF?text=王">
-          <div class="reel-overlay"></div>
-          <div class="reel-lvl" style="background:#2196F3">P3</div>
-        </div>
-        <span class="reel-name">网球王子</span>
+      <span class="gc-title">周末友谊赛·四人单打</span>
+      <div class="gc-meta">
+        <span>📍 朝阳体育馆</span>
+        <span>📅 5月28日 周三 09:00</span>
       </div>
-      <div class="reel-item">
-        <div class="reel-thumb-wrap" style="border-color:#2196F3">
-          <img src="https://placehold.co/40x56/1565C0/FFF?text=张">
-          <div class="reel-overlay"></div>
-          <div class="reel-lvl" style="background:#4CAF50">P2</div>
+      <div class="gc-bottom">
+        <div class="gc-creator">
+          <div class="gc-cav"><img src="https://placehold.co/22x22/E91E63/FFF?text=王"></div>
+          <span class="gc-cname">网球王子</span>
         </div>
-        <span class="reel-name">蓝鸟张飞</span>
-      </div>
-      <div class="reel-item">
-        <div class="reel-thumb-wrap" style="border-color:#FF9800">
-          <img src="https://placehold.co/40x56/FF9800/FFF?text=赵">
-          <div class="reel-overlay"></div>
-          <div class="reel-lvl" style="background:#FF9800">P5</div>
-        </div>
-        <span class="reel-name">橙子赵四</span>
-      </div>
-      <div class="reel-item">
-        <div class="reel-thumb-wrap" style="border-color:#9C27B0">
-          <img src="https://placehold.co/40x56/9C27B0/FFF?text=陈">
-          <div class="reel-overlay"></div>
-          <div class="reel-lvl" style="background:#9C27B0">P4</div>
-        </div>
-        <span class="reel-name">快手小陈</span>
-      </div>
-      <div class="reel-item">
-        <div class="reel-thumb-wrap" style="border-color:#F44336">
-          <img src="https://placehold.co/40x56/C62828/FFF?text=林">
-          <div class="reel-overlay"></div>
-          <div class="reel-lvl" style="background:#F44336">P6</div>
-        </div>
-        <span class="reel-name">球王小林</span>
+        <span class="gc-price">¥30<span class="gc-price-u">/人</span></span>
       </div>
     </div>
 
-    <div class="post-prompt">
-      <div class="pp-avatar"><img src="https://placehold.co/30x30/4CAF50/FFF?text=李"></div>
-      <div class="pp-fake">发布球局或约球动态…</div>
-      <div class="pp-actions"><span>🏸</span><span>📅</span></div>
-    </div>
-
-    <div class="post-card">
-      <div class="pcard-hd">
-        <div class="pcard-av-wrap">
-          <div class="pcard-avatar"><img src="https://placehold.co/36x36/E91E63/FFF?text=王"></div>
-          <div class="pcard-verified">✓</div>
-        </div>
-        <div class="pcard-info">
-          <div class="pcard-name-row">
-            <span class="pcard-name">网球王子</span>
-            <span class="pcard-level" style="background:#2196F3">P3</span>
-          </div>
-          <span class="pcard-time">5月28日 周三 · 朝阳</span>
-        </div>
-        <div class="pcard-join">加入</div>
+    <!-- Card 2 -->
+    <div class="game-card gc-mint">
+      <div class="gc-top">
+        <div class="gc-level" style="background:#FF9800">P4~P5</div>
+        <span class="gc-status">招募中 · 2/4人</span>
+        <div class="gc-cta">加入 →</div>
       </div>
-      <div class="pcard-cover" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
-        <div class="pcard-cover-inner">
-          <div class="pcc-top">
-            <span class="pcc-title">周末友谊赛 · 四人单打</span>
-            <span class="pcc-chip">招募中</span>
-          </div>
-          <div class="pcc-bottom">
-            <span class="pcc-fee">¥30<span style="font-size:9px;font-weight:500">/人</span></span>
-            <div class="pcc-tags"><span class="pcc-tag">P3-P4</span><span class="pcc-tag">09:00</span></div>
-          </div>
+      <span class="gc-title">高手切磋·混合双打</span>
+      <div class="gc-meta">
+        <span>📍 国贸体育馆</span>
+        <span>📅 5月29日 周四 19:00</span>
+      </div>
+      <div class="gc-bottom">
+        <div class="gc-creator">
+          <div class="gc-cav"><img src="https://placehold.co/22x22/FF9800/FFF?text=赵"></div>
+          <span class="gc-cname">橙子赵四</span>
         </div>
-      </div>
-      <div class="pcard-caption">
-        <span class="pcard-cap-text">📅 5月28日 · 📍 朝阳体育馆</span>
-        <span class="pcard-spots">还差1人</span>
-      </div>
-      <div class="pcard-eng">
-        <div class="peng-item"><span class="peng-icon">👥</span><span class="peng-val">3/4人</span></div>
-        <div class="peng-item"><span class="peng-icon">💬</span><span class="peng-val">详情</span></div>
-        <div class="peng-item"><span class="peng-icon">↗</span><span class="peng-val">分享</span></div>
-        <div class="peng-bookmark"><span class="peng-icon">🔖</span></div>
+        <span class="gc-price">¥50<span class="gc-price-u">/人</span></span>
       </div>
     </div>
 
-    <div class="post-card" style="margin-bottom:8px">
-      <div class="pcard-hd">
-        <div class="pcard-av-wrap">
-          <div class="pcard-avatar"><img src="https://placehold.co/36x36/FF9800/FFF?text=赵"></div>
-          <div class="pcard-verified">✓</div>
-        </div>
-        <div class="pcard-info">
-          <div class="pcard-name-row">
-            <span class="pcard-name">橙子赵四</span>
-            <span class="pcard-level" style="background:#FF9800">P5</span>
-          </div>
-          <span class="pcard-time">5月29日 周四 · 东城</span>
-        </div>
-        <div class="pcard-join">加入</div>
+    <!-- Card 3 -->
+    <div class="game-card gc-peach">
+      <div class="gc-top">
+        <div class="gc-level" style="background:#9C27B0">P5~P6</div>
+        <span class="gc-status">招募中 · 1/4人</span>
+        <div class="gc-cta">加入 →</div>
       </div>
-      <div class="pcard-cover" style="background:linear-gradient(135deg,#43E97B,#38A169)">
-        <div class="pcard-cover-inner">
-          <div class="pcc-top">
-            <span class="pcc-title">高手切磋 · 混合双打</span>
-            <span class="pcc-chip">招募中</span>
-          </div>
-          <div class="pcc-bottom">
-            <span class="pcc-fee">¥50<span style="font-size:9px;font-weight:500">/人</span></span>
-            <div class="pcc-tags"><span class="pcc-tag">P4-P5</span><span class="pcc-tag">19:00</span></div>
-          </div>
+      <span class="gc-title">精英挑战赛·大师局</span>
+      <div class="gc-meta">
+        <span>📍 望京球馆</span>
+        <span>📅 5月30日 周五 20:00</span>
+      </div>
+      <div class="gc-bottom">
+        <div class="gc-creator">
+          <div class="gc-cav"><img src="https://placehold.co/22x22/9C27B0/FFF?text=陈"></div>
+          <span class="gc-cname">快手小陈</span>
         </div>
+        <span class="gc-price">¥80<span class="gc-price-u">/人</span></span>
       </div>
-      <div class="pcard-caption">
-        <span class="pcard-cap-text">📅 5月29日 · 📍 国贸体育馆</span>
-        <span class="pcard-spots">还差2人</span>
+    </div>
+
+    <!-- Players -->
+    <div class="section-hd">
+      <div class="sh-left"><span class="sh-title">活跃球友</span><span class="sh-count">(6)</span></div>
+      <span class="sh-more">全部 ›</span>
+    </div>
+    <div class="players">
+      <div class="player-item">
+        <div class="pi-wrap">
+          <div class="pi-av"><img src="https://placehold.co/48x48/E91E63/FFF?text=王"></div>
+          <div class="pi-badge" style="background:#2196F3">P3</div>
+        </div>
+        <span class="pi-name">网球王子</span>
       </div>
-      <div class="pcard-eng">
-        <div class="peng-item"><span class="peng-icon">👥</span><span class="peng-val">2/4人</span></div>
-        <div class="peng-item"><span class="peng-icon">💬</span><span class="peng-val">详情</span></div>
-        <div class="peng-item"><span class="peng-icon">↗</span><span class="peng-val">分享</span></div>
-        <div class="peng-bookmark"><span class="peng-icon">🔖</span></div>
+      <div class="player-item">
+        <div class="pi-wrap">
+          <div class="pi-av"><img src="https://placehold.co/48x48/9C27B0/FFF?text=陈"></div>
+          <div class="pi-badge" style="background:#9C27B0">P4</div>
+        </div>
+        <span class="pi-name">快手小陈</span>
+      </div>
+      <div class="player-item">
+        <div class="pi-wrap">
+          <div class="pi-av"><img src="https://placehold.co/48x48/FF9800/FFF?text=赵"></div>
+          <div class="pi-badge" style="background:#FF9800">P5</div>
+        </div>
+        <span class="pi-name">橙子赵四</span>
+      </div>
+      <div class="player-item">
+        <div class="pi-wrap">
+          <div class="pi-av"><img src="https://placehold.co/48x48/F44336/FFF?text=林"></div>
+          <div class="pi-badge" style="background:#F44336">P6</div>
+        </div>
+        <span class="pi-name">球王小林</span>
+      </div>
+      <div class="player-item">
+        <div class="pi-wrap">
+          <div class="pi-av"><img src="https://placehold.co/48x48/009688/FFF?text=刘"></div>
+          <div class="pi-badge" style="background:#4CAF50">P2</div>
+        </div>
+        <span class="pi-name">刘小侠</span>
       </div>
     </div>
   </div>
 
   <div class="tab-bar">
-    <div class="tb-item active">
-      <span class="tb-icon">🏠</span>
-      <span class="tb-label" style="color:#4BADD8">首页</span>
-    </div>
-    <div class="tb-item">
-      <span class="tb-icon">🏸</span>
-      <span class="tb-label">球局</span>
-    </div>
-    <div class="tb-center-btn">+</div>
-    <div class="tb-item">
-      <span class="tb-icon">💬</span>
-      <span class="tb-label">消息</span>
-    </div>
-    <div class="tb-item">
-      <span class="tb-icon">👤</span>
-      <span class="tb-label">我的</span>
-    </div>
+    <div class="tb-item active"><span class="tb-icon">🏠</span><span class="tb-label" style="color:#4BADD8">首页</span></div>
+    <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>
+    <div class="tb-fab">+</div>
+    <div class="tb-item"><span class="tb-icon">💬</span><span class="tb-label">消息</span></div>
+    <div class="tb-item"><span class="tb-icon">👤</span><span class="tb-label">我的</span></div>
   </div>
 </div>
-
 </body>
 </html>

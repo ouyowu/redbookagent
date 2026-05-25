@@ -1,177 +1,116 @@
 <view class="home-page">
 
-  <!-- ── 顶部 Header ── -->
+  <!-- 顶部 Header -->
   <view class="home-hd">
-    <view class="hd-logo">
-      <text class="hd-logo-icon">🏸</text>
-      <text class="hd-logo-text">匹克约球</text>
+    <view class="hd-greeting">
+      <text class="hd-hi">嗨，{{userInfo.nickName}}！👋</text>
+      <text class="hd-sub">今天有 {{nearbyGames.length}} 场球局等你</text>
     </view>
-    <view class="hd-right">
-      <view class="hd-btn" bindtap="onGoMessages">🔔</view>
-      <view class="hd-btn" bindtap="onGoFriends">🔍</view>
+    <view class="hd-actions">
+      <view class="hd-icon-btn" bindtap="onGoMessages">🔔</view>
       <image class="hd-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" bindtap="onProfileTap"/>
     </view>
   </view>
 
-  <!-- ── Feed 类型 Tab ── -->
-  <view class="feed-tabs">
-    <view
-      class="ftab {{feedTab === 'recommend' ? 'ftab-active' : ''}}"
-      bindtap="onFeedTab"
-      data-tab="recommend"
-    >推荐</view>
-    <view
-      class="ftab {{feedTab === 'latest' ? 'ftab-active' : ''}}"
-      bindtap="onFeedTab"
-      data-tab="latest"
-    >最新</view>
-    <view
-      class="ftab {{feedTab === 'nearby' ? 'ftab-active' : ''}}"
-      bindtap="onFeedTab"
-      data-tab="nearby"
-    >附近</view>
-  </view>
-
   <scroll-view scroll-y class="home-scroll" enable-flex>
 
-    <!-- ── Reels：球友照片随机展示 ── -->
-    <view class="reels-section">
-      <scroll-view scroll-x class="reels-scroll">
-
-        <!-- 发布球局 -->
-        <view class="reel-add-wrap" bindtap="onCreateGame">
-          <view class="reel-add-thumb">
-            <text class="reel-add-plus">+</text>
-          </view>
-          <text class="reel-name">发球局</text>
-        </view>
-
-        <!-- 球友 Reel 卡片 -->
-        <view
-          wx:for="{{nearbyPlayers}}"
-          wx:key="_id"
-          class="reel-item"
-          bindtap="onPlayerTap"
-          data-id="{{item._id}}"
-        >
-          <view class="reel-thumb-wrap" style="border-color:{{item.levelInfo.color}}">
-            <image class="reel-thumb" src="{{item.avatarUrl}}" mode="aspectFill"/>
-            <view class="reel-overlay"></view>
-            <view class="reel-bottom">
-              <view class="reel-level" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
-            </view>
-          </view>
-          <text class="reel-name">{{item.nickName}}</text>
-        </view>
-
-      </scroll-view>
-    </view>
-
-    <!-- ── 发布提示栏 ── -->
-    <view class="post-prompt" bindtap="onCreateGame">
-      <image class="pp-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
-      <view class="pp-input-fake">
-        <text class="pp-placeholder">发布球局或约球动态…</text>
+    <!-- 大标题 + 筛选 -->
+    <view class="page-title-block">
+      <view class="pt-row">
+        <text class="pt-main">今日球局</text>
+        <text class="pt-count">({{nearbyGames.length}})</text>
       </view>
-      <view class="pp-actions">
-        <view class="pp-action-item">🏸</view>
-        <view class="pp-action-item">📅</view>
-      </view>
+      <text class="pt-sub">找到适合你的球局</text>
     </view>
 
-    <!-- ── 加载中 ── -->
-    <view wx:if="{{loading}}" class="loading-center">
-      <text class="color-gray">加载中...</text>
+    <!-- 筛选 pills -->
+    <scroll-view scroll-x class="filter-strip">
+      <view class="fpill {{feedTab==='recommend'?'fpill-on':''}}" bindtap="onFeedTab" data-tab="recommend">推荐</view>
+      <view class="fpill {{feedTab==='latest'?'fpill-on':''}}" bindtap="onFeedTab" data-tab="latest">最新</view>
+      <view class="fpill {{feedTab==='nearby'?'fpill-on':''}}" bindtap="onFeedTab" data-tab="nearby">附近</view>
+      <view class="fpill {{feedTab==='pro'?'fpill-on':''}}" bindtap="onFeedTab" data-tab="pro">高手局</view>
+    </scroll-view>
+
+    <!-- 加载 / 空状态 -->
+    <view wx:if="{{loading}}" class="pg-center">
+      <text class="pg-tip">加载中...</text>
+    </view>
+    <view wx:elif="{{nearbyGames.length===0}}" class="pg-center">
+      <text class="pg-tip">附近暂无开放球局 🏸</text>
     </view>
 
-    <!-- ── 空状态 ── -->
-    <view wx:elif="{{nearbyGames.length === 0}}" class="empty-state">
-      <text class="empty-icon">🏸</text>
-      <text class="empty-text">附近暂无开放球局</text>
-    </view>
-
-    <!-- ── 球局 Feed ── -->
-    <view
-      wx:else
-      wx:for="{{nearbyGames}}"
-      wx:key="_id"
-      class="post-card"
-    >
-      <!-- 帖子头部：发布者信息 + 加入按钮 -->
-      <view class="pcard-hd">
-        <view class="pcard-av-wrap" bindtap="onPlayerTap" data-id="{{item.creator._id}}">
-          <image class="pcard-avatar" src="{{item.creator.avatarUrl}}" mode="aspectFill"/>
-          <view wx:if="{{item.creator.levelVerified}}" class="pcard-dot-verified">✓</view>
-        </view>
-        <view class="pcard-meta" bindtap="onPlayerTap" data-id="{{item.creator._id}}">
-          <view class="pcard-name-row">
-            <text class="pcard-name">{{item.creator.nickName}}</text>
-            <view class="pcard-level-tag" style="background:{{item.creator.levelInfo.color}}">{{item.creator.level}}</view>
-          </view>
-          <text class="pcard-time">{{item.formattedDate}} · {{item.district}}</text>
-        </view>
-        <view
-          class="pcard-join {{item.spotsLeft > 0 ? '' : 'pcard-join-full'}}"
-          catchtap="onQuickJoin"
-          data-id="{{item._id}}"
-          style="opacity:{{joiningId === item._id ? 0.6 : 1}}"
-        >{{item.spotsLeft > 0 ? '加入' : '已满'}}</view>
-      </view>
-
-      <!-- 封面渐变图 -->
+    <!-- 球局卡片 -->
+    <view wx:else>
       <view
-        class="pcard-cover"
-        style="background:{{item.cardGradient}}"
+        wx:for="{{nearbyGames}}"
+        wx:key="_id"
+        class="game-card {{item.cardColor}}"
         bindtap="onGameTap"
         data-id="{{item._id}}"
       >
-        <view class="pcard-cover-inner">
-          <view class="pcc-top">
-            <text class="pcc-title">{{item.title}}</text>
-            <view class="pcc-status-chip {{item.status}}">
-              {{item.status === 'OPEN' ? '招募中' : item.status === 'FULL' ? '已满员' : '已结束'}}
-            </view>
+        <!-- 顶部：等级标签 + 状态 + 加入按钮 -->
+        <view class="gc-top">
+          <view class="gc-level" style="background:{{item.creator.levelInfo.color}}">
+            {{item.minLevel}}~{{item.maxLevel}}
           </view>
-          <view class="pcc-bottom">
-            <text class="pcc-fee">¥{{item.fee}}<text class="pcc-fee-unit">/人</text></text>
-            <view class="pcc-tags">
-              <view class="pcc-tag">{{item.minLevel}}~{{item.maxLevel}}</view>
-              <view class="pcc-tag">{{item.startTime}}</view>
-            </view>
+          <text class="gc-status">{{item.status==='OPEN'?'招募中':'已满员'}} · {{item.currentPlayers}}/{{item.maxPlayers}}人</text>
+          <view
+            class="gc-cta {{item.spotsLeft>0?'':'gc-cta-full'}}"
+            catchtap="onQuickJoin"
+            data-id="{{item._id}}"
+            style="opacity:{{joiningId===item._id?0.5:1}}"
+          >{{item.spotsLeft>0?'加入 →':'已满'}}</view>
+        </view>
+
+        <!-- 大标题 -->
+        <text class="gc-title">{{item.title}}</text>
+
+        <!-- 详情行 -->
+        <view class="gc-meta">
+          <text class="gc-meta-item">📍 {{item.venue}}</text>
+          <text class="gc-meta-item">📅 {{item.formattedDate}} {{item.startTime}}</text>
+        </view>
+
+        <!-- 底部：创建者 + 价格 -->
+        <view class="gc-bottom">
+          <view class="gc-creator">
+            <image class="gc-cr-av" src="{{item.creator.avatarUrl}}" mode="aspectFill"/>
+            <text class="gc-cr-name">{{item.creator.nickName}}</text>
           </view>
-        </view>
-      </view>
-
-      <!-- 文字说明 -->
-      <view class="pcard-caption">
-        <text class="pcard-caption-text">📅 {{item.formattedDate}} · 📍 {{item.venue}}</text>
-        <view wx:if="{{item.spotsLeft > 0}}" class="pcard-spots">还差{{item.spotsLeft}}人</view>
-      </view>
-
-      <!-- 互动栏 -->
-      <view class="pcard-eng">
-        <view class="peng-item" bindtap="onGameTap" data-id="{{item._id}}">
-          <text class="peng-icon">👥</text>
-          <text class="peng-val">{{item.currentPlayers}}/{{item.maxPlayers}}人</text>
-        </view>
-        <view class="peng-item" bindtap="onGameTap" data-id="{{item._id}}">
-          <text class="peng-icon">💬</text>
-          <text class="peng-val">详情</text>
-        </view>
-        <view class="peng-item" bindtap="onGameTap" data-id="{{item._id}}">
-          <text class="peng-icon">↗</text>
-          <text class="peng-val">分享</text>
-        </view>
-        <view class="peng-bookmark">
-          <text class="peng-icon">🔖</text>
+          <text class="gc-price">¥{{item.fee}}<text class="gc-price-u">/人</text></text>
         </view>
       </view>
     </view>
+
+    <!-- 活跃球友 section -->
+    <view class="section-hd">
+      <view class="sh-left">
+        <text class="sh-title">活跃球友</text>
+        <text class="sh-count">({{nearbyPlayers.length}})</text>
+      </view>
+      <view class="sh-more" bindtap="onGoFriends">全部 ›</view>
+    </view>
+
+    <scroll-view scroll-x class="players-strip">
+      <view
+        wx:for="{{nearbyPlayers}}"
+        wx:key="_id"
+        class="player-item"
+        bindtap="onPlayerTap"
+        data-id="{{item._id}}"
+      >
+        <view class="pi-av-wrap">
+          <image class="pi-av" src="{{item.avatarUrl}}" mode="aspectFill"/>
+          <view class="pi-badge" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+        </view>
+        <text class="pi-name">{{item.nickName}}</text>
+      </view>
+    </scroll-view>
 
     <view class="safe-bottom"></view>
   </scroll-view>
 
-  <!-- FAB -->
+  <!-- 发布 FAB -->
   <view class="fab" bindtap="onCreateGame">
     <text class="fab-plus">+</text>
   </view>

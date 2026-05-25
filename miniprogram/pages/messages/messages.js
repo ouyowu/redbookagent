@@ -1,17 +1,22 @@
-const app = getApp();
 const api = require('../../utils/api');
 const { showToast } = require('../../utils/util');
-const { mockUsers } = require('../../utils/mock');
+
+const MSG_COLORS = ['c-lavender', 'c-mint', 'c-peach', 'c-yellow', 'c-blue'];
+
+const WEEK_DAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
 Page({
   data: {
     unreadMessages: [],
     readMessages: [],
-    activeUsers: [],
+    dateStr: '',
     loading: false,
   },
 
   onShow() {
+    const d = new Date();
+    const dateStr = `${d.getMonth() + 1}月${d.getDate()}日 ${WEEK_DAYS[d.getDay()]}`;
+    this.setData({ dateStr });
     this.loadMessages();
   },
 
@@ -20,30 +25,15 @@ Page({
     try {
       const messages = await api.getMessages();
 
-      const unreadMessages = messages.filter(m => !m.isRead);
+      const unreadMessages = messages
+        .filter(m => !m.isRead)
+        .map((m, i) => ({ ...m, cardColor: MSG_COLORS[i % MSG_COLORS.length] }));
+
       const readMessages = messages.filter(m => m.isRead);
 
-      // 取有 fromUser 的消息发送者去重作为活跃用户，补充固定球友
-      const seenIds = new Set();
-      const activeUsers = [];
-      messages.forEach(m => {
-        if (m.fromUser && !seenIds.has(m.fromUser._id)) {
-          seenIds.add(m.fromUser._id);
-          activeUsers.push(m.fromUser);
-        }
-      });
-      // 补充更多活跃球友
-      mockUsers.slice(0, 6).forEach(u => {
-        if (!seenIds.has(u._id)) {
-          seenIds.add(u._id);
-          activeUsers.push(u);
-        }
-      });
+      this.setData({ unreadMessages, readMessages });
 
-      const unreadCount = unreadMessages.length;
-      this.setData({ unreadMessages, readMessages, activeUsers });
-
-      if (unreadCount > 0) {
+      if (unreadMessages.length > 0) {
         wx.showTabBarRedDot({ index: 3 });
       } else {
         wx.hideTabBarRedDot({ index: 3 });
@@ -66,10 +56,6 @@ Page({
     }
 
     this.loadMessages();
-  },
-
-  onPlayerTap(e) {
-    wx.navigateTo({ url: `/pages/player-profile/player-profile?id=${e.currentTarget.dataset.id}` });
   },
 
   onPullDownRefresh() {

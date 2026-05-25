@@ -1,95 +1,80 @@
 <view class="messages-page">
 
-  <!-- 天蓝色顶部 Header -->
+  <!-- 顶部 Header -->
   <view class="msg-hd">
-    <text class="msg-hd-title">消息</text>
+    <view class="msg-hd-left">
+      <text class="msg-hd-title">消息</text>
+      <text class="msg-hd-date">{{dateStr}}</text>
+    </view>
     <view class="msg-hd-edit">编辑</view>
   </view>
 
-  <!-- 活跃球友横向滚动 -->
-  <view class="active-users-section">
-    <scroll-view scroll-x class="active-scroll">
+  <!-- 大数字：未读数 -->
+  <view wx:if="{{!loading && unreadMessages.length > 0}}" class="unread-hero">
+    <text class="uh-num">{{unreadMessages.length}}</text>
+    <view class="uh-right">
+      <text class="uh-label">条未读消息</text>
+      <text class="uh-sub">请及时处理</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading && unreadMessages.length === 0}}" class="all-read-hero">
+    <text class="arh-text">全部已读 ✓</text>
+  </view>
+
+  <scroll-view wx:if="{{!loading}}" scroll-y class="msg-scroll">
+
+    <!-- 未读消息 — 色块卡片 -->
+    <view wx:if="{{unreadMessages.length > 0}}" class="msg-group">
+      <text class="mg-label">未读</text>
       <view
-        wx:for="{{activeUsers}}"
+        wx:for="{{unreadMessages}}"
         wx:key="_id"
-        class="au-item"
-        bindtap="onPlayerTap"
+        class="msg-color-card {{item.cardColor}}"
+        bindtap="onMessageTap"
         data-id="{{item._id}}"
+        data-type="{{item.type}}"
+        data-gameid="{{item.gameId}}"
       >
-        <view class="au-ring">
-          <image class="au-avatar" src="{{item.avatarUrl}}" mode="aspectFill"/>
-          <view class="au-online"></view>
-        </view>
-        <text class="au-name">{{item.nickName}}</text>
-      </view>
-    </scroll-view>
-  </view>
-
-  <!-- 消息列表 -->
-  <view wx:if="{{loading}}" class="msg-loading">
-    <text class="loading-text">加载中…</text>
-  </view>
-
-  <scroll-view wx:else scroll-y class="msg-scroll">
-
-    <!-- 未读消息 -->
-    <view wx:if="{{unreadMessages.length > 0}}" class="msg-section">
-      <text class="section-label">未读</text>
-      <view class="msg-card">
-        <view
-          wx:for="{{unreadMessages}}"
-          wx:key="_id"
-          class="msg-row {{index < unreadMessages.length - 1 ? 'has-border' : ''}}"
-          bindtap="onMessageTap"
-          data-id="{{item._id}}"
-          data-type="{{item.type}}"
-          data-gameid="{{item.gameId}}"
-        >
-          <view class="msg-icon-wrap {{item.type}}">
-            <text wx:if="{{item.type === 'system'}}">🔔</text>
-            <text wx:elif="{{item.type === 'join_request'}}">🙋</text>
-            <text wx:elif="{{item.type === 'review'}}">⭐</text>
-            <text wx:elif="{{item.type === 'approved'}}">✅</text>
-            <text wx:else>💬</text>
+        <view class="mcc-top">
+          <view class="mcc-icon">
+            <text wx:if="{{item.type==='system'}}">🔔</text>
+            <text wx:elif="{{item.type==='join_request'}}">🙋</text>
+            <text wx:elif="{{item.type==='review'}}">⭐</text>
+            <text wx:else>✅</text>
           </view>
-          <view class="msg-body-wrap">
-            <view class="msg-top-row">
-              <text class="msg-title">{{item.title}}</text>
-              <text class="msg-time">{{item.createdAt}}</text>
-            </view>
-            <text class="msg-preview">{{item.content}}</text>
-          </view>
-          <view class="unread-badge">{{item.unreadCount || 1}}</view>
+          <text class="mcc-time">{{item.createdAt}}</text>
         </view>
+        <text class="mcc-title">{{item.title}}</text>
+        <text class="mcc-body">{{item.content}}</text>
       </view>
     </view>
 
-    <!-- 已读 / 全部消息 -->
-    <view class="msg-section">
-      <text class="section-label">{{unreadMessages.length > 0 ? '已读' : '全部消息'}}</text>
-      <view class="msg-card">
+    <!-- 已读消息 — 白色列表卡 -->
+    <view class="msg-group">
+      <text class="mg-label">{{unreadMessages.length > 0 ? '已读' : '全部消息'}}</text>
+      <view class="read-card">
         <view
           wx:for="{{readMessages}}"
           wx:key="_id"
-          class="msg-row {{index < readMessages.length - 1 ? 'has-border' : ''}}"
+          class="read-row {{index < readMessages.length - 1 ? 'rr-border' : ''}}"
           bindtap="onMessageTap"
           data-id="{{item._id}}"
           data-type="{{item.type}}"
           data-gameid="{{item.gameId}}"
         >
-          <view class="msg-icon-wrap {{item.type}} muted">
-            <text wx:if="{{item.type === 'system'}}">🔔</text>
-            <text wx:elif="{{item.type === 'join_request'}}">🙋</text>
-            <text wx:elif="{{item.type === 'review'}}">⭐</text>
-            <text wx:elif="{{item.type === 'approved'}}">✅</text>
-            <text wx:else>💬</text>
+          <view class="rr-icon {{item.type}}">
+            <text wx:if="{{item.type==='system'}}">🔔</text>
+            <text wx:elif="{{item.type==='join_request'}}">🙋</text>
+            <text wx:elif="{{item.type==='review'}}">⭐</text>
+            <text wx:else>✅</text>
           </view>
-          <view class="msg-body-wrap">
-            <view class="msg-top-row">
-              <text class="msg-title muted-title">{{item.title}}</text>
-              <text class="msg-time">{{item.createdAt}}</text>
+          <view class="rr-body">
+            <view class="rr-top-row">
+              <text class="rr-title">{{item.title}}</text>
+              <text class="rr-time">{{item.createdAt}}</text>
             </view>
-            <text class="msg-preview muted-preview">{{item.content}}</text>
+            <text class="rr-preview">{{item.content}}</text>
           </view>
         </view>
       </view>
@@ -97,5 +82,9 @@
 
     <view class="safe-bottom"></view>
   </scroll-view>
+
+  <view wx:if="{{loading}}" class="msg-loading">
+    <text class="loading-tip">加载中…</text>
+  </view>
 
 </view>

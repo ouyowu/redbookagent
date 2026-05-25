@@ -2,13 +2,7 @@ const app = getApp();
 const api = require('../../utils/api');
 const { getLevelInfo, getCreditLevel, formatDate, showToast } = require('../../utils/util');
 
-const CARD_GRADIENTS = [
-  'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
-  'linear-gradient(135deg, #F093FB 0%, #F5576C 100%)',
-  'linear-gradient(135deg, #43E97B 0%, #38A169 100%)',
-  'linear-gradient(135deg, #FA709A 0%, #FEE140 100%)',
-  'linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%)',
-];
+const CARD_COLORS = ['c-lavender', 'c-mint', 'c-peach', 'c-yellow', 'c-blue'];
 
 Page({
   data: {
@@ -50,7 +44,7 @@ Page({
         ...g,
         formattedDate: formatDate(g.date),
         spotsLeft: g.maxPlayers - g.currentPlayers,
-        cardGradient: CARD_GRADIENTS[i % CARD_GRADIENTS.length],
+        cardColor: CARD_COLORS[i % CARD_COLORS.length],
         creator: {
           ...g.creator,
           levelInfo: getLevelInfo(g.creator.level),

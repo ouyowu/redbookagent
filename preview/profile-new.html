@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人资料 — 匹克约球</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;700;900&display=swap">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #1A2A35; display: flex; padding: 40px; justify-content: center; }
+
+.phone { width: 375px; height: 812px; background: #F5F6FF; border-radius: 44px; overflow: hidden; box-shadow: 0 28px 80px rgba(0,0,0,0.55); display: flex; flex-direction: column; }
+
+/* Scroll */
+.scroll { flex: 1; overflow-y: auto; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* Top section */
+.profile-top { background: linear-gradient(160deg, #6CCFF0, #4BADD8); padding: 44px 16px 16px; display: flex; align-items: flex-start; justify-content: space-between; }
+.pt-text { flex: 1; }
+.pt-hi { display: block; font-size: 22px; font-weight: 900; color: #FFF; margin-bottom: 5px; }
+.pt-level { display: block; font-size: 12px; color: rgba(255,255,255,0.8); }
+.pt-av-wrap { position: relative; }
+.pt-av { width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.7); }
+.pt-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.pt-dot { position: absolute; bottom: 1px; right: 1px; width: 11px; height: 11px; background: #22D68A; border-radius: 50%; border: 1.5px solid #4BADD8; }
+
+/* Stats */
+.stats-row { display: flex; gap: 8px; padding: 10px 10px 4px; }
+.stat-block { flex: 1; border-radius: 10px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.s-blue { background: #C8E8FF; }
+.s-mint { background: #C8F7EE; }
+.s-lav  { background: #E4E0FF; }
+.sb-num { font-size: 22px; font-weight: 900; color: #0D0D1A; line-height: 1; font-family: 'DM Sans', sans-serif; }
+.sb-lab { font-size: 10px; color: #555; }
+
+/* Running card */
+.running-card { display: flex; align-items: center; justify-content: space-between; background: #0D0D1A; margin: 6px 10px 4px; border-radius: 12px; padding: 14px 16px; }
+.rc-left { flex: 1; }
+.rc-tag { display: block; font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; letter-spacing: 0.5px; }
+.rc-title { display: block; font-size: 15px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
+.rc-desc { display: block; font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.4; }
+.rc-right { display: flex; flex-direction: column; align-items: center; padding-left: 10px; }
+.rc-level { font-size: 28px; font-weight: 900; color: #4BADD8; line-height: 1; font-family: 'DM Sans', sans-serif; }
+.rc-arrow { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+/* Tabs */
+.ptabs { display: flex; gap: 6px; padding: 8px 10px 4px; }
+.ptab { padding: 7px 16px; border-radius: 16px; font-size: 12px; color: #666; border: 1px solid #DDE0F5; background: #FFF; }
+.ptab.on { background: #0D0D1A; color: #FFF; border-color: #0D0D1A; font-weight: 700; }
+
+/* Game cards */
+.game-card { margin: 0 10px 8px; border-radius: 12px; padding: 12px; }
+.gc-lav   { background: #E4E0FF; }
+.gc-mint  { background: #C8F7EE; }
+.gc-peach { background: #FFE4D4; }
+.gc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.gc-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: rgba(0,185,107,0.15); color: #00875A; }
+.gc-chip.full { background: rgba(255,149,0,0.15); color: #C07800; }
+.gc-date { font-size: 10px; color: #666; }
+.gc-title { display: block; font-size: 18px; font-weight: 900; color: #0D0D1A; margin-bottom: 5px; }
+.gc-venue { font-size: 11px; color: #555; }
+
+/* Tab bar */
+.tab-bar { height: 56px; background: #FFF; border-top: 1px solid #ECEEF8; display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; padding-bottom: 4px; }
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tb-icon { font-size: 20px; }
+.tb-label { font-size: 10px; color: #8B8FA8; }
+.tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
+.tb-fab { width: 44px; height: 44px; background: #0D0D1A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #FFF; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="scroll">
+    <div class="profile-top">
+      <div class="pt-text">
+        <span class="pt-hi">嗨，李明！👋</span>
+        <span class="pt-level">P4 · 进阶高手 · 北京</span>
+      </div>
+      <div class="pt-av-wrap">
+        <div class="pt-av"><img src="https://placehold.co/48x48/4CAF50/FFF?text=李"></div>
+        <div class="pt-dot"></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-block s-blue">
+        <span class="sb-num">23</span>
+        <span class="sb-lab">参与球局</span>
+      </div>
+      <div class="stat-block s-mint">
+        <span class="sb-num">92</span>
+        <span class="sb-lab">信用分</span>
+      </div>
+      <div class="stat-block s-lav">
+        <span class="sb-num">P4</span>
+        <span class="sb-lab">认证等级</span>
+      </div>
+    </div>
+
+    <div class="running-card">
+      <div class="rc-left">
+        <span class="rc-tag">球员档案</span>
+        <span class="rc-title">已认证球员 ✓</span>
+        <span class="rc-desc">能主导比赛节奏，打法稳定</span>
+      </div>
+      <div class="rc-right">
+        <span class="rc-level">P4</span>
+        <span class="rc-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="ptabs">
+      <div class="ptab on">我的球局 (3)</div>
+      <div class="ptab">信用记录</div>
+    </div>
+
+    <div class="game-card gc-lav">
+      <div class="gc-top">
+        <div class="gc-chip">招募中</div>
+        <span class="gc-date">5月28日</span>
+      </div>
+      <span class="gc-title">周末友谊赛·四人单打</span>
+      <span class="gc-venue">📍 朝阳体育馆 · 09:00</span>
+    </div>
+
+    <div class="game-card gc-mint">
+      <div class="gc-top">
+        <div class="gc-chip">招募中</div>
+        <span class="gc-date">5月29日</span>
+      </div>
+      <span class="gc-title">高手切磋·混合双打</span>
+      <span class="gc-venue">📍 国贸体育馆 · 19:00</span>
+    </div>
+
+    <div class="game-card gc-peach">
+      <div class="gc-top">
+        <div class="gc-chip full">已结束</div>
+        <span class="gc-date">5月21日</span>
+      </div>
+      <span class="gc-title">朝阳公园早场球局</span>
+      <span class="gc-venue">📍 朝阳公园球场 · 08:00</span>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tb-item"><span class="tb-icon">🏠</span><span class="tb-label">首页</span></div>
+    <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>
+    <div class="tb-fab">+</div>
+    <div class="tb-item"><span class="tb-icon">💬</span><span class="tb-label">消息</span></div>
+    <div class="tb-item active"><span class="tb-icon">👤</span><span class="tb-label" style="color:#4BADD8">我的</span></div>
+  </div>
+</div>
+</body>
+</html>

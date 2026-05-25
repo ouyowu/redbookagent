@@ -1,0 +1,97 @@
+<view class="player-page" wx:if="{{!loading && player}}">
+  <!-- 球员头部 -->
+  <view class="player-hero">
+    <view class="player-top-row flex align-center">
+      <image class="hero-avatar" src="{{player.avatarUrl}}" mode="aspectFill" />
+      <view class="hero-info flex-1">
+        <view class="hero-name-row flex align-center">
+          <text class="hero-name">{{player.nickName}}</text>
+          <view wx:if="{{player.levelVerified}}" class="verified-tag">已认证</view>
+        </view>
+        <view class="level-display" style="background:{{levelInfo.color}}">
+          <text class="level-code">{{player.level}}</text>
+          <text class="level-name">{{levelInfo.label}}</text>
+        </view>
+        <text class="level-desc text-sm" style="color:{{levelInfo.color}}">{{levelInfo.desc}}</text>
+      </view>
+    </view>
+
+    <text class="hero-bio">{{player.bio || '这位球友很神秘，还没有填写简介'}}</text>
+
+    <!-- 统计 -->
+    <view class="hero-stats flex">
+      <view class="hero-stat flex-1">
+        <text class="stat-num">{{player.gamesPlayed}}</text>
+        <text class="stat-lab">总场次</text>
+      </view>
+      <view class="hero-stat flex-1" style="border-left:1rpx solid rgba(255,255,255,0.3)">
+        <text class="stat-num" style="color:{{creditLevel.color}}">{{player.creditScore}}</text>
+        <text class="stat-lab">信用分</text>
+      </view>
+      <view class="hero-stat flex-1" style="border-left:1rpx solid rgba(255,255,255,0.3)">
+        <text class="stat-num">{{player.city || '—'}}</text>
+        <text class="stat-lab">城市</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 信用等级展示 -->
+  <view class="credit-banner card" style="border-left:6rpx solid {{creditLevel.color}}">
+    <text class="credit-icon">{{creditLevel.icon}}</text>
+    <text class="credit-label" style="color:{{creditLevel.color}}">{{creditLevel.label}}</text>
+    <text class="credit-score-sm" style="color:{{creditLevel.color}}">{{player.creditScore}}分</text>
+  </view>
+
+  <!-- Tab -->
+  <view class="tab-bar">
+    <view
+      class="tab-item {{activeTab === 'reviews' ? 'active' : ''}}"
+      bindtap="onTabChange"
+      data-tab="reviews"
+    >
+      收到评价（{{reviews.length}}）
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view wx:if="{{reviews.length === 0}}" class="empty-state">
+    <text class="empty-icon">⭐</text>
+    <text class="empty-text">暂无评价</text>
+  </view>
+
+  <view
+    wx:else
+    wx:for="{{reviews}}"
+    wx:key="_id"
+    class="review-card card"
+    bindtap="onReviewTap"
+    data-gameid="{{item.gameId}}"
+  >
+    <view class="review-header flex align-center">
+      <image class="reviewer-avatar" src="{{item.reviewer.avatarUrl}}" mode="aspectFill" />
+      <view class="reviewer-info flex-1">
+        <text class="reviewer-name text-bold">{{item.reviewer.nickName}}</text>
+        <text class="review-date text-gray text-sm">{{item.createdAt}}</text>
+      </view>
+      <view class="rating-stars">
+        <text wx:for="{{[1,2,3,4,5]}}" wx:key="index" class="star {{index < item.rating ? 'filled' : ''}}">★</text>
+      </view>
+    </view>
+
+    <view class="review-tags mt-10">
+      <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index" class="tag tag-green mr-10">
+        {{tag}}
+      </view>
+    </view>
+
+    <text wx:if="{{item.comment}}" class="review-comment text-gray text-sm mt-10">
+      "{{item.comment}}"
+    </text>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>
+
+<view wx:if="{{loading}}" class="flex-center" style="height:100vh">
+  <text class="text-gray">加载中...</text>
+</view>

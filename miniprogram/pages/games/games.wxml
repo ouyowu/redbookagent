@@ -1,0 +1,97 @@
+<view class="games-page">
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <!-- 状态 Tab -->
+    <scroll-view class="status-tabs" scroll-x>
+      <view
+        wx:for="{{statusTabs}}"
+        wx:key="key"
+        class="status-tab {{activeStatusIndex === index ? 'active' : ''}}"
+        bindtap="onStatusTabChange"
+        data-index="{{index}}"
+      >
+        {{item.label}}
+      </view>
+    </scroll-view>
+
+    <!-- 等级筛选 -->
+    <picker class="level-picker" bindchange="onLevelFilter" value="{{0}}" range="{{levelOptions}}" range-key="label">
+      <view class="picker-btn">
+        {{filters.level ? filters.level : '等级'}} ▾
+      </view>
+    </picker>
+  </view>
+
+  <!-- 球局列表 -->
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <text class="text-gray">加载中...</text>
+  </view>
+
+  <view wx:elif="{{games.length === 0}}" class="empty-state">
+    <text class="empty-icon">🏸</text>
+    <text class="empty-text">暂无球局</text>
+  </view>
+
+  <scroll-view wx:else scroll-y class="game-list">
+    <view
+      wx:for="{{games}}"
+      wx:key="_id"
+      class="game-card card"
+      bindtap="onGameTap"
+      data-id="{{item._id}}"
+    >
+      <!-- 球局头部 -->
+      <view class="game-header flex-between">
+        <text class="game-title text-bold text-lg">{{item.title}}</text>
+        <view class="status-badge open" wx:if="{{item.status === 'OPEN'}}">招募中</view>
+        <view class="status-badge full" wx:elif="{{item.status === 'FULL'}}">已满员</view>
+        <view class="status-badge done" wx:else>已结束</view>
+      </view>
+
+      <!-- 球局信息 -->
+      <view class="game-info mt-10">
+        <view class="info-row">
+          <text class="info-icon">📅</text>
+          <text class="info-text">{{item.formattedDate}} {{item.startTime}}–{{item.endTime}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-icon">📍</text>
+          <text class="info-text">{{item.venue}} · {{item.district}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-icon">🎯</text>
+          <text class="info-text">水平要求 {{item.minLevel}} ~ {{item.maxLevel}}</text>
+        </view>
+      </view>
+
+      <!-- 球局底部 -->
+      <view class="game-footer flex-between mt-20">
+        <view class="participants-wrap flex align-center">
+          <view
+            wx:for="{{item.participants}}"
+            wx:for-item="p"
+            wx:key="_id"
+            wx:if="{{index < 4}}"
+          >
+            <image class="participant-avatar" src="{{p.avatarUrl}}" mode="aspectFill" />
+          </view>
+          <text class="participants-count text-gray text-sm">
+            {{item.currentPlayers}}/{{item.maxPlayers}}人
+          </text>
+          <text wx:if="{{item.spotsLeft > 0}}" class="spots-left">还差{{item.spotsLeft}}人</text>
+        </view>
+        <view class="fee-wrap">
+          <text class="fee">¥{{item.fee}}</text>
+          <text class="fee-unit text-gray text-sm">/人</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </scroll-view>
+
+  <!-- 发布球局按钮 -->
+  <view class="fab-btn" bindtap="onCreateGame">
+    <text class="fab-icon">+</text>
+  </view>
+</view>

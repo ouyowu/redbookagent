@@ -1,0 +1,75 @@
+<view class="friends-page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索球友昵称、城市"
+        value="{{searchValue}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+      />
+    </view>
+  </view>
+
+  <!-- 等级筛选 -->
+  <scroll-view class="level-filter" scroll-x>
+    <view
+      wx:for="{{levelOptions}}"
+      wx:key="key"
+      class="level-chip {{selectedLevel === item.key ? 'active' : ''}}"
+      bindtap="onLevelSelect"
+      data-level="{{item.key}}"
+    >
+      {{item.label}}
+    </view>
+  </scroll-view>
+
+  <!-- 球友列表 -->
+  <view wx:if="{{loading}}" class="loading-wrap flex-center" style="padding:80rpx">
+    <text class="text-gray">加载中...</text>
+  </view>
+
+  <view wx:elif="{{players.length === 0}}" class="empty-state">
+    <text class="empty-icon">👥</text>
+    <text class="empty-text">暂无球友</text>
+  </view>
+
+  <scroll-view wx:else scroll-y class="player-list">
+    <view
+      wx:for="{{players}}"
+      wx:key="_id"
+      class="player-card card"
+      bindtap="onPlayerTap"
+      data-id="{{item._id}}"
+    >
+      <view class="player-left">
+        <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+        <view wx:if="{{item.levelVerified}}" class="verified-dot">✓</view>
+      </view>
+
+      <view class="player-info flex-1">
+        <view class="player-top flex-between">
+          <view class="flex align-center">
+            <text class="player-name text-bold mr-10">{{item.nickName}}</text>
+            <view class="level-badge" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+          </view>
+          <view class="credit-chip" style="color:{{item.creditLevel.color}}">
+            {{item.creditLevel.icon}} {{item.creditScore}}
+          </view>
+        </view>
+
+        <view class="player-meta mt-10">
+          <text class="meta-text text-gray text-sm">📍 {{item.city}} {{item.district}}</text>
+          <text class="meta-dot">·</text>
+          <text class="meta-text text-gray text-sm">🏸 {{item.gamesPlayed}}场</text>
+        </view>
+
+        <text class="player-bio text-sm text-gray mt-10 text-ellipsis">{{item.bio}}</text>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </scroll-view>
+</view>

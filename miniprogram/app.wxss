@@ -1,0 +1,177 @@
+/* 全局样式 */
+page {
+  background-color: #F5F5F5;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-size: 28rpx;
+  color: #333333;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 主色调 */
+/* --primary: #00B96B; 匹克球绿 */
+/* --secondary: #1A1A2E; 深色 */
+/* --accent: #FFB347; 橙黄 */
+
+.primary-color { color: #00B96B; }
+.text-gray { color: #999999; }
+.text-light { color: #CCCCCC; }
+.text-white { color: #FFFFFF; }
+.text-red { color: #F44336; }
+.text-orange { color: #FF9800; }
+
+/* 按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #00B96B, #00875A);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  padding: 0 40rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border: none;
+  letter-spacing: 2rpx;
+}
+
+.btn-primary::after { border: none; }
+
+.btn-secondary {
+  background: #FFFFFF;
+  color: #00B96B;
+  border: 2rpx solid #00B96B;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  padding: 0 40rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+}
+
+.btn-secondary::after { border: none; }
+
+.btn-ghost {
+  background: transparent;
+  color: #666666;
+  border: 2rpx solid #DDDDDD;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  padding: 0 24rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+}
+
+.btn-ghost::after { border: none; }
+
+/* 卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin: 0 24rpx 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+/* 分割线 */
+.divider {
+  height: 1rpx;
+  background: #F0F0F0;
+  margin: 20rpx 0;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+.tag-green { background: #E8F5E9; color: #00B96B; }
+.tag-blue { background: #E3F2FD; color: #2196F3; }
+.tag-orange { background: #FFF3E0; color: #FF9800; }
+.tag-gray { background: #F5F5F5; color: #9E9E9E; }
+.tag-purple { background: #F3E5F5; color: #9C27B0; }
+.tag-red { background: #FFEBEE; color: #F44336; }
+
+/* 头像 */
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #E0E0E0;
+}
+
+.avatar-lg {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+/* Flex 工具类 */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.align-center { align-items: center; }
+.flex-1 { flex: 1; }
+
+/* 间距 */
+.mt-10 { margin-top: 10rpx; }
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.ml-10 { margin-left: 10rpx; }
+.ml-20 { margin-left: 20rpx; }
+.mr-10 { margin-right: 10rpx; }
+
+/* 文字 */
+.text-bold { font-weight: 600; }
+.text-sm { font-size: 24rpx; }
+.text-md { font-size: 28rpx; }
+.text-lg { font-size: 32rpx; }
+.text-xl { font-size: 36rpx; }
+.text-xxl { font-size: 44rpx; }
+.text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  color: #CCCCCC;
+}
+
+.empty-state .empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-state .empty-text {
+  font-size: 28rpx;
+  color: #BBBBBB;
+}
+
+/* 底部安全区 */
+.safe-bottom {
+  height: env(safe-area-inset-bottom);
+  min-height: 20rpx;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #CCCCCC;
+  font-size: 24rpx;
+}

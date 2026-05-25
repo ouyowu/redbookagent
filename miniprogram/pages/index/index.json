@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "匹克约球",
+  "navigationBarBackgroundColor": "#00B96B",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "light"
+}

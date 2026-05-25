@@ -1,0 +1,51 @@
+<view class="messages-page">
+  <view wx:if="{{loading}}" class="loading-wrap flex-center" style="padding:80rpx">
+    <text class="text-gray">加载中...</text>
+  </view>
+
+  <view wx:elif="{{messages.length === 0}}" class="empty-state">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无消息</text>
+  </view>
+
+  <scroll-view wx:else scroll-y class="msg-list">
+    <view
+      wx:for="{{messages}}"
+      wx:key="_id"
+      class="msg-item {{item.isRead ? 'read' : 'unread'}}"
+      bindtap="onMessageTap"
+      data-id="{{item._id}}"
+      data-type="{{item.type}}"
+      data-gameid="{{item.gameId}}"
+    >
+      <!-- 消息图标 -->
+      <view class="msg-icon-wrap">
+        <view class="msg-icon {{item.type}}">
+          <text wx:if="{{item.type === 'system'}}">🔔</text>
+          <text wx:elif="{{item.type === 'join_request'}}">🙋</text>
+          <text wx:elif="{{item.type === 'review'}}">⭐</text>
+          <text wx:elif="{{item.type === 'approved'}}">✅</text>
+          <text wx:else>💬</text>
+        </view>
+        <view wx:if="{{!item.isRead}}" class="unread-dot"></view>
+      </view>
+
+      <!-- 消息内容 -->
+      <view class="msg-content flex-1">
+        <view class="msg-title-row flex-between">
+          <text class="msg-title text-bold">{{item.title}}</text>
+          <text class="msg-time text-gray text-sm">{{item.createdAt}}</text>
+        </view>
+        <text class="msg-body text-gray text-sm mt-10">{{item.content}}</text>
+
+        <!-- 发件人头像 -->
+        <view wx:if="{{item.fromUser}}" class="msg-from flex align-center mt-10">
+          <image class="from-avatar" src="{{item.fromUser.avatarUrl}}" mode="aspectFill" />
+          <text class="text-gray text-sm">{{item.fromUser.nickName}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+  </scroll-view>
+</view>

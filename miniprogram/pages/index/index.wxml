@@ -1,0 +1,124 @@
+<view class="index-page">
+  <!-- 顶部用户信息栏 -->
+  <view class="header">
+    <view class="header-left" bindtap="onProfileTap">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+      <view class="user-info">
+        <view class="nickname">{{userInfo.nickName}}</view>
+        <view class="level-row">
+          <view class="level-badge" style="background:{{levelInfo.color}}">
+            {{userInfo.level}}
+          </view>
+          <view class="credit-badge" style="color:{{creditLevel.color}}">
+            {{creditLevel.icon}} {{userInfo.creditScore}}分
+          </view>
+          <view wx:if="{{!userInfo.levelVerified}}" class="unverified-tag">未认证</view>
+        </view>
+      </view>
+    </view>
+    <view class="header-right">
+      <view class="location-btn">📍 {{userInfo.city || '选择城市'}}</view>
+    </view>
+  </view>
+
+  <!-- 认证提示横幅 -->
+  <view wx:if="{{!userInfo.levelVerified}}" class="verify-banner" bindtap="onBannerTap" data-id="1">
+    <text>🎥 上传球技视频，获取专属等级认证</text>
+    <text class="arrow">›</text>
+  </view>
+
+  <!-- 轮播横幅 -->
+  <swiper
+    class="banner-swiper"
+    indicator-dots="{{true}}"
+    autoplay="{{true}}"
+    interval="4000"
+    circular="{{true}}"
+    bindchange="onBannerChange"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <view class="banner-item" style="background:{{item.bg}}" bindtap="onBannerTap" data-id="{{item.id}}">
+        <text class="banner-icon">{{item.icon}}</text>
+        <text class="banner-title">{{item.title}}</text>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions card">
+    <view class="action-item" bindtap="onCreateGame">
+      <view class="action-icon-wrap green">🏸</view>
+      <text class="action-label">发布球局</text>
+    </view>
+    <view class="action-item" bindtap="onMoreGames">
+      <view class="action-icon-wrap blue">🔍</view>
+      <text class="action-label">找球局</text>
+    </view>
+    <view class="action-item" bindtap="{{() => wx.switchTab({ url: '/pages/friends/friends' })}}">
+      <view class="action-icon-wrap orange">👥</view>
+      <text class="action-label">找球友</text>
+    </view>
+    <view class="action-item" bindtap="{{() => wx.navigateTo({ url: '/pages/video-upload/video-upload' })}}">
+      <view class="action-icon-wrap purple">🎥</view>
+      <text class="action-label">认证等级</text>
+    </view>
+  </view>
+
+  <!-- 附近球局 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">附近球局</text>
+      <text class="section-more" bindtap="onMoreGames">查看全部 ›</text>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-wrap">
+      <view class="loading-dot"></view>
+      <text class="text-gray text-sm">加载中...</text>
+    </view>
+
+    <view wx:elif="{{nearbyGames.length === 0}}" class="empty-state">
+      <text class="empty-icon">🏸</text>
+      <text class="empty-text">附近暂无开放球局</text>
+    </view>
+
+    <view
+      wx:else
+      wx:for="{{nearbyGames}}"
+      wx:key="_id"
+      class="game-card card"
+      bindtap="onGameTap"
+      data-id="{{item._id}}"
+    >
+      <view class="game-card-header flex-between">
+        <text class="game-title text-bold text-lg">{{item.title}}</text>
+        <view class="spots-badge" wx:if="{{item.spotsLeft > 0}}">
+          还差{{item.spotsLeft}}人
+        </view>
+        <view class="full-badge" wx:else>已满员</view>
+      </view>
+
+      <view class="game-meta mt-10">
+        <text class="meta-item">📅 {{item.formattedDate}} {{item.startTime}}</text>
+        <text class="meta-item">📍 {{item.venue}}</text>
+        <text class="meta-item">👥 {{item.currentPlayers}}/{{item.maxPlayers}}人</text>
+      </view>
+
+      <view class="game-footer flex-between mt-20">
+        <view class="level-range">
+          <view class="tag tag-green">{{item.minLevel}}~{{item.maxLevel}}</view>
+        </view>
+        <view class="fee-row">
+          <text class="fee-amount">¥{{item.fee}}</text>
+          <text class="text-gray text-sm">/人</text>
+        </view>
+      </view>
+
+      <view class="creator-row mt-10 flex align-center">
+        <image class="creator-avatar" src="{{item.creator.avatarUrl}}" mode="aspectFill" />
+        <text class="creator-name text-gray text-sm">{{item.creator.nickName}} 发布</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+</view>

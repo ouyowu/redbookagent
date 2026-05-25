@@ -1,0 +1,63 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/games/games",
+    "pages/game-detail/game-detail",
+    "pages/game-create/game-create",
+    "pages/friends/friends",
+    "pages/messages/messages",
+    "pages/profile/profile",
+    "pages/profile-edit/profile-edit",
+    "pages/player-profile/player-profile",
+    "pages/video-upload/video-upload",
+    "pages/review/review"
+  ],
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#00B96B",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/games/games",
+        "text": "球局",
+        "iconPath": "images/tab-games.png",
+        "selectedIconPath": "images/tab-games-active.png"
+      },
+      {
+        "pagePath": "pages/friends/friends",
+        "text": "球友",
+        "iconPath": "images/tab-friends.png",
+        "selectedIconPath": "images/tab-friends-active.png"
+      },
+      {
+        "pagePath": "pages/messages/messages",
+        "text": "消息",
+        "iconPath": "images/tab-messages.png",
+        "selectedIconPath": "images/tab-messages-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "匹克球约球",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

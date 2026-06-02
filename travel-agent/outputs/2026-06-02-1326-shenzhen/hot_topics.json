@@ -1,0 +1,446 @@
+{
+  "date": "2026-06-02-1326",
+  "city": {
+    "slug": "shenzhen",
+    "name": "深圳",
+    "country": "中国",
+    "rank": ""
+  },
+  "content_theme": "深圳热门旅游内容矩阵 Top25",
+  "platforms": [
+    "xiaohongshu",
+    "douyin",
+    "bilibili",
+    "mafengwo",
+    "ctrip",
+    "official",
+    "maps"
+  ],
+  "topics": [
+    {
+      "rank": 1,
+      "slug": "food-overview",
+      "name": "深圳美食总览与本地人高频推荐",
+      "focus": "把平台高频出现的吃法、片区和本地人推荐关键词整理成城市吃喝总览",
+      "query_terms": "美食 本地人推荐 必吃 当地人常去 攻略",
+      "score": 25,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 美食 本地人推荐 必吃 当地人常去 攻略",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "slug": "restaurants",
+      "name": "深圳当地人推荐的10大餐厅",
+      "focus": "提炼高频餐厅类型与适合游客验证的吃饭片区",
+      "query_terms": "当地人推荐 餐厅 饭馆 必吃 排队",
+      "score": 24,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 当地人推荐 餐厅 饭馆 必吃 排队",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "slug": "fly-restaurants",
+      "name": "深圳10大苍蝇小馆和烟火气小店",
+      "focus": "整理高频小馆关键词和更适合体验本地生活的觅食方向",
+      "query_terms": "苍蝇馆子 小馆 本地人常去 烟火气",
+      "score": 23,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 苍蝇馆子 小馆 本地人常去 烟火气",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "slug": "hotpot",
+      "name": "深圳最好吃的火锅或城市代表热菜",
+      "focus": "把城市代表热菜、火锅或同类高热餐饮做成新手友好索引",
+      "query_terms": "火锅 必吃 排队 本地人推荐 招牌菜",
+      "score": 22,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 火锅 必吃 排队 本地人推荐 招牌菜",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "slug": "breakfast",
+      "name": "深圳最值得早起吃的早餐",
+      "focus": "整理这个城市高频早餐类型与适合早起打卡的觅食路线",
+      "query_terms": "早餐 早饭 早点 必吃 推荐",
+      "score": 21,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 早餐 早饭 早点 必吃 推荐",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "slug": "snacks",
+      "name": "深圳最值得买的零食和伴手礼",
+      "focus": "总结游客最常搜的零食清单与购买片区",
+      "query_terms": "零食 伴手礼 特产 值得买",
+      "score": 20,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 零食 伴手礼 特产 值得买",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "slug": "hotels",
+      "name": "深圳最方便住的区域和酒店",
+      "focus": "总结游客最常搜的住宿片区、预算区间和挑选思路",
+      "query_terms": "住哪里 酒店 区域 方便 民宿",
+      "score": 19,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 住哪里 酒店 区域 方便 民宿",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "slug": "transport",
+      "name": "深圳交通怎么安排最省心",
+      "focus": "提炼机场高铁进城、地铁公交、打车和少绕路交通建议",
+      "query_terms": "交通 地铁 机场 高铁 打车 公交",
+      "score": 18,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 交通 地铁 机场 高铁 打车 公交",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "slug": "attractions",
+      "name": "深圳最推荐的游玩景点",
+      "focus": "整理高频景点、预约提醒和第一次去更稳妥的游玩顺序",
+      "query_terms": "景点 值得去 游玩 排名 必打卡",
+      "score": 17,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 景点 值得去 游玩 排名 必打卡",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "slug": "citywalk",
+      "name": "深圳最值得逛的citywalk路线",
+      "focus": "总结高频街区和步行路线话题",
+      "query_terms": "citywalk 街区 散步 路线",
+      "score": 16,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 citywalk 街区 散步 路线",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 11,
+      "slug": "photospots",
+      "name": "深圳最容易出片的拍照点",
+      "focus": "汇总最常出现的出片地点和避开人潮的建议",
+      "query_terms": "拍照 出片 机位 打卡点",
+      "score": 15,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 拍照 出片 机位 打卡点",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 12,
+      "slug": "museums",
+      "name": "深圳最值得去的博物馆和展览",
+      "focus": "整理高热文化场馆话题和预约提醒",
+      "query_terms": "博物馆 展览 值得去 预约",
+      "score": 14,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 博物馆 展览 值得去 预约",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 13,
+      "slug": "shopping",
+      "name": "深圳最值得逛的购物点和商圈",
+      "focus": "归纳最常被提到的商圈、商场和购物点",
+      "query_terms": "购物 商圈 商场 好逛 逛街",
+      "score": 13,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 购物 商圈 商场 好逛 逛街",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 14,
+      "slug": "what-to-buy",
+      "name": "深圳什么值得买清单",
+      "focus": "整理游客最常搜的特产、文创、纪念品和不踩雷购买建议",
+      "query_terms": "值得买 特产 纪念品 文创 手信",
+      "score": 12,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 值得买 特产 纪念品 文创 手信",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 15,
+      "slug": "shoppingstreets",
+      "name": "深圳最值得逛的商业街和买手店",
+      "focus": "整理逛街党最常搜的片区和商店类型",
+      "query_terms": "商业街 买手店 文创店 好逛",
+      "score": 11,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 商业街 买手店 文创店 好逛",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 16,
+      "slug": "markets",
+      "name": "深圳最有烟火气的夜市和菜市场",
+      "focus": "总结人气市集和更适合游客体验的逛法",
+      "query_terms": "夜市 菜市场 烟火气 市集",
+      "score": 10,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 夜市 菜市场 烟火气 市集",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 17,
+      "slug": "nightlife",
+      "name": "深圳最好玩的夜生活和晚间活动",
+      "focus": "总结晚间活动、夜游、演出和微醺玩法",
+      "query_terms": "夜生活 夜游 livehouse 微醺 演出",
+      "score": 9,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 夜生活 夜游 livehouse 微醺 演出",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 18,
+      "slug": "nightview",
+      "name": "深圳最值得看的夜景和机位",
+      "focus": "提炼热门夜景区域和拍照时段建议",
+      "query_terms": "夜景 机位 拍照 打卡",
+      "score": 8,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 夜景 机位 拍照 打卡",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 19,
+      "slug": "cafes",
+      "name": "深圳最出片的咖啡馆",
+      "focus": "整理高热咖啡馆主题和更适合出片的片区",
+      "query_terms": "咖啡馆 cafe 探店 出片",
+      "score": 7,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 咖啡馆 cafe 探店 出片",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 20,
+      "slug": "desserts",
+      "name": "深圳最值得专门去吃的甜品",
+      "focus": "提炼高频甜品话题与适合顺路安排的片区",
+      "query_terms": "甜品 蛋糕 冰品 必吃",
+      "score": 6,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 甜品 蛋糕 冰品 必吃",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 21,
+      "slug": "rainyday",
+      "name": "深圳下雨天也能玩的去处",
+      "focus": "总结天气不好时的高频替代玩法",
+      "query_terms": "雨天 室内 去哪玩 备用",
+      "score": 5,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 雨天 室内 去哪玩 备用",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 22,
+      "slug": "parents",
+      "name": "深圳带爸妈去最省力的玩法",
+      "focus": "整理适合家庭游客的高热话题和少走路安排",
+      "query_terms": "带爸妈 适合长辈 省力",
+      "score": 4,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 带爸妈 适合长辈 省力",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 23,
+      "slug": "family",
+      "name": "深圳亲子最值得去的地方",
+      "focus": "总结平台高频亲子玩法和适合带孩子的区域",
+      "query_terms": "亲子 遛娃 适合小孩",
+      "score": 3,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 亲子 遛娃 适合小孩",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 24,
+      "slug": "daytrip",
+      "name": "深圳周边一日游最值得去哪",
+      "focus": "提炼这个城市周边延展玩法的话题热度",
+      "query_terms": "周边 一日游 当天往返",
+      "score": 2,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 周边 一日游 当天往返",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    },
+    {
+      "rank": 25,
+      "slug": "checklist",
+      "name": "深圳第一次去最该知道的避坑清单",
+      "focus": "整理高频踩坑点和新手最需要提前知道的信息",
+      "query_terms": "避坑 攻略 注意事项 第一次去",
+      "score": 1,
+      "fallback": true,
+      "results": [
+        {
+          "platform": "public-search-keywords",
+          "title": "深圳 避坑 攻略 注意事项 第一次去",
+          "link": "https://en.wikivoyage.org/wiki/Shenzhen",
+          "snippet": "用于后续人工交叉验证的公开检索关键词，不复制任何平台原文。"
+        }
+      ]
+    }
+  ]
+}

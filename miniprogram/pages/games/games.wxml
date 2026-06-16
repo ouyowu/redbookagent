@@ -1,0 +1,117 @@
+<view class="games-page">
+
+  <!-- ── Header ── -->
+  <view class="games-header">
+    <view class="gh-title">
+      <text class="gh-main">球局广场</text>
+      <view class="gh-count pill pill-green">{{games.length}}场</view>
+    </view>
+    <view class="gh-actions">
+      <view class="gh-icon-btn">🔍</view>
+    </view>
+  </view>
+
+  <!-- ── 状态 Tabs ── -->
+  <view class="status-tabs-bar">
+    <view
+      wx:for="{{statusTabs}}"
+      wx:key="key"
+      class="stab {{activeStatusIndex === index ? 'stab-active' : ''}}"
+      bindtap="onStatusTabChange"
+      data-index="{{index}}"
+    >
+      <text>{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- ── 位置/等级 Chips ── -->
+  <scroll-view scroll-x class="chips-bar">
+    <view
+      wx:for="{{levelOptions}}"
+      wx:key="key"
+      class="chip {{filters.level === item.key ? 'chip-active' : ''}}"
+      bindtap="onLevelChip"
+      data-level="{{item.key}}"
+    >{{item.label}}</view>
+  </scroll-view>
+
+  <!-- ── 球局列表 ── -->
+  <view wx:if="{{loading}}" class="loading-center">
+    <text class="color-gray">加载中...</text>
+  </view>
+
+  <view wx:elif="{{games.length === 0}}" class="empty-state" style="margin-top:60rpx">
+    <text class="empty-icon">🏸</text>
+    <text class="empty-text">暂无球局</text>
+  </view>
+
+  <scroll-view wx:else scroll-y class="games-list">
+    <view
+      wx:for="{{games}}"
+      wx:key="_id"
+      class="event-card"
+      bindtap="onGameTap"
+      data-id="{{item._id}}"
+    >
+      <!-- 彩色封面条 -->
+      <view class="event-cover" style="background:{{item.cardGradient}}">
+        <view class="event-cover-inner">
+          <view class="ec-top flex-between">
+            <text class="ec-title">{{item.title}}</text>
+            <view class="ec-status-chip {{item.status}}">
+              {{item.status === 'OPEN' ? '招募中' : item.status === 'FULL' ? '已满员' : '已结束'}}
+            </view>
+          </view>
+          <view class="ec-bottom flex-between">
+            <view class="ec-level-tag">{{item.minLevel}} ~ {{item.maxLevel}}</view>
+            <text class="ec-fee">¥{{item.fee}}/人</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 球局信息 -->
+      <view class="event-info">
+        <view class="ei-row">
+          <text class="ei-icon">📅</text>
+          <text class="ei-text">{{item.formattedDate}} {{item.startTime}}–{{item.endTime}}</text>
+        </view>
+        <view class="ei-row">
+          <text class="ei-icon">📍</text>
+          <text class="ei-text">{{item.venue}} · {{item.district}}</text>
+        </view>
+      </view>
+
+      <!-- 底部：头像组 + 人数 + 按钮 -->
+      <view class="event-footer flex-between">
+        <view class="flex align-center">
+          <view
+            wx:for="{{item.participants}}"
+            wx:for-item="p"
+            wx:key="_id"
+            wx:if="{{index < 3}}"
+          >
+            <image class="footer-avatar" src="{{p.avatarUrl}}" mode="aspectFill"
+              style="margin-left:{{index > 0 ? '-14rpx' : '0'}}; z-index:{{10 - index}}"
+            />
+          </view>
+          <text class="footer-count">{{item.currentPlayers}}/{{item.maxPlayers}}</text>
+          <view class="spots-pill" wx:if="{{item.spotsLeft > 0 && item.status === 'OPEN'}}">
+            还差{{item.spotsLeft}}人
+          </view>
+        </view>
+        <view class="footer-action-btn {{item.status !== 'OPEN' ? 'btn-disabled' : ''}}">
+          {{item.status === 'OPEN' ? '申请加入' : item.status === 'FULL' ? '已满员' : '已结束'}}
+        </view>
+      </view>
+    </view>
+
+    <view class="safe-bottom"></view>
+    <view style="height:20rpx"></view>
+  </scroll-view>
+
+  <!-- FAB -->
+  <view class="fab" bindtap="onCreateGame">
+    <text class="fab-plus">+</text>
+  </view>
+
+</view>

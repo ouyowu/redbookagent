@@ -1,0 +1,279 @@
+.detail-page {
+  background: #F5F5F5;
+  min-height: 100vh;
+}
+
+/* 顶部英雄区 */
+.hero-section {
+  background: linear-gradient(135deg, #00B96B, #00875A);
+  padding: 40rpx 30rpx 50rpx;
+}
+
+.game-title-row {
+  align-items: flex-start;
+  margin-bottom: 30rpx;
+}
+
+.game-title {
+  flex: 1;
+  color: #FFFFFF;
+  margin-right: 16rpx;
+  line-height: 1.4;
+}
+
+.status-chip {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-chip.open { background: rgba(255,255,255,0.25); color: #FFFFFF; }
+.status-chip.full { background: rgba(255,152,0,0.3); color: #FFD54F; }
+.status-chip.done { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+
+.info-grid {
+  display: flex;
+  background: rgba(255,255,255,0.15);
+  border-radius: 16rpx;
+  padding: 20rpx 0;
+}
+
+.info-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.info-divider {
+  width: 1rpx;
+  background: rgba(255,255,255,0.3);
+  margin: 10rpx 0;
+}
+
+.info-label {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.7);
+}
+
+.info-value {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.info-value.fee-value { color: #FFD54F; }
+
+.info-sub {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.7);
+}
+
+.full-text { color: #FFB347; }
+
+/* 详情卡片 */
+.card { margin: 0 24rpx; }
+.mt-20 { margin-top: 20rpx; }
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 10rpx 0;
+}
+
+.detail-icon { font-size: 32rpx; margin-top: 4rpx; }
+
+.detail-content { flex: 1; }
+
+.detail-label {
+  font-size: 22rpx;
+  color: #999999;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.detail-value {
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+  display: block;
+}
+
+.detail-value.desc {
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.6;
+}
+
+.detail-sub {
+  font-size: 24rpx;
+  color: #999999;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.map-btn {
+  color: #2196F3;
+  font-size: 26rpx;
+  border: 1rpx solid #2196F3;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+/* 球员列表 */
+.player-row {
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.player-row:last-child { border-bottom: none; }
+
+.player-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  background: #E0E0E0;
+}
+
+.player-name { font-size: 28rpx; }
+
+.level-dot {
+  font-size: 20rpx;
+  color: #FFFFFF;
+  padding: 3rpx 12rpx;
+  border-radius: 16rpx;
+  font-weight: 700;
+}
+
+.creator-tag {
+  font-size: 20rpx;
+  color: #FF9800;
+  background: #FFF3E0;
+  padding: 3rpx 12rpx;
+  border-radius: 16rpx;
+  margin-left: 10rpx;
+}
+
+.player-credit { margin-top: 6rpx; }
+
+.arrow-right { font-size: 36rpx; }
+
+/* 空位 */
+.empty-slot {
+  padding: 16rpx 0;
+  gap: 16rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.empty-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #F5F5F5;
+  border: 2rpx dashed #DDDDDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #DDDDDD;
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-top: 1rpx solid #F0F0F0;
+  padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+}
+
+.share-btn {
+  width: 120rpx;
+  height: 88rpx;
+  border: 2rpx solid #DDDDDD;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.join-btn {
+  flex: 1;
+  height: 88rpx;
+  background: linear-gradient(135deg, #00B96B, #00875A);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  border: none;
+  letter-spacing: 2rpx;
+}
+
+.join-btn::after { border: none; }
+
+.cancel-btn {
+  flex: 1;
+  height: 88rpx;
+  background: #FFEBEE;
+  color: #F44336;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.cancel-btn::after { border: none; }
+
+.creator-action, .full-action, .completed-action {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.review-hint {
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+/* 评价区 */
+.review-section { border-top: 4rpx solid #00B96B; }
+
+.review-player-row {
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.review-player-row:last-child { border-bottom: none; }
+
+.reviewed-tag {
+  font-size: 22rpx;
+  color: #9E9E9E;
+  background: #F5F5F5;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.review-btn-sm {
+  font-size: 26rpx;
+  color: #00B96B;
+  font-weight: 600;
+}
+
+.loading-wrap { height: 100vh; }
+
+.section-title { font-size: 30rpx; }

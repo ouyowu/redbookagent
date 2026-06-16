@@ -1,0 +1,168 @@
+<view class="create-page">
+  <scroll-view scroll-y class="form-scroll">
+    <!-- 基础信息 -->
+    <view class="form-section">
+      <view class="section-title">基础信息</view>
+
+      <view class="form-item">
+        <text class="form-label required">球局标题</text>
+        <input
+          class="form-input"
+          placeholder="例：周末双打友谊赛，欢迎P3+"
+          value="{{form.title}}"
+          bindinput="onInput"
+          data-field="title"
+          maxlength="30"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label required">场地名称</text>
+        <input
+          class="form-input"
+          placeholder="输入场地名称"
+          value="{{form.venue}}"
+          bindinput="onInput"
+          data-field="venue"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">详细地址</text>
+        <input
+          class="form-input"
+          placeholder="输入详细地址（可选）"
+          value="{{form.address}}"
+          bindinput="onInput"
+          data-field="address"
+        />
+      </view>
+    </view>
+
+    <!-- 时间信息 -->
+    <view class="form-section">
+      <view class="section-title">时间安排</view>
+
+      <view class="form-item">
+        <text class="form-label required">日期</text>
+        <picker
+          mode="date"
+          value="{{form.date}}"
+          start="{{minDate}}"
+          bindchange="onPickerChange"
+          data-field="date"
+        >
+          <view class="picker-value {{form.date ? '' : 'placeholder'}}">
+            {{form.date || '选择日期'}}
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-row">
+        <view class="form-item flex-1">
+          <text class="form-label required">开始时间</text>
+          <picker
+            mode="time"
+            value="{{form.startTime}}"
+            bindchange="onPickerChange"
+            data-field="startTime"
+          >
+            <view class="picker-value {{form.startTime ? '' : 'placeholder'}}">
+              {{form.startTime || '选择时间'}}
+            </view>
+          </picker>
+        </view>
+        <text class="time-sep">至</text>
+        <view class="form-item flex-1">
+          <text class="form-label required">结束时间</text>
+          <picker
+            mode="time"
+            value="{{form.endTime}}"
+            bindchange="onPickerChange"
+            data-field="endTime"
+          >
+            <view class="picker-value {{form.endTime ? '' : 'placeholder'}}">
+              {{form.endTime || '选择时间'}}
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <!-- 球局配置 -->
+    <view class="form-section">
+      <view class="section-title">球局设置</view>
+
+      <view class="form-item">
+        <text class="form-label">人数上限</text>
+        <picker
+          range="{{playerOptions}}"
+          value="{{0}}"
+          bindchange="onMaxPlayersChange"
+        >
+          <view class="picker-value">{{form.maxPlayers}} 人</view>
+        </picker>
+      </view>
+
+      <view class="form-row">
+        <view class="form-item flex-1">
+          <text class="form-label">最低水平</text>
+          <picker range="{{levelOptions}}" value="{{0}}" bindchange="onMinLevelChange">
+            <view class="picker-value">{{form.minLevel}}</view>
+          </picker>
+        </view>
+        <text class="time-sep">~</text>
+        <view class="form-item flex-1">
+          <text class="form-label">最高水平</text>
+          <picker range="{{levelOptions}}" value="{{5}}" bindchange="onMaxLevelChange">
+            <view class="picker-value">{{form.maxLevel}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">场地费用（每人）</text>
+        <view class="fee-input-wrap">
+          <text class="fee-prefix">¥</text>
+          <input
+            class="form-input fee-input"
+            type="digit"
+            placeholder="0"
+            value="{{form.fee}}"
+            bindinput="onInput"
+            data-field="fee"
+          />
+        </view>
+      </view>
+    </view>
+
+    <!-- 球局说明 -->
+    <view class="form-section">
+      <view class="section-title">球局说明</view>
+      <textarea
+        class="form-textarea"
+        placeholder="介绍球局特点、对球友的要求等（可选）"
+        value="{{form.description}}"
+        bindinput="onInput"
+        data-field="description"
+        maxlength="200"
+        auto-height
+      />
+    </view>
+
+    <!-- 信用提示 -->
+    <view class="credit-notice">
+      <text class="notice-icon">ℹ️</text>
+      <text class="notice-text">开局前2小时内取消将扣除10信用分，确认后未到场扣20分</text>
+    </view>
+
+    <view style="height:160rpx"></view>
+  </scroll-view>
+
+  <!-- 发布按钮 -->
+  <view class="submit-bar">
+    <button class="submit-btn" loading="{{submitting}}" bindtap="onSubmit">
+      发布球局
+    </button>
+  </view>
+</view>

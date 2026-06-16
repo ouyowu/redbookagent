@@ -1,0 +1,99 @@
+<view class="review-page">
+  <!-- 被评价者信息 -->
+  <view class="reviewee-section card" wx:if="{{reviewee}}">
+    <text class="section-label text-gray text-sm">评价球友</text>
+    <view class="reviewee-row flex align-center mt-10">
+      <image class="reviewee-avatar" src="{{reviewee.avatarUrl}}" mode="aspectFill" />
+      <view class="flex-1">
+        <text class="reviewee-name text-bold text-lg">{{reviewee.nickName}}</text>
+        <text class="text-gray text-sm">{{reviewee.level}} · {{reviewee.city}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 星级评分 -->
+  <view class="rating-section card">
+    <text class="section-label text-bold">整体评价</text>
+    <view class="stars-row mt-20">
+      <view
+        wx:for="{{[1,2,3,4,5]}}"
+        wx:key="index"
+        class="star-btn {{rating >= item ? 'filled' : ''}}"
+        bindtap="onRatingTap"
+        data-rating="{{item}}"
+      >★</view>
+    </view>
+    <text class="rating-label mt-10 text-gray text-sm">
+      {{rating === 0 ? '点击星星评分' :
+        rating === 1 ? '很差' :
+        rating === 2 ? '较差' :
+        rating === 3 ? '一般' :
+        rating === 4 ? '不错' : '非常好'}}
+    </text>
+  </view>
+
+  <!-- 准时评价 -->
+  <view class="punctual-section card">
+    <view class="flex-between">
+      <text class="text-bold">是否准时到场？</text>
+      <switch
+        checked="{{isPunctual}}"
+        color="#00B96B"
+        bindchange="onPunctualChange"
+      />
+    </view>
+    <text class="text-gray text-sm mt-10">
+      {{isPunctual ? '✅ 准时到场，+2 信用分' : '⚠️ 未准时到场'}}
+    </text>
+  </view>
+
+  <!-- 评价标签 -->
+  <view class="tags-section card" wx:if="{{rating > 0}}">
+    <text class="section-label text-bold mb-20">
+      {{showNegativeTags ? '哪里让您不满意？' : '他/她有什么优点？'}}（最多3个）
+    </text>
+
+    <view class="tags-wrap">
+      <view
+        wx:for="{{showNegativeTags ? negativeTags : positiveTags}}"
+        wx:key="index"
+        class="tag-chip {{selectedTags.indexOf(item) >= 0 ? 'selected' : ''}}"
+        bindtap="onTagTap"
+        data-tag="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 文字评价 -->
+  <view class="comment-section card">
+    <text class="section-label text-bold mb-10">文字评价（可选）</text>
+    <textarea
+      class="comment-input"
+      placeholder="分享这次约球的感受..."
+      value="{{comment}}"
+      bindinput="onCommentInput"
+      maxlength="150"
+      auto-height
+    />
+    <text class="char-count text-gray text-sm">{{comment.length}}/150</text>
+  </view>
+
+  <!-- 信用分说明 -->
+  <view class="credit-rule card">
+    <text class="rule-title text-bold text-sm mb-10">📊 评价对信用分的影响</text>
+    <text class="rule-item text-gray text-sm">好评（4~5星）→ 被评价者 +2 信用分</text>
+    <text class="rule-item text-gray text-sm">差评（1~2星）→ 被评价者 -3 信用分</text>
+    <text class="rule-item text-gray text-sm">准时到场 → 被评价者 +2 信用分</text>
+  </view>
+
+  <view style="height:160rpx"></view>
+
+  <!-- 提交 -->
+  <view class="submit-bar">
+    <button class="submit-btn" loading="{{submitting}}" bindtap="onSubmit">
+      提交评价
+    </button>
+  </view>
+</view>

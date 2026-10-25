@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>登录页 — 匹克约球</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:wght@400;700;900&display=swap">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif; background: #1C3A4A; display: flex; padding: 40px; justify-content: center; align-items: flex-start; }
+
+.phone {
+  width: 375px;
+  height: 812px;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.55);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #5BC4ED;
+}
+
+/* ── 上半区：天蓝色 ── */
+.login-top {
+  height: 447px; /* ~55vh of 812px */
+  background: linear-gradient(155deg, #7DD6F5 0%, #4BADD8 55%, #3298C8 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 状态栏 */
+.status-bar-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.sb-time { font-size: 14px; font-weight: 700; color: #FFF; font-family: 'DM Sans', sans-serif; }
+.sb-icons { font-size: 11px; color: #FFF; font-family: 'DM Sans', sans-serif; }
+
+/* 漂浮 pills */
+.pill-deco {
+  position: absolute;
+  background: rgba(255,255,255,0.22);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 15px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.pd-1 { top: 18%;  left: 6%;  transform: rotate(-9deg); }
+.pd-2 { top: 22%;  right: 8%; transform: rotate(7deg);  }
+.pd-3 { top: 50%;  left: 5%;  transform: rotate(-4deg); }
+.pd-4 { bottom: 20%; right: 6%;  transform: rotate(11deg); }
+.pd-5 { bottom: 32%; left: 22%; transform: rotate(-6deg); }
+.pd-6 { top: 64%;  right: 12%; transform: rotate(5deg);  }
+
+/* App 图标 */
+.login-icon-box {
+  width: 80px;
+  height: 80px;
+  background: rgba(255,255,255,0.28);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+  z-index: 1;
+  font-size: 40px;
+}
+
+/* ── 下半区：白色面板 ── */
+.login-bottom {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 24px 24px 0 0;
+  margin-top: -24px;
+  padding: 28px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.login-hl {
+  display: block;
+  font-size: 32px;
+  font-weight: 900;
+  color: #1A1A2E;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.login-sub {
+  display: block;
+  font-size: 13px;
+  color: #999;
+  margin-top: 8px;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+}
+
+/* 深色主按钮 */
+.btn-dark-cta {
+  width: 100%;
+  height: 50px;
+  background: #1A1A2E;
+  color: #FFFFFF;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 20px rgba(26,26,46,0.3);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* 分割线 */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.divider-line { flex: 1; height: 1px; background: #EBEBEB; }
+.divider-text { font-size: 12px; color: #BBB; white-space: nowrap; }
+
+/* 幽灵按钮 */
+.btn-ghost-cta {
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  color: #888;
+  border: 1.5px solid #DCDCDC;
+  border-radius: 22px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.agreement {
+  text-align: center;
+  font-size: 11px;
+  color: #BBBBBB;
+  margin-top: auto;
+  padding-top: 12px;
+  line-height: 1.6;
+}
+.agreement .link { color: #4BADD8; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <!-- 上半区 -->
+  <div class="login-top">
+    <!-- 状态栏 -->
+    <div class="status-bar-overlay">
+      <span class="sb-time">9:41</span>
+      <span class="sb-icons">●●● WiFi 🔋</span>
+    </div>
+
+    <!-- 漂浮标签 -->
+    <div class="pill-deco pd-1">P4 认证球员</div>
+    <div class="pill-deco pd-2">信用分 92 ⭐</div>
+    <div class="pill-deco pd-3">🏸 北京同城</div>
+    <div class="pill-deco pd-4">P6 大神级</div>
+    <div class="pill-deco pd-5">约球中 🏓</div>
+    <div class="pill-deco pd-6">低门槛入门</div>
+
+    <!-- App 图标 -->
+    <div class="login-icon-box">🏓</div>
+  </div>
+
+  <!-- 下半区 -->
+  <div class="login-bottom">
+    <span class="login-hl">同城约球，</span>
+    <span class="login-hl">随时开始！</span>
+    <span class="login-sub">认证水平 · 信用约球 · 同城社区</span>
+
+    <div class="btn-dark-cta">💬&nbsp;&nbsp;微信一键登录</div>
+
+    <div class="login-divider">
+      <div class="divider-line"></div>
+      <span class="divider-text">或</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="btn-ghost-cta">访客体验（Mock）</div>
+
+    <div class="agreement">
+      登录即同意
+      <span class="link">《用户服务协议》</span>
+      和
+      <span class="link">《隐私政策》</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

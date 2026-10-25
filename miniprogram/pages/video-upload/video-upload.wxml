@@ -1,0 +1,71 @@
+<view class="upload-page">
+  <!-- 成功状态 -->
+  <view wx:if="{{uploaded}}" class="success-page flex-col flex-center">
+    <text class="success-icon">🎉</text>
+    <text class="success-title text-bold">提交成功！</text>
+    <text class="success-desc text-gray">审核团队将在24小时内评定您的等级，结果会通过消息通知您</text>
+    <button class="back-btn btn-primary" bindtap="onGoBack">返回</button>
+  </view>
+
+  <view wx:else>
+    <!-- 说明 -->
+    <view class="tips-section card">
+      <view class="tips-title text-bold mb-10">📋 视频要求</view>
+      <view wx:for="{{tips}}" wx:key="index" class="tip-row">
+        <text class="tip-dot">·</text>
+        <text class="tip-text text-gray text-sm">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 视频选择区 -->
+    <view class="video-section card">
+      <view wx:if="{{!videoPath}}" class="video-placeholder" bindtap="onChooseVideo">
+        <text class="placeholder-icon">🎥</text>
+        <text class="placeholder-text text-gray">点击选择视频（10~20秒）</text>
+        <text class="placeholder-sub text-gray text-sm">支持从相册选择或直接拍摄</text>
+      </view>
+
+      <view wx:else class="video-preview">
+        <video
+          class="video-player"
+          src="{{videoPath}}"
+          poster="{{thumbPath}}"
+          controls="{{true}}"
+          show-fullscreen-btn="{{true}}"
+          show-play-btn="{{true}}"
+          show-center-play-btn="{{true}}"
+        />
+        <view class="video-info flex-between mt-20">
+          <text class="text-gray text-sm">时长：{{duration}}秒</text>
+          <text class="re-select text-sm" style="color:#2196F3" bindtap="onChooseVideo">重新选择</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自评等级 -->
+    <view class="level-section card">
+      <view class="section-title text-bold mb-20">您的自评等级</view>
+      <view
+        wx:for="{{levelOptions}}"
+        wx:key="key"
+        class="level-row {{selfRatedLevel === item.key ? 'selected' : ''}}"
+        bindtap="onLevelSelect"
+        data-level="{{item.key}}"
+      >
+        <view class="level-code-badge">{{item.key}}</view>
+        <view class="level-info flex-1">
+          <text class="level-label text-bold">{{item.label}}</text>
+          <text class="level-desc text-gray text-sm">{{item.desc}}</text>
+        </view>
+        <view wx:if="{{selfRatedLevel === item.key}}" class="check-icon">✓</view>
+      </view>
+    </view>
+
+    <!-- 提交 -->
+    <view class="submit-bar">
+      <button class="submit-btn" loading="{{uploading}}" bindtap="onUpload">
+        提交认证视频
+      </button>
+    </view>
+  </view>
+</view>

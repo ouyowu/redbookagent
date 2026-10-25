@@ -1,0 +1,48 @@
+<view class="login-page">
+
+  <!-- 上半部：天蓝色背景 + 漂浮标签 -->
+  <view class="login-top">
+    <view class="pill-deco pd-1">P4 认证球员</view>
+    <view class="pill-deco pd-2">信用分 92 ⭐</view>
+    <view class="pill-deco pd-3">🏸 北京同城</view>
+    <view class="pill-deco pd-4">P6 大神级</view>
+    <view class="pill-deco pd-5">约球中 🏓</view>
+    <view class="pill-deco pd-6">低门槛入门</view>
+
+    <!-- App 图标 -->
+    <view class="login-icon-box">
+      <text class="login-icon-emoji">🏓</text>
+    </view>
+  </view>
+
+  <!-- 下半部：白色面板 -->
+  <view class="login-bottom">
+    <text class="login-hl">同城约球，</text>
+    <text class="login-hl">随时开始！</text>
+    <text class="login-sub">认证水平 · 信用约球 · 同城社区</text>
+
+    <button
+      class="btn-dark-cta"
+      loading="{{loading}}"
+      bindtap="onMockLogin"
+    >💬  微信一键登录</button>
+
+    <view class="login-divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">或</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <button class="btn-ghost-cta" bindtap="onMockLogin">
+      访客体验（Mock）
+    </button>
+
+    <view class="agreement">
+      登录即同意
+      <text class="link">《用户服务协议》</text>
+      和
+      <text class="link">《隐私政策》</text>
+    </view>
+  </view>
+
+</view>

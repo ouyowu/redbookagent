@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>首页 — 匹克约球</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif;
+  background: #0E1C24;
+  display: flex; gap: 40px; padding: 40px; justify-content: center;
+}
+
+.phone {
+  width: 375px; height: 812px;
+  background: #F5F3FE;
+  border-radius: 44px; overflow: hidden;
+  box-shadow: 0 32px 96px rgba(0,0,0,0.7);
+  display: flex; flex-direction: column;
+}
+
+/* ── White header ── */
+.home-hd {
+  background: #FFF;
+  padding: 44px 16px 12px;
+  display: flex; align-items: center; gap: 9px;
+  flex-shrink: 0;
+}
+.hd-logo { font-size: 20px; font-weight: 900; color: #1A1A2E; flex: 1; }
+.hd-search {
+  display: flex; align-items: center; gap: 5px;
+  background: #F5F3FE; border-radius: 18px;
+  padding: 7px 12px; font-size: 12px; color: #AAAECC;
+  border: 1px solid #EAE8FC; flex: 1;
+}
+.hd-bell {
+  width: 34px; height: 34px; background: #F5F3FE;
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 15px; flex-shrink: 0;
+  border: 1px solid #EAE8FC;
+}
+.hd-av {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #4BADD8;
+  border: 2px solid #FFF; box-shadow: 0 0 0 2px rgba(75,173,216,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 900; color: #FFF; flex-shrink: 0;
+}
+
+/* ── Tab row: underline style ── */
+.cat-tabs {
+  background: #FFF;
+  display: flex; align-items: center; padding: 2px 16px 0;
+  border-bottom: 1.5px solid #F0EEFB; flex-shrink: 0;
+}
+.ct {
+  padding: 9px 13px; font-size: 15px; font-weight: 600;
+  color: #AAAECC; border-bottom: 2.5px solid transparent;
+  margin-bottom: -1.5px; white-space: nowrap;
+}
+.ct.on { color: #1A1A2E; font-weight: 900; border-bottom-color: #4BADD8; }
+
+/* ── Scroll ── */
+.scroll { flex: 1; overflow-y: auto; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ── Quick shortcut icons ── */
+.quick-icons {
+  display: flex; justify-content: space-around;
+  padding: 18px 12px 14px; background: #FFF;
+}
+.qi { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.qi-icon {
+  width: 54px; height: 54px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center; font-size: 26px;
+}
+.qi-sky    { background: linear-gradient(145deg, #5CD4F8, #4BADD8); }
+.qi-purple { background: linear-gradient(145deg, #9B7BFF, #7B5BFB); }
+.qi-orange { background: linear-gradient(145deg, #FFB845, #FF8C2A); }
+.qi-pink   { background: linear-gradient(145deg, #FF8CBB, #FF6B9D); }
+.qi-label { font-size: 12px; color: #333; font-weight: 600; }
+
+/* ── Section heading ── */
+.sec-hd {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 14px 16px 10px;
+}
+.sec-title { font-size: 20px; font-weight: 900; color: #1A1A2E; }
+.sec-more { font-size: 12px; color: #AAAECC; font-weight: 600; }
+
+/* ── Vivid 2×2 game card grid ── */
+.game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 14px 14px; }
+.gg-card {
+  border-radius: 20px; padding: 14px;
+  height: 154px; display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.gg-pink   { background: #FF6B9D; }
+.gg-purple { background: #7B5BFB; }
+.gg-green  { background: #00BF88; }
+.gg-orange { background: #FF9F00; }
+
+.gg-sport {
+  position: absolute; right: 8px; top: 6px;
+  font-size: 46px; line-height: 1; opacity: 0.88;
+}
+.gg-level {
+  display: inline-block; background: rgba(255,255,255,0.26); color: #FFF;
+  font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+  margin-bottom: 5px; width: fit-content;
+}
+.gg-title { font-size: 17px; font-weight: 900; color: #FFF; line-height: 1.3; }
+.gg-foot { display: flex; align-items: center; justify-content: space-between; }
+.gg-meta { font-size: 10px; color: rgba(255,255,255,0.75); }
+.gg-btn {
+  background: rgba(255,255,255,0.28); color: #FFF;
+  font-size: 10px; font-weight: 700; padding: 4px 11px; border-radius: 8px;
+}
+
+/* ── Player strip (white card) ── */
+.player-strip { background: #FFF; padding: 14px 0 16px; margin-top: 8px; }
+.ps-hd { display: flex; align-items: baseline; justify-content: space-between; padding: 0 16px 12px; }
+.ps-title { font-size: 18px; font-weight: 900; color: #1A1A2E; }
+.ps-more { font-size: 12px; color: #AAAECC; }
+.players { display: flex; gap: 14px; padding: 0 16px; overflow-x: auto; }
+.players::-webkit-scrollbar { display: none; }
+.pi { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.pi-av {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 900; color: #FFF;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+}
+.pi-badge {
+  font-size: 9px; font-weight: 900; color: #FFF;
+  background: #4BADD8; padding: 2px 7px; border-radius: 6px;
+}
+.pi-name { font-size: 10px; color: #666; max-width: 54px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── More games list ── */
+.list-section { background: #FFF; margin-top: 8px; padding-bottom: 4px; }
+.gl-row {
+  display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+}
+.gl-row + .gl-row { border-top: 1px solid #F5F3FE; }
+.gl-icon {
+  width: 46px; height: 46px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+}
+.gl-icon.lav   { background: #EEEAFF; }
+.gl-icon.mint  { background: #D4FAF0; }
+.gl-icon.peach { background: #FFE9DF; }
+.gl-body { flex: 1; min-width: 0; }
+.gl-title { font-size: 15px; font-weight: 900; color: #1A1A2E; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gl-chips { display: flex; gap: 5px; }
+.gl-chip { font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: 600; }
+.gc-level { color: #7B5BFB; background: #F0EDFF; }
+.gc-spot  { color: #00BF88; background: #E2FBF4; }
+.gl-right { text-align: right; flex-shrink: 0; }
+.gl-price { display: block; font-size: 16px; font-weight: 900; color: #1A1A2E; font-family: 'DM Sans', sans-serif; }
+.gl-time  { display: block; font-size: 10px; color: #AAAECC; }
+
+/* ── Tab bar ── */
+.tab-bar {
+  height: 58px; background: #FFF; border-top: 1.5px solid #F0EEFB;
+  display: flex; align-items: center; justify-content: space-around;
+  flex-shrink: 0; padding-bottom: 4px;
+}
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; padding: 0 8px; }
+.tb-icon { font-size: 20px; }
+.tb-label { font-size: 10px; color: #AAAECC; }
+.tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
+.tb-item.active::after { content: ''; position: absolute; bottom: -5px; width: 18px; height: 3px; background: #4BADD8; border-radius: 2px; }
+.tb-fab { width: 48px; height: 48px; background: #4BADD8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; box-shadow: 0 4px 18px rgba(75,173,216,0.45); }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- White header -->
+  <div class="home-hd">
+    <span class="hd-logo">🏓 匹克约球</span>
+    <div class="hd-search">🔍 搜索球局或球友</div>
+    <div class="hd-bell">🔔</div>
+    <div class="hd-av">李</div>
+  </div>
+
+  <!-- Category tab underline -->
+  <div class="cat-tabs">
+    <span class="ct on">推荐</span>
+    <span class="ct">最新</span>
+    <span class="ct">附近</span>
+    <span class="ct">高手局</span>
+  </div>
+
+  <div class="scroll">
+
+    <!-- Shortcut icons -->
+    <div class="quick-icons">
+      <div class="qi"><div class="qi-icon qi-sky">🏓</div><span class="qi-label">约球</span></div>
+      <div class="qi"><div class="qi-icon qi-purple">👥</div><span class="qi-label">球友</span></div>
+      <div class="qi"><div class="qi-icon qi-orange">⭐</div><span class="qi-label">认证</span></div>
+      <div class="qi"><div class="qi-icon qi-pink">🏆</div><span class="qi-label">排行</span></div>
+    </div>
+
+    <!-- Game card grid -->
+    <div class="sec-hd">
+      <span class="sec-title">推荐球局</span>
+      <span class="sec-more">更多 ›</span>
+    </div>
+    <div class="game-grid">
+
+      <div class="gg-card gg-pink">
+        <span class="gg-sport">🏓</span>
+        <div>
+          <div class="gg-level">P3 · P4</div>
+          <div class="gg-title">友谊赛·四人单打</div>
+        </div>
+        <div class="gg-foot">
+          <span class="gg-meta">朝阳 · 3/4人</span>
+          <div class="gg-btn">加入</div>
+        </div>
+      </div>
+
+      <div class="gg-card gg-purple">
+        <span class="gg-sport">🎾</span>
+        <div>
+          <div class="gg-level">P4 · P5</div>
+          <div class="gg-title">高手切磋·混双</div>
+        </div>
+        <div class="gg-foot">
+          <span class="gg-meta">国贸 · 2/4人</span>
+          <div class="gg-btn">加入</div>
+        </div>
+      </div>
+
+      <div class="gg-card gg-green">
+        <span class="gg-sport">🏸</span>
+        <div>
+          <div class="gg-level">P3 · P5</div>
+          <div class="gg-title">混合双打·练习</div>
+        </div>
+        <div class="gg-foot">
+          <span class="gg-meta">望京 · 1/4人</span>
+          <div class="gg-btn">加入</div>
+        </div>
+      </div>
+
+      <div class="gg-card gg-orange">
+        <span class="gg-sport">🏅</span>
+        <div>
+          <div class="gg-level">P5 · P6</div>
+          <div class="gg-title">精英挑战·大师</div>
+        </div>
+        <div class="gg-foot">
+          <span class="gg-meta">三元桥 · 1/4人</span>
+          <div class="gg-btn">加入</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Players -->
+    <div class="player-strip">
+      <div class="ps-hd">
+        <span class="ps-title">活跃球友 ✦</span>
+        <span class="ps-more">更多 ›</span>
+      </div>
+      <div class="players">
+        <div class="pi"><div class="pi-av" style="background:#FF6B9D">王</div><div class="pi-badge">P3</div><span class="pi-name">网球王子</span></div>
+        <div class="pi"><div class="pi-av" style="background:#7B5BFB">陈</div><div class="pi-badge">P4</div><span class="pi-name">快手小陈</span></div>
+        <div class="pi"><div class="pi-av" style="background:#FF9F00">赵</div><div class="pi-badge">P5</div><span class="pi-name">橙子赵四</span></div>
+        <div class="pi"><div class="pi-av" style="background:#00BF88">林</div><div class="pi-badge">P6</div><span class="pi-name">球王小林</span></div>
+        <div class="pi"><div class="pi-av" style="background:#4895EF">刘</div><div class="pi-badge">P2</div><span class="pi-name">刘小侠</span></div>
+      </div>
+    </div>
+
+    <!-- More games list -->
+    <div class="sec-hd" style="padding-top:18px">
+      <span class="sec-title">附近球局</span>
+      <span class="sec-more">更多 ›</span>
+    </div>
+    <div class="list-section">
+      <div class="gl-row">
+        <div class="gl-icon lav">🏓</div>
+        <div class="gl-body">
+          <div class="gl-title">朝阳公园晨练局</div>
+          <div class="gl-chips">
+            <span class="gl-chip gc-level">P2~P3</span>
+            <span class="gl-chip gc-spot">3/4 可报</span>
+          </div>
+        </div>
+        <div class="gl-right">
+          <span class="gl-price">¥20</span>
+          <span class="gl-time">明早 07:00</span>
+        </div>
+      </div>
+      <div class="gl-row">
+        <div class="gl-icon mint">🎾</div>
+        <div class="gl-body">
+          <div class="gl-title">周末双打练习赛</div>
+          <div class="gl-chips">
+            <span class="gl-chip gc-level">P3~P4</span>
+            <span class="gl-chip gc-spot">2/4 可报</span>
+          </div>
+        </div>
+        <div class="gl-right">
+          <span class="gl-price">¥35</span>
+          <span class="gl-time">周六 09:30</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <div class="tb-item active"><span class="tb-icon">🏠</span><span class="tb-label" style="color:#4BADD8">首页</span></div>
+    <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>
+    <div class="tb-fab">+</div>
+    <div class="tb-item"><span class="tb-icon">💬</span><span class="tb-label">消息</span></div>
+    <div class="tb-item"><span class="tb-icon">👤</span><span class="tb-label">我的</span></div>
+  </div>
+
+</div>
+</body>
+</html>

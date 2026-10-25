@@ -1,0 +1,179 @@
+<view class="detail-page" wx:if="{{!loading && game}}">
+  <!-- 顶部信息 -->
+  <view class="hero-section">
+    <view class="game-title-row flex-between">
+      <text class="game-title text-xxl text-bold">{{game.title}}</text>
+      <view class="status-chip open" wx:if="{{game.status === 'OPEN'}}">招募中</view>
+      <view class="status-chip full" wx:elif="{{game.status === 'FULL'}}">已满员</view>
+      <view class="status-chip done" wx:else>已结束</view>
+    </view>
+
+    <view class="info-grid">
+      <view class="info-block">
+        <text class="info-label">时间</text>
+        <text class="info-value">{{game.formattedDate}}</text>
+        <text class="info-sub">{{game.startTime}}–{{game.endTime}}</text>
+      </view>
+      <view class="info-divider"></view>
+      <view class="info-block">
+        <text class="info-label">费用</text>
+        <text class="info-value fee-value">¥{{game.fee}}</text>
+        <text class="info-sub">/人</text>
+      </view>
+      <view class="info-divider"></view>
+      <view class="info-block">
+        <text class="info-label">名额</text>
+        <text class="info-value">{{game.currentPlayers}}/{{game.maxPlayers}}</text>
+        <text class="info-sub" wx:if="{{game.spotsLeft > 0}}">还差{{game.spotsLeft}}人</text>
+        <text class="info-sub full-text" wx:else>已满员</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 球局详情 -->
+  <view class="card mt-20">
+    <view class="detail-row">
+      <text class="detail-icon">📍</text>
+      <view class="detail-content">
+        <text class="detail-label">场地</text>
+        <text class="detail-value">{{game.venue}}</text>
+        <text class="detail-sub">{{game.address}}</text>
+      </view>
+      <view class="map-btn">地图</view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="detail-row">
+      <text class="detail-icon">🎯</text>
+      <view class="detail-content">
+        <text class="detail-label">水平要求</text>
+        <text class="detail-value">{{game.minLevel}} ~ {{game.maxLevel}}</text>
+      </view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="detail-row">
+      <text class="detail-icon">💬</text>
+      <view class="detail-content">
+        <text class="detail-label">球局说明</text>
+        <text class="detail-value desc">{{game.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 参与者 -->
+  <view class="card mt-20">
+    <view class="section-title text-bold mb-20">参与球友（{{game.currentPlayers}}人）</view>
+
+    <view
+      wx:for="{{game.participants}}"
+      wx:key="_id"
+      class="player-row flex align-center"
+      bindtap="onPlayerTap"
+      data-id="{{item._id}}"
+    >
+      <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+      <view class="player-info flex-1">
+        <view class="flex align-center">
+          <text class="player-name text-bold mr-10">{{item.nickName}}</text>
+          <view class="level-dot" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+          <view wx:if="{{item.creatorId === game.creatorId || item._id === game.creatorId}}" class="creator-tag">发起人</view>
+        </view>
+        <view class="player-credit text-sm" style="color:{{item.creditLevel.color}}">
+          {{item.creditLevel.icon}} 信用 {{item.creditScore}}
+        </view>
+      </view>
+      <text class="arrow-right text-gray">›</text>
+    </view>
+
+    <!-- 空位展示 -->
+    <view
+      wx:for="{{game.spotsLeft}}"
+      wx:key="index"
+      class="empty-slot flex align-center"
+    >
+      <view class="empty-avatar">+</view>
+      <text class="text-gray text-sm">空位等待中</text>
+    </view>
+  </view>
+
+  <!-- 发起人 -->
+  <view class="card mt-20">
+    <view class="section-title text-bold mb-20">发起人</view>
+    <view class="player-row flex align-center" bindtap="onPlayerTap" data-id="{{game.creator._id}}">
+      <image class="player-avatar" src="{{game.creator.avatarUrl}}" mode="aspectFill" />
+      <view class="player-info flex-1">
+        <text class="player-name text-bold">{{game.creator.nickName}}</text>
+        <text class="text-gray text-sm">{{game.creator.gamesPlayed}}场经验 · {{game.creator.city}}</text>
+      </view>
+      <text class="arrow-right text-gray">›</text>
+    </view>
+  </view>
+
+  <!-- 评价区域（球局已结束且当前用户参与过） -->
+  <view wx:if="{{canReview}}" class="card mt-20 review-section">
+    <view class="section-title text-bold mb-20">⭐ 为球友评价</view>
+    <view
+      wx:for="{{reviewablePlayers}}"
+      wx:key="_id"
+      class="review-player-row flex align-center"
+      bindtap="onReviewPlayer"
+      data-id="{{item._id}}"
+    >
+      <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+      <view class="player-info flex-1">
+        <view class="flex align-center">
+          <text class="player-name text-bold mr-10">{{item.nickName}}</text>
+          <view class="level-dot" style="background:{{item.levelInfo.color}}">{{item.level}}</view>
+        </view>
+      </view>
+      <view wx:if="{{item.hasReviewed}}" class="reviewed-tag">已评价</view>
+      <view wx:else class="review-btn-sm">去评价 ›</view>
+    </view>
+  </view>
+
+  <view class="safe-bottom"></view>
+  <view style="height:160rpx"></view>
+</view>
+
+<!-- 加载中 -->
+<view wx:if="{{loading}}" class="loading-wrap flex-center" style="height:100vh">
+  <text class="text-gray">加载中...</text>
+</view>
+
+<!-- 底部操作栏 -->
+<view class="bottom-bar" wx:if="{{!loading && game}}">
+  <view class="share-btn" bindtap="onShareGame">分享</view>
+
+  <button
+    wx:if="{{canJoin}}"
+    class="join-btn"
+    loading="{{joining}}"
+    bindtap="onJoinGame"
+  >
+    申请加入
+  </button>
+
+  <button
+    wx:elif="{{isParticipant && !isCreator && game.status !== 'COMPLETED'}}"
+    class="cancel-btn"
+    bindtap="onCancelJoin"
+  >
+    取消参加
+  </button>
+
+  <view wx:elif="{{isCreator && game.status !== 'COMPLETED'}}" class="creator-action">
+    <text class="text-gray text-sm">您发起的球局</text>
+  </view>
+
+  <view wx:elif="{{game.status === 'FULL' && !isParticipant}}" class="full-action">
+    <text class="text-gray">已满员，期待下次</text>
+  </view>
+
+  <view wx:elif="{{game.status === 'COMPLETED'}}" class="completed-action">
+    <text class="text-gray text-sm">球局已结束</text>
+    <text wx:if="{{canReview}}" class="review-hint primary-color">↑ 为球友评价</text>
+  </view>
+</view>

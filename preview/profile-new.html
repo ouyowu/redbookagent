@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人资料 — 匹克约球</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,900&display=swap">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body { font-family: 'ZCOOL QingKe HuangYou','PingFang SC',sans-serif; background: #0E1C24; display: flex; padding: 40px; justify-content: center; }
+
+.phone { width: 375px; height: 812px; background: #F5F3FE; border-radius: 44px; overflow: hidden; box-shadow: 0 32px 96px rgba(0,0,0,0.7); display: flex; flex-direction: column; }
+
+/* ── Scroll ── */
+.scroll { flex: 1; overflow-y: auto; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ── Sky-blue profile hero ── */
+.profile-hero {
+  background: linear-gradient(145deg, #6CCFF0 0%, #4BADD8 55%, #2F8FC0 100%);
+  padding: 44px 18px 22px; flex-shrink: 0;
+}
+
+/* Top row: user info + avatar */
+.ph-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.ph-av {
+  width: 66px; height: 66px; border-radius: 50%; flex-shrink: 0;
+  background: #43A047; border: 3px solid #FFF;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 900; color: #FFF;
+  position: relative;
+}
+.ph-online {
+  position: absolute; bottom: 2px; right: 2px;
+  width: 13px; height: 13px; background: #22D68A;
+  border-radius: 50%; border: 2px solid #4BADD8;
+}
+.ph-info { flex: 1; }
+.ph-name { display: block; font-size: 22px; font-weight: 900; color: #FFF; margin-bottom: 6px; }
+.ph-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.ph-badge {
+  font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px;
+  background: rgba(255,255,255,0.22); color: #FFF;
+  border: 1px solid rgba(255,255,255,0.36);
+}
+.ph-badge.highlight { background: rgba(255,255,255,0.35); }
+.ph-edit { font-size: 12px; color: rgba(255,255,255,0.85); padding: 5px 13px; background: rgba(255,255,255,0.2); border-radius: 12px; white-space: nowrap; }
+
+/* Stats row */
+.ph-stats { display: flex; justify-content: space-around; }
+.phs { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.phs-num { font-size: 24px; font-weight: 900; color: #FFF; font-family: 'DM Sans', sans-serif; line-height: 1; }
+.phs-lab { font-size: 11px; color: rgba(255,255,255,0.7); }
+.phs-div { width: 1px; height: 32px; background: rgba(255,255,255,0.25); }
+
+/* ── Quick action icons ── */
+.quick-actions {
+  background: #FFF; display: flex; justify-content: space-around; padding: 16px 12px 14px;
+}
+.qa { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+.qa-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.qa-sky    { background: linear-gradient(145deg, #5CD4F8, #4BADD8); }
+.qa-purple { background: linear-gradient(145deg, #9B7BFF, #7B5BFB); }
+.qa-orange { background: linear-gradient(145deg, #FFB845, #FF8C2A); }
+.qa-green  { background: linear-gradient(145deg, #44D4A4, #00BF88); }
+.qa-label { font-size: 12px; color: #333; font-weight: 600; }
+
+/* ── Level card ── */
+.level-card {
+  margin: 10px 14px 0;
+  background: linear-gradient(135deg, #F5F3FE, #EEEAFF);
+  border-radius: 18px; padding: 16px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid #E0DAFF;
+}
+.lc-left {}
+.lc-label { display: block; font-size: 11px; color: #9B87E8; font-weight: 700; margin-bottom: 5px; letter-spacing: 0.3px; }
+.lc-name { display: block; font-size: 16px; font-weight: 900; color: #1A1A2E; margin-bottom: 4px; }
+.lc-steps { display: flex; align-items: center; gap: 5px; margin-top: 8px; }
+.ls { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 7px; }
+.ls.done { color: #9B87E8; background: #EAE4FF; }
+.ls.current { color: #FFF; background: #7B5BFB; }
+.ls.next { color: #CCC; background: #F0F0F8; }
+.ls-sep { font-size: 10px; color: #CCC; }
+.lc-right { text-align: center; }
+.lc-num { display: block; font-size: 46px; font-weight: 900; color: #7B5BFB; line-height: 1; font-family: 'DM Sans', sans-serif; }
+.lc-prog-label { font-size: 10px; color: #9B87E8; }
+.lc-prog-bar { width: 60px; height: 4px; background: #E0DAFF; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.lc-prog-fill { height: 100%; background: #7B5BFB; border-radius: 2px; width: 72%; }
+
+/* ── Tabs ── */
+.ptabs { display: flex; padding: 12px 14px 0; gap: 6px; background: #FFF; margin-top: 10px; border-bottom: 1.5px solid #F0EEFB; }
+.ptab { padding: 9px 18px; border-radius: 0; font-size: 14px; font-weight: 600; color: #AAAECC; border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; }
+.ptab.on { color: #1A1A2E; font-weight: 900; border-bottom-color: #4BADD8; }
+
+/* ── Game list rows (white cards) ── */
+.game-list-section { background: #FFF; }
+.gl-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; }
+.gl-row + .gl-row { border-top: 1px solid #F5F3FE; }
+.gl-icon { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.gi-lav   { background: #EEEAFF; }
+.gi-mint  { background: #D4FAF0; }
+.gi-peach { background: #FFE9DF; }
+.gl-body { flex: 1; min-width: 0; }
+.gl-title { font-size: 15px; font-weight: 900; color: #1A1A2E; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gl-meta { font-size: 11px; color: #AAAECC; }
+.gl-right { flex-shrink: 0; text-align: right; }
+.gl-status { display: block; font-size: 11px; font-weight: 700; }
+.gl-status.open { color: #00BF88; }
+.gl-status.done { color: #AAAECC; }
+.gl-date { display: block; font-size: 10px; color: #C0C4D6; margin-top: 2px; }
+
+/* ── Tab bar ── */
+.tab-bar { height: 58px; background: #FFF; border-top: 1.5px solid #F0EEFB; display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; padding-bottom: 4px; }
+.tb-item { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; padding: 0 8px; }
+.tb-icon { font-size: 20px; }
+.tb-label { font-size: 10px; color: #AAAECC; }
+.tb-item.active .tb-label { color: #4BADD8; font-weight: 700; }
+.tb-item.active::after { content: ''; position: absolute; bottom: -5px; width: 18px; height: 3px; background: #4BADD8; border-radius: 2px; }
+.tb-fab { width: 48px; height: 48px; background: #4BADD8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #FFF; box-shadow: 0 4px 18px rgba(75,173,216,0.45); }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="scroll">
+
+    <!-- Sky blue hero -->
+    <div class="profile-hero">
+      <div class="ph-top">
+        <div style="position:relative">
+          <div class="ph-av">李<div class="ph-online"></div></div>
+        </div>
+        <div class="ph-info">
+          <span class="ph-name">李明 ✦</span>
+          <div class="ph-badges">
+            <span class="ph-badge highlight">⚡ P4 进阶高手</span>
+            <span class="ph-badge">📍 北京</span>
+          </div>
+        </div>
+        <div class="ph-edit">编辑</div>
+      </div>
+      <div class="ph-stats">
+        <div class="phs">
+          <span class="phs-num">23</span>
+          <span class="phs-lab">参与球局</span>
+        </div>
+        <div class="phs-div"></div>
+        <div class="phs">
+          <span class="phs-num">92</span>
+          <span class="phs-lab">信用分</span>
+        </div>
+        <div class="phs-div"></div>
+        <div class="phs">
+          <span class="phs-num">P4</span>
+          <span class="phs-lab">认证等级</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick action icons -->
+    <div class="quick-actions">
+      <div class="qa"><div class="qa-icon qa-sky">🏆</div><span class="qa-label">排行榜</span></div>
+      <div class="qa"><div class="qa-icon qa-purple">📋</div><span class="qa-label">我的任务</span></div>
+      <div class="qa"><div class="qa-icon qa-orange">⭐</div><span class="qa-label">认证中心</span></div>
+      <div class="qa"><div class="qa-icon qa-green">⚙️</div><span class="qa-label">设置</span></div>
+    </div>
+
+    <!-- Level card -->
+    <div class="level-card">
+      <div class="lc-left">
+        <span class="lc-label">球员档案</span>
+        <span class="lc-name">已认证 P4 球员 ✓</span>
+        <div class="lc-steps">
+          <span class="ls done">P3</span>
+          <span class="ls-sep">›</span>
+          <span class="ls current">P4</span>
+          <span class="ls-sep">›</span>
+          <span class="ls next">P5</span>
+          <span class="ls-sep">›</span>
+          <span class="ls next">P6</span>
+        </div>
+      </div>
+      <div class="lc-right">
+        <span class="lc-num">P4</span>
+        <span class="lc-prog-label">72% → P5</span>
+        <div class="lc-prog-bar"><div class="lc-prog-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="ptabs">
+      <span class="ptab on">我的球局 (3)</span>
+      <span class="ptab">信用记录</span>
+    </div>
+
+    <div class="game-list-section">
+      <div class="gl-row">
+        <div class="gl-icon gi-lav">🏓</div>
+        <div class="gl-body">
+          <div class="gl-title">周末友谊赛·四人单打</div>
+          <span class="gl-meta">📍 朝阳体育馆 · 09:00 · 3/4 人</span>
+        </div>
+        <div class="gl-right">
+          <span class="gl-status open">招募中</span>
+          <span class="gl-date">5月28日</span>
+        </div>
+      </div>
+      <div class="gl-row">
+        <div class="gl-icon gi-mint">🎾</div>
+        <div class="gl-body">
+          <div class="gl-title">高手切磋·混合双打</div>
+          <span class="gl-meta">📍 国贸体育馆 · 19:00 · 2/4 人</span>
+        </div>
+        <div class="gl-right">
+          <span class="gl-status open">招募中</span>
+          <span class="gl-date">5月29日</span>
+        </div>
+      </div>
+      <div class="gl-row">
+        <div class="gl-icon gi-peach">🏅</div>
+        <div class="gl-body">
+          <div class="gl-title">朝阳公园早场球局</div>
+          <span class="gl-meta">📍 朝阳公园球场 · 08:00 · 4/4 人</span>
+        </div>
+        <div class="gl-right">
+          <span class="gl-status done">已结束</span>
+          <span class="gl-date">5月21日</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tab-bar">
+    <div class="tb-item"><span class="tb-icon">🏠</span><span class="tb-label">首页</span></div>
+    <div class="tb-item"><span class="tb-icon">🏸</span><span class="tb-label">球局</span></div>
+    <div class="tb-fab">+</div>
+    <div class="tb-item"><span class="tb-icon">💬</span><span class="tb-label">消息</span></div>
+    <div class="tb-item active"><span class="tb-icon">👤</span><span class="tb-label" style="color:#4BADD8">我的</span></div>
+  </div>
+</div>
+</body>
+</html>

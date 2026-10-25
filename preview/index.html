@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375px, initial-scale=1">
+<title>匹克约球 - 预览</title>
+<style>
+/* rpx → px: 1rpx = 0.5px on 375px screen */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #E8E8E8; display: flex; gap: 24px; padding: 24px; flex-wrap: wrap; }
+
+.phone-frame {
+  width: 375px;
+  background: #F7F8FA;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.22);
+  flex-shrink: 0;
+  position: relative;
+}
+.page-label {
+  background: #333;
+  color: #FFF;
+  font-size: 13px;
+  padding: 8px 16px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ===== GLOBAL STYLES ===== */
+.story-ring {
+  border-radius: 50%;
+  padding: 3px;
+  display: inline-block;
+  background: linear-gradient(135deg, #00C27A, #667EEA);
+}
+.story-ring-inner {
+  border-radius: 50%;
+  overflow: hidden;
+  background: #FFF;
+  border: 2px solid white;
+}
+.story-ring img { display: block; object-fit: cover; }
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #FFF;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* ===== HOME PAGE ===== */
+.home-page { background: #F7F8FA; }
+
+.home-header {
+  background: #FFF;
+  padding: 48px 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #F0F0F0;
+}
+.hh-avatar-wrap { flex-shrink: 0; }
+.hh-greeting { flex: 1; }
+.hh-greeting-line { font-size: 11px; color: #888; display: block; }
+.hh-name { font-size: 15px; font-weight: 800; color: #1A1A2E; display: block; margin-top: 2px; }
+.hh-right { display: flex; gap: 6px; }
+.hh-icon-btn {
+  width: 34px; height: 34px; background: #F7F8FA;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #00C27A 0%, #00875A 100%);
+  padding: 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::after {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 140px; height: 140px;
+  background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.hero-slogan { font-size: 20px; font-weight: 900; color: #FFF; font-style: italic; line-height: 1.2; margin-bottom: 4px; }
+.hero-sub { font-size: 11px; color: rgba(255,255,255,0.75); margin-bottom: 14px; }
+.hero-stats-row { display: flex; gap: 4px; }
+.hsr-item {
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hsr-num { font-size: 16px; font-weight: 900; color: #FFF; }
+.hsr-lab { font-size: 10px; color: rgba(255,255,255,0.7); }
+
+.stories-wrap {
+  background: #FFF;
+  padding: 12px 16px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  border-bottom: 1px solid #F5F5F5;
+}
+.story-item { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.story-name { font-size: 10px; color: #555; max-width: 52px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+.story-add-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px dashed #00C27A;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #00C27A; font-weight: 300;
+}
+
+.quick-actions {
+  background: #FFF;
+  margin: 8px 12px;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.qa-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.qa-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.qa-label { font-size: 10px; color: #555; }
+
+.feed-title { font-size: 14px; font-weight: 800; color: #1A1A2E; padding: 8px 16px 4px; }
+
+.game-post {
+  background: #FFF;
+  margin: 0 12px 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.post-hd { display: flex; align-items: center; padding: 10px 12px; gap: 8px; }
+.post-hd-name { flex: 1; font-size: 13px; font-weight: 700; color: #1A1A2E; }
+.post-hd-level { font-size: 10px; font-weight: 700; color: #FFF; padding: 2px 7px; border-radius: 8px; }
+.join-pill {
+  background: linear-gradient(135deg, #00C27A, #00875A);
+  color: #FFF; font-size: 11px; font-weight: 700;
+  padding: 5px 14px; border-radius: 14px;
+}
+.full-pill { background: #F0F0F0; color: #AAA; font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 14px; }
+
+.post-cover {
+  height: 90px; position: relative;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.post-cover-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.15); }
+.cover-top { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; }
+.cover-title { font-size: 14px; font-weight: 800; color: #FFF; text-shadow: 0 1px 3px rgba(0,0,0,0.3); flex: 1; margin-right: 6px; line-height: 1.3; }
+.cover-status-chip { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 10px; white-space: nowrap; background: rgba(0,200,107,0.3); color: #7FFFD4; }
+.cover-bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; }
+.cover-fee { font-size: 14px; font-weight: 900; color: #FFE566; }
+.cover-meta { font-size: 10px; color: rgba(255,255,255,0.85); }
+
+.engagement-row {
+  display: flex; align-items: center; padding: 8px 12px;
+  border-top: 1px solid #F5F5F5;
+}
+.eng-item { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; color: #888; }
+.eng-divider { width: 1px; height: 16px; background: #F0F0F0; }
+
+/* ===== GAMES PAGE ===== */
+.games-page { background: #F7F8FA; }
+.games-header {
+  background: #FFF; padding: 48px 14px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.gh-main { font-size: 20px; font-weight: 900; color: #1A1A2E; }
+.gh-sub { font-size: 11px; color: #888; background: #F0F0F0; padding: 3px 10px; border-radius: 10px; }
+.gh-fab-sm { width: 32px; height: 32px; background: linear-gradient(135deg,#00C27A,#00875A); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #FFF; font-size: 18px; font-weight: 200; }
+
+.status-tabs {
+  display: flex; background: #FFF; padding: 0 14px;
+  border-bottom: 1px solid #F2F2F2; gap: 4px;
+}
+.stab { padding: 10px 8px; font-size: 13px; color: #888; position: relative; font-weight: 500; }
+.stab.active { color: #1A1A2E; font-weight: 800; }
+.stab.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 2.5px; background: linear-gradient(90deg,#00C27A,#00875A); border-radius: 3px; }
+
+.chips-bar { background: #FFF; white-space: nowrap; padding: 7px 10px; border-bottom: 1px solid #F2F2F2; }
+.chip { display: inline-block; padding: 4px 12px; border-radius: 15px; font-size: 11px; color: #666; background: #F5F5F5; margin-right: 5px; font-weight: 500; }
+.chip.active { background: #1A1A2E; color: #FFF; font-weight: 700; }
+
+.event-card {
+  background: #FFF; margin: 8px 12px 0; border-radius: 12px;
+  overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.event-cover { height: 90px; position: relative; }
+.event-cover-inner {
+  position: absolute; inset: 0; padding: 12px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: rgba(0,0,0,0.15);
+}
+.ec-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.ec-title { font-size: 14px; font-weight: 800; color: #FFF; flex: 1; margin-right: 5px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); line-height: 1.3; }
+.ec-chip { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(0,200,107,0.3); color: #7FFFD4; white-space: nowrap; }
+.ec-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+.ec-level { background: rgba(255,255,255,0.2); color: #FFF; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 8px; }
+.ec-fee { font-size: 14px; font-weight: 900; color: #FFE566; }
+
+.event-info { padding: 9px 12px 6px; display: flex; flex-direction: column; gap: 3px; }
+.ei-row { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #666; }
+
+.event-footer {
+  padding: 8px 12px 10px; border-top: 1px solid #F5F5F5;
+  display: flex; align-items: center;
+}
+.avatar-overlap { display: flex; }
+.ov-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid #FFF; margin-right: -7px;
+  background: #E0E0E0; overflow: hidden;
+}
+.ov-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.footer-count { font-size: 11px; color: #888; margin-left: 14px; flex: 1; }
+.spots-pill { background: #E6FAF2; color: #00B96B; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-right: 6px; }
+.footer-btn { background: linear-gradient(135deg,#00C27A,#00875A); color: #FFF; font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 15px; }
+
+/* ===== FRIENDS PAGE ===== */
+.friends-page { background: #F7F8FA; }
+.friends-header { background: #FFF; padding: 48px 14px 10px; }
+.fh-title { display: block; font-size: 20px; font-weight: 900; color: #1A1A2E; margin-bottom: 8px; }
+.fh-search { display: flex; align-items: center; gap: 6px; background: #F5F5F7; border-radius: 25px; padding: 8px 12px; }
+.fh-search span { font-size: 12px; }
+.fh-search input { flex: 1; font-size: 12px; color: #1A1A2E; border: none; background: transparent; outline: none; }
+
+.lchips { background: #FFF; white-space: nowrap; padding: 7px 10px 9px; border-bottom: 1px solid #F2F2F2; }
+.lchip { display: inline-flex; align-items: center; padding: 4px 13px; border-radius: 15px; font-size: 11px; color: #666; background: #F5F5F5; margin-right: 5px; font-weight: 500; }
+.lchip.active { background: #1A1A2E; color: #FFF; font-weight: 700; }
+
+.player-card {
+  display: flex; align-items: center; gap: 10px;
+  background: #FFF; margin: 8px 12px 0; border-radius: 12px; padding: 12px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+}
+.pc-avatar-wrap { position: relative; flex-shrink: 0; }
+.pc-img { width: 49px; height: 49px; object-fit: cover; border-radius: 50%; display: block; }
+.verified-badge {
+  position: absolute; bottom: 0; right: 0;
+  width: 17px; height: 17px; background: #00B96B; border-radius: 50%;
+  color: #FFF; font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid #FFF;
+}
+.pc-info { flex: 1; }
+.pc-name-row { display: flex; align-items: center; gap: 4px; justify-content: space-between; margin-bottom: 4px; }
+.pc-name { font-size: 14px; font-weight: 700; color: #1A1A2E; }
+.credit-display { display: flex; align-items: center; gap: 2px; font-size: 12px; font-weight: 700; }
+.pc-meta { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #888; margin-bottom: 3px; }
+.pc-bio { font-size: 11px; color: #AAA; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+
+/* ===== PROFILE PAGE ===== */
+.profile-page { background: #F7F8FA; }
+.profile-hero {
+  background: linear-gradient(160deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%);
+  padding: 40px 16px 18px;
+}
+.ph-actions { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 16px; }
+.ph-action-btn {
+  background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9);
+  font-size: 11px; font-weight: 600; padding: 5px 12px;
+  border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);
+}
+.ph-user { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+.ph-avatar-ring { width: 70px; height: 70px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg,#667EEA,#764BA2); flex-shrink: 0; }
+.ph-avatar-inner { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: white; border: 1.5px solid white; }
+.ph-avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+.ph-info { flex: 1; padding-top: 4px; }
+.ph-name { display: block; font-size: 18px; font-weight: 900; color: #FFF; margin-bottom: 6px; }
+.ph-level-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 15px; margin-bottom: 6px; }
+.ph-level-code { font-size: 10px; font-weight: 900; color: #FFF; }
+.ph-level-name { font-size: 9px; color: rgba(255,255,255,0.85); }
+.ph-bio { display: block; font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.ph-verified { position: absolute; bottom: 0; right: -4px; background: #00B96B; color: #FFF; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
+
+.ph-stats {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.08); border-radius: 10px; padding: 12px 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.phs-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.phs-num { font-size: 18px; font-weight: 900; color: #FFF; }
+.phs-lab { font-size: 10px; color: rgba(255,255,255,0.5); }
+.phs-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.15); }
+
+.profile-menu-row {
+  display: flex; justify-content: space-around;
+  background: #FFF; margin: 10px 12px; border-radius: 12px; padding: 14px 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.pmenu-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pmenu-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.pmenu-label { font-size: 10px; color: #555; font-weight: 500; }
+
+.profile-tabs {
+  display: flex; background: #FFF; margin: 0 12px 8px;
+  border-radius: 8px; padding: 3px; box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+}
+.ptab { flex: 1; text-align: center; padding: 7px; font-size: 12px; color: #888; border-radius: 6px; }
+.ptab.active { background: #1A1A2E; color: #FFF; font-weight: 700; }
+
+.my-game-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #FFF; margin: 0 12px 8px; border-radius: 10px; padding: 12px 14px;
+  box-shadow: 0 1px 7px rgba(0,0,0,0.05);
+}
+.mgr-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+.mgr-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mgr-dot.open { background: #00B96B; }
+.mgr-title { display: block; font-size: 13px; font-weight: 700; color: #1A1A2E; margin-bottom: 2px; }
+.mgr-date { display: block; font-size: 10px; color: #888; }
+.mgr-badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: #E6FAF2; color: #00B96B; }
+
+/* ===== MEMBERSHIP PAGE ===== */
+.membership-page { background: #F7F8FA; }
+.mem-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 44px 14px 10px; background: #FFF;
+}
+.mem-nav-back { font-size: 24px; color: #1A1A2E; font-weight: 300; }
+.mem-nav-title { font-size: 15px; font-weight: 800; color: #1A1A2E; }
+.mem-nav-share { font-size: 12px; color: #00B96B; font-weight: 600; }
+
+.player-card-wrap { padding: 12px 12px 4px; }
+.player-card {
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  border-radius: 16px; padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  position: relative; overflow: hidden;
+}
+.player-card::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px; background: rgba(255,255,255,0.08); border-radius: 50%;
+}
+.pc-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.pc-logo { display: flex; align-items: center; gap: 5px; }
+.pc-logo span:first-child { font-size: 16px; }
+.pc-logo-name { font-size: 12px; font-weight: 800; color: rgba(255,255,255,0.9); letter-spacing: 1px; }
+.pc-card-type { font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 3px; }
+
+.pc-card-body { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+.pc-card-avatar-ring { width: 70px; height: 70px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.4); overflow: hidden; flex-shrink: 0; }
+.pc-card-avatar-ring img { width: 100%; height: 100%; object-fit: cover; }
+.pc-card-name { display: block; font-size: 18px; font-weight: 900; color: #FFF; margin-bottom: 8px; }
+.pc-card-level { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 15px; background: rgba(255,255,255,0.2); margin-bottom: 6px; }
+.pc-card-level-code { font-size: 12px; font-weight: 900; color: #FFF; }
+.pc-card-level-name { font-size: 10px; color: rgba(255,255,255,0.9); }
+.pc-card-desc { display: block; font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+.pc-card-stats {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,0.12); border-radius: 8px; padding: 10px 0;
+  margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.15);
+}
+.pcs-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.pcs-num { font-size: 16px; font-weight: 900; color: #FFF; }
+.pcs-lab { font-size: 9px; color: rgba(255,255,255,0.5); }
+.pcs-div { width: 1px; height: 20px; background: rgba(255,255,255,0.2); }
+
+.pc-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.pc-id { font-size: 9px; color: rgba(255,255,255,0.3); font-family: monospace; }
+.pc-dots { display: flex; gap: 4px; }
+.pc-dot { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+.pc-dot.dark { background: rgba(255,255,255,0.6); }
+
+.section-card { background: #FFF; margin: 8px 12px; border-radius: 12px; padding: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.section-title { display: block; font-size: 13px; font-weight: 800; color: #1A1A2E; margin-bottom: 10px; }
+
+.level-progress { display: flex; gap: 4px; }
+.lp-step { flex: 1; height: 26px; border-radius: 6px; background: #F0F0F0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #999; }
+.lp-step.active { color: #FFF; }
+
+.badges-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.badge-item { display: flex; flex-direction: column; align-items: center; gap: 5px; width: calc((100% - 36px) / 4); }
+.badge-icon-wrap { width: 40px; height: 40px; border-radius: 10px; background: #F0F0F0; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.badge-name { font-size: 9px; color: #555; text-align: center; line-height: 1.3; }
+.badge-item.locked { opacity: 0.3; }
+
+.credit-status-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.csr-left { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.csr-emoji { font-size: 22px; }
+.csr-score { font-size: 22px; font-weight: 900; }
+.csr-bar-track { flex: 1; height: 6px; background: #F0F0F0; border-radius: 6px; overflow: hidden; }
+.csr-bar-fill { height: 100%; border-radius: 6px; background: #4CAF50; }
+</style>
+</head>
+<body>
+
+<!-- ========== HOME PAGE ========== -->
+<div class="phone-frame">
+  <div class="page-label">首页</div>
+  <div class="home-page">
+    <!-- Header -->
+    <div class="home-header">
+      <div class="hh-avatar-wrap">
+        <div class="story-ring" style="width:44px;height:44px;padding:2px;background:linear-gradient(135deg,#667EEA,#764BA2)">
+          <div class="story-ring-inner" style="width:40px;height:40px;border:1.5px solid white">
+            <img src="https://placehold.co/40x40/4CAF50/FFF?text=李" style="width:40px;height:40px">
+          </div>
+        </div>
+      </div>
+      <div class="hh-greeting">
+        <span class="hh-greeting-line">下午好 👋</span>
+        <span class="hh-name">球神小李 <span class="level-badge" style="background:#9C27B0;font-size:9px">P4</span></span>
+      </div>
+      <div class="hh-right">
+        <div class="hh-icon-btn">🔔</div>
+        <div class="hh-icon-btn">✉️</div>
+      </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-slogan">同城约球，<br>随时开始！</div>
+      <div class="hero-sub">已有 128 位球友加入</div>
+      <div class="hero-stats-row">
+        <div class="hsr-item"><span class="hsr-num">18</span><span class="hsr-lab">总场次</span></div>
+        <div class="hsr-item"><span class="hsr-num" style="color:#FFE566">92</span><span class="hsr-lab">信用分</span></div>
+        <div class="hsr-item"><span class="hsr-num" style="color:#7FFFD4">在线</span><span class="hsr-lab">状态</span></div>
+      </div>
+    </div>
+
+    <!-- Stories -->
+    <div class="stories-wrap">
+      <div class="story-item">
+        <div class="story-add-btn">+</div>
+        <span class="story-name">发球局</span>
+      </div>
+      <div class="story-item">
+        <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#F093FB,#F5576C)">
+          <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+            <img src="https://placehold.co/47x47/E91E63/FFF?text=王" style="width:47px;height:47px">
+          </div>
+        </div>
+        <span class="story-name">网球王子</span>
+      </div>
+      <div class="story-item">
+        <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#43E97B,#38A169)">
+          <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+            <img src="https://placehold.co/47x47/2196F3/FFF?text=张" style="width:47px;height:47px">
+          </div>
+        </div>
+        <span class="story-name">蓝鸟张飞</span>
+      </div>
+      <div class="story-item">
+        <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#FA709A,#FEE140)">
+          <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+            <img src="https://placehold.co/47x47/FF9800/FFF?text=赵" style="width:47px;height:47px">
+          </div>
+        </div>
+        <span class="story-name">橙子赵四</span>
+      </div>
+      <div class="story-item">
+        <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#4FACFE,#00F2FE)">
+          <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+            <img src="https://placehold.co/47x47/9C27B0/FFF?text=陈" style="width:47px;height:47px">
+          </div>
+        </div>
+        <span class="story-name">快手小陈</span>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="qa-item">
+        <div class="qa-icon" style="background:#E6FAF2">🏸</div>
+        <span class="qa-label">发布球局</span>
+      </div>
+      <div class="qa-item">
+        <div class="qa-icon" style="background:#EDF2FF">🔍</div>
+        <span class="qa-label">找球局</span>
+      </div>
+      <div class="qa-item">
+        <div class="qa-icon" style="background:#FFF3E0">👥</div>
+        <span class="qa-label">找球友</span>
+      </div>
+      <div class="qa-item">
+        <div class="qa-icon" style="background:#F3EDFF">🎖</div>
+        <span class="qa-label">认证等级</span>
+      </div>
+    </div>
+
+    <!-- Feed -->
+    <div class="feed-title">推荐球局</div>
+
+    <div class="game-post">
+      <div class="post-hd">
+        <div class="story-ring" style="width:34px;height:34px;padding:2px;background:linear-gradient(135deg,#F093FB,#F5576C)">
+          <div class="story-ring-inner" style="width:30px;height:30px;border:1.5px solid white">
+            <img src="https://placehold.co/30x30/E91E63/FFF?text=王" style="width:30px;height:30px">
+          </div>
+        </div>
+        <span class="post-hd-name">网球王子 <span class="post-hd-level" style="background:#2196F3">P3</span></span>
+        <span class="join-pill">加入</span>
+      </div>
+      <div class="post-cover" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+        <div class="post-cover-overlay"></div>
+        <div class="cover-top">
+          <span class="cover-title">周末友谊赛 · 四人单打</span>
+          <span class="cover-status-chip">招募中</span>
+        </div>
+        <div class="cover-bottom">
+          <span class="cover-fee">¥30</span>
+          <span class="cover-meta">📅 5月28日 · 🏟 朝阳体育馆</span>
+        </div>
+      </div>
+      <div class="engagement-row">
+        <div class="eng-item">👥 3/4人</div>
+        <div class="eng-divider"></div>
+        <div class="eng-item">🕐 09:00</div>
+        <div class="eng-divider"></div>
+        <div class="eng-item">P3-P4</div>
+      </div>
+    </div>
+
+    <div class="game-post" style="margin-bottom:8px">
+      <div class="post-hd">
+        <div class="story-ring" style="width:34px;height:34px;padding:2px;background:linear-gradient(135deg,#43E97B,#38A169)">
+          <div class="story-ring-inner" style="width:30px;height:30px;border:1.5px solid white">
+            <img src="https://placehold.co/30x30/2196F3/FFF?text=张" style="width:30px;height:30px">
+          </div>
+        </div>
+        <span class="post-hd-name">蓝鸟张飞 <span class="post-hd-level" style="background:#4CAF50">P2</span></span>
+        <span class="full-pill">已满</span>
+      </div>
+      <div class="post-cover" style="background:linear-gradient(135deg,#F093FB,#F5576C)">
+        <div class="post-cover-overlay"></div>
+        <div class="cover-top">
+          <span class="cover-title">初级训练营 · 欢迎新手</span>
+          <span class="cover-status-chip" style="background:rgba(255,149,0,0.3);color:#FFD54F">已满员</span>
+        </div>
+        <div class="cover-bottom">
+          <span class="cover-fee">¥20</span>
+          <span class="cover-meta">📅 5月26日 · 🏟 海淀球馆</span>
+        </div>
+      </div>
+      <div class="engagement-row">
+        <div class="eng-item">👥 4/4人</div>
+        <div class="eng-divider"></div>
+        <div class="eng-item">🕐 14:00</div>
+        <div class="eng-divider"></div>
+        <div class="eng-item">P1-P2</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== GAMES PAGE ========== -->
+<div class="phone-frame">
+  <div class="page-label">球局广场</div>
+  <div class="games-page">
+    <div class="games-header">
+      <div>
+        <div class="gh-main">球局广场</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="gh-sub">3 个球局</span>
+        <div class="gh-fab-sm">+</div>
+      </div>
+    </div>
+
+    <div class="status-tabs">
+      <div class="stab active">招募中</div>
+      <div class="stab">已满员</div>
+      <div class="stab">已结束</div>
+    </div>
+
+    <div class="chips-bar">
+      <span class="chip active">全部</span>
+      <span class="chip">P1</span>
+      <span class="chip">P2</span>
+      <span class="chip">P3</span>
+      <span class="chip">P4</span>
+      <span class="chip">P5</span>
+    </div>
+
+    <div class="event-card">
+      <div class="event-cover" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+        <div class="event-cover-inner">
+          <div class="ec-top">
+            <span class="ec-title">周末友谊赛 · 四人单打</span>
+            <span class="ec-chip">招募中</span>
+          </div>
+          <div class="ec-bottom">
+            <span class="ec-level">P3-P4</span>
+            <span class="ec-fee">¥30</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-info">
+        <div class="ei-row">📅 <span>5月28日 周三</span></div>
+        <div class="ei-row">🕐 <span>09:00 - 11:00</span></div>
+        <div class="ei-row">📍 <span>朝阳体育馆 · 2号场</span></div>
+      </div>
+      <div class="event-footer">
+        <div class="avatar-overlap">
+          <div class="ov-avatar"><img src="https://placehold.co/24x24/E91E63/FFF?text=王"></div>
+          <div class="ov-avatar"><img src="https://placehold.co/24x24/2196F3/FFF?text=张"></div>
+          <div class="ov-avatar"><img src="https://placehold.co/24x24/FF9800/FFF?text=赵"></div>
+        </div>
+        <span class="footer-count">3人已加入</span>
+        <span class="spots-pill">剩1位</span>
+        <span class="footer-btn">加入</span>
+      </div>
+    </div>
+
+    <div class="event-card" style="margin-top:8px">
+      <div class="event-cover" style="background:linear-gradient(135deg,#43E97B,#38A169)">
+        <div class="event-cover-inner">
+          <div class="ec-top">
+            <span class="ec-title">高手切磋 · 混合双打</span>
+            <span class="ec-chip">招募中</span>
+          </div>
+          <div class="ec-bottom">
+            <span class="ec-level">P4-P5</span>
+            <span class="ec-fee">¥50</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-info">
+        <div class="ei-row">📅 <span>5月29日 周四</span></div>
+        <div class="ei-row">🕐 <span>19:00 - 21:00</span></div>
+        <div class="ei-row">📍 <span>国贸体育馆 · 1号场</span></div>
+      </div>
+      <div class="event-footer">
+        <div class="avatar-overlap">
+          <div class="ov-avatar"><img src="https://placehold.co/24x24/4CAF50/FFF?text=李"></div>
+          <div class="ov-avatar"><img src="https://placehold.co/24x24/9C27B0/FFF?text=陈"></div>
+        </div>
+        <span class="footer-count">2人已加入</span>
+        <span class="spots-pill">剩2位</span>
+        <span class="footer-btn">加入</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FRIENDS PAGE ========== -->
+<div class="phone-frame">
+  <div class="page-label">球友广场</div>
+  <div class="friends-page">
+    <div class="friends-header">
+      <span class="fh-title">球友广场</span>
+      <div class="fh-search">
+        <span>🔍</span>
+        <input placeholder="搜索球友昵称..." readonly>
+      </div>
+    </div>
+
+    <div class="lchips">
+      <span class="lchip active">全部</span>
+      <span class="lchip">P1</span>
+      <span class="lchip">P2</span>
+      <span class="lchip">P3</span>
+      <span class="lchip">P4</span>
+      <span class="lchip">P5</span>
+      <span class="lchip">P6</span>
+    </div>
+
+    <div style="padding-top:4px">
+      <div class="player-card">
+        <div class="pc-avatar-wrap">
+          <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#F093FB,#F5576C)">
+            <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+              <img class="pc-img" src="https://placehold.co/47x47/E91E63/FFF?text=王">
+            </div>
+          </div>
+          <div class="verified-badge">✓</div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-name-row">
+            <div style="display:flex;align-items:center;gap:4px">
+              <span class="pc-name">网球王子</span>
+              <span class="level-badge" style="background:#2196F3;font-size:9px;margin-left:3px">P3</span>
+            </div>
+            <div class="credit-display" style="color:#4CAF50">⭐<span>88</span></div>
+          </div>
+          <div class="pc-meta">📍 北京 朝阳 · 🏸 24场</div>
+          <span class="pc-bio">喜欢打双打，欢迎约球！</span>
+        </div>
+      </div>
+
+      <div class="player-card" style="margin-top:8px">
+        <div class="pc-avatar-wrap">
+          <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#43E97B,#38A169)">
+            <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+              <img class="pc-img" src="https://placehold.co/47x47/2196F3/FFF?text=张">
+            </div>
+          </div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-name-row">
+            <div style="display:flex;align-items:center;gap:4px">
+              <span class="pc-name">蓝鸟张飞</span>
+              <span class="level-badge" style="background:#4CAF50;font-size:9px;margin-left:3px">P2</span>
+            </div>
+            <div class="credit-display" style="color:#2196F3">👍<span>75</span></div>
+          </div>
+          <div class="pc-meta">📍 北京 海淀 · 🏸 8场</div>
+          <span class="pc-bio">这位球友很低调</span>
+        </div>
+      </div>
+
+      <div class="player-card" style="margin-top:8px">
+        <div class="pc-avatar-wrap">
+          <div class="story-ring" style="width:52px;height:52px;padding:2.5px;background:linear-gradient(135deg,#FA709A,#FEE140)">
+            <div class="story-ring-inner" style="width:47px;height:47px;border:1.5px solid white">
+              <img class="pc-img" src="https://placehold.co/47x47/FF9800/FFF?text=赵">
+            </div>
+          </div>
+          <div class="verified-badge">✓</div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-name-row">
+            <div style="display:flex;align-items:center;gap:4px">
+              <span class="pc-name">橙子赵四</span>
+              <span class="level-badge" style="background:#FF9800;font-size:9px;margin-left:3px">P5</span>
+            </div>
+            <div class="credit-display" style="color:#4CAF50">⭐<span>95</span></div>
+          </div>
+          <div class="pc-meta">📍 北京 东城 · 🏸 56场</div>
+          <span class="pc-bio">P5认证，寻找高手对练</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PROFILE PAGE ========== -->
+<div class="phone-frame">
+  <div class="page-label">我的主页</div>
+  <div class="profile-page">
+    <div class="profile-hero">
+      <div class="ph-actions">
+        <span class="ph-action-btn">编辑</span>
+        <span class="ph-action-btn">🎖 球员档案</span>
+      </div>
+      <div class="ph-user">
+        <div style="position:relative;flex-shrink:0">
+          <div class="ph-avatar-ring">
+            <div class="ph-avatar-inner">
+              <img src="https://placehold.co/64x64/4CAF50/FFF?text=李" style="width:64px;height:64px">
+            </div>
+          </div>
+          <div class="ph-verified">✓ 认证</div>
+        </div>
+        <div class="ph-info">
+          <span class="ph-name">球神小李</span>
+          <div>
+            <div class="ph-level-chip" style="background:#9C27B0;display:inline-flex">
+              <span class="ph-level-code">P4</span>
+              <span class="ph-level-name">中高级</span>
+            </div>
+          </div>
+          <span class="ph-bio">热爱匹克球，喜欢以球会友 🏸</span>
+        </div>
+      </div>
+      <div class="ph-stats">
+        <div class="phs-item"><span class="phs-num">18</span><span class="phs-lab">总场次</span></div>
+        <div class="phs-divider"></div>
+        <div class="phs-item"><span class="phs-num" style="color:#FFE566">92</span><span class="phs-lab">信用分</span></div>
+        <div class="phs-divider"></div>
+        <div class="phs-item"><span class="phs-num">北京</span><span class="phs-lab">城市</span></div>
+      </div>
+    </div>
+
+    <div class="profile-menu-row">
+      <div class="pmenu-item">
+        <div class="pmenu-icon" style="background:#EDF2FF">🎖</div>
+        <span class="pmenu-label">球员档案</span>
+      </div>
+      <div class="pmenu-item">
+        <div class="pmenu-icon" style="background:#E6FAF2">🎥</div>
+        <span class="pmenu-label">等级认证</span>
+      </div>
+      <div class="pmenu-item">
+        <div class="pmenu-icon" style="background:#FFF3E0">🏸</div>
+        <span class="pmenu-label">我的球局</span>
+      </div>
+      <div class="pmenu-item">
+        <div class="pmenu-icon" style="background:#F3EDFF">⭐</div>
+        <span class="pmenu-label">信用记录</span>
+      </div>
+    </div>
+
+    <div class="profile-tabs">
+      <div class="ptab active">我的球局</div>
+      <div class="ptab">信用记录</div>
+    </div>
+
+    <div class="my-game-row">
+      <div class="mgr-left">
+        <div class="mgr-dot open"></div>
+        <div>
+          <span class="mgr-title">周末友谊赛 · 四人单打</span>
+          <span class="mgr-date">📅 5月28日 09:00 · 朝阳体育馆</span>
+        </div>
+      </div>
+      <span class="mgr-badge">招募中</span>
+    </div>
+
+    <div class="my-game-row">
+      <div class="mgr-left">
+        <div class="mgr-dot" style="background:#AAA"></div>
+        <div>
+          <span class="mgr-title">高手切磋 · 混合双打</span>
+          <span class="mgr-date">📅 5月20日 19:00 · 国贸体育馆</span>
+        </div>
+      </div>
+      <span class="mgr-badge" style="background:#F5F5F5;color:#888">已结束</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MEMBERSHIP PAGE ========== -->
+<div class="phone-frame">
+  <div class="page-label">球员档案</div>
+  <div class="membership-page">
+    <div class="mem-nav">
+      <span class="mem-nav-back">‹</span>
+      <span class="mem-nav-title">球员档案</span>
+      <span class="mem-nav-share">分享</span>
+    </div>
+
+    <div class="player-card-wrap">
+      <div class="player-card">
+        <div class="pc-card-header">
+          <div class="pc-logo">
+            <span>🏸</span>
+            <span class="pc-logo-name">匹克约球</span>
+          </div>
+          <span class="pc-card-type">PLAYER CARD</span>
+        </div>
+        <div class="pc-card-body">
+          <div class="pc-card-avatar-ring">
+            <img src="https://placehold.co/70x70/4CAF50/FFF?text=李">
+          </div>
+          <div>
+            <span class="pc-card-name">球神小李</span>
+            <div class="pc-card-level">
+              <span class="pc-card-level-code">P4</span>
+              <span class="pc-card-level-name">中高级</span>
+            </div>
+            <span class="pc-card-desc">技术全面，具备较强比赛能力</span>
+          </div>
+        </div>
+        <div class="pc-card-stats">
+          <div class="pcs-item"><span class="pcs-num">18</span><span class="pcs-lab">总场次</span></div>
+          <div class="pcs-div"></div>
+          <div class="pcs-item"><span class="pcs-num">92</span><span class="pcs-lab">信用分</span></div>
+          <div class="pcs-div"></div>
+          <div class="pcs-item"><span class="pcs-num">北京</span><span class="pcs-lab">城市</span></div>
+        </div>
+        <div class="pc-card-footer">
+          <span class="pc-id">ID: user_001</span>
+          <div class="pc-dots">
+            <div class="pc-dot"></div>
+            <div class="pc-dot"></div>
+            <div class="pc-dot dark"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <span class="section-title">等级进度</span>
+      <div class="level-progress">
+        <div class="lp-step" style="background:#9E9E9E;opacity:0.5"><span style="color:#FFF">P1</span></div>
+        <div class="lp-step" style="background:#4CAF50;opacity:0.6"><span style="color:#FFF">P2</span></div>
+        <div class="lp-step" style="background:#2196F3;opacity:0.7"><span style="color:#FFF">P3</span></div>
+        <div class="lp-step active" style="background:#9C27B0"><span style="color:#FFF;font-size:10px">P4 ✓</span></div>
+        <div class="lp-step"><span>P5</span></div>
+        <div class="lp-step"><span>P6</span></div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <span class="section-title">信用状态</span>
+      <div class="credit-status-row">
+        <div class="csr-left">
+          <span class="csr-emoji">⭐</span>
+          <span class="csr-score" style="color:#4CAF50">92</span>
+          <span style="font-size:11px;font-weight:600;color:#4CAF50">信誉极佳</span>
+        </div>
+        <div style="flex:1">
+          <div class="csr-bar-track">
+            <div class="csr-bar-fill" style="width:92%;background:#4CAF50"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <span class="section-title">成就徽章</span>
+      <div class="badges-grid">
+        <div class="badge-item">
+          <div class="badge-icon-wrap" style="background:#E6FAF2">🏸</div>
+          <span class="badge-name">初次出击</span>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon-wrap" style="background:#FFF3E0">🔥</div>
+          <span class="badge-name">球场常客</span>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon-wrap" style="background:#FFFBE6">⭐</div>
+          <span class="badge-name">信誉达人</span>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon-wrap" style="background:#F3EDFF">🎖</div>
+          <span class="badge-name">认证球员</span>
+        </div>
+        <div class="badge-item locked">
+          <div class="badge-icon-wrap">⚡</div>
+          <span class="badge-name">球场老将</span>
+        </div>
+        <div class="badge-item locked">
+          <div class="badge-icon-wrap">🏆</div>
+          <span class="badge-name">P4以上</span>
+        </div>
+        <div class="badge-item locked">
+          <div class="badge-icon-wrap">👑</div>
+          <span class="badge-name">P5精英</span>
+        </div>
+        <div class="badge-item locked">
+          <div class="badge-icon-wrap">💎</div>
+          <span class="badge-name">P6大神</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

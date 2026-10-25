@@ -1,0 +1,160 @@
+.friends-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #F7F8FA;
+}
+
+/* ── Header ── */
+.friends-header {
+  background: #FFFFFF;
+  padding: 100rpx 28rpx 20rpx;
+}
+
+.fh-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #1A1A2E;
+  margin-bottom: 16rpx;
+}
+
+.fh-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: #F5F5F7;
+  border-radius: 50rpx;
+  padding: 16rpx 24rpx;
+}
+
+.fs-icon { font-size: 28rpx; }
+
+.fs-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1A1A2E;
+  height: 44rpx;
+}
+
+/* ── Level Chips ── */
+.level-chips-bar {
+  background: #FFFFFF;
+  white-space: nowrap;
+  padding: 16rpx 20rpx 20rpx;
+  border-bottom: 1rpx solid #F2F2F2;
+}
+
+.lchip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #F5F5F5;
+  margin-right: 12rpx;
+  font-weight: 500;
+}
+
+.lchip-active {
+  background: #1A1A2E;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ── Players List ── */
+.players-list {
+  flex: 1;
+  height: 0;
+}
+
+/* ── Player Card ── */
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: #FFFFFF;
+  margin: 16rpx 24rpx 0;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.05);
+}
+
+.pc-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* story-ring is from app.wxss but override size here */
+.player-card .story-ring {
+  width: 104rpx;
+  height: 104rpx;
+  padding: 3rpx;
+  border-radius: 50%;
+}
+
+.pc-img {
+  width: 98rpx !important;
+  height: 98rpx !important;
+}
+
+.verified-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 34rpx;
+  height: 34rpx;
+  background: #00B96B;
+  border-radius: 50%;
+  color: #FFFFFF;
+  font-size: 18rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid #FFFFFF;
+}
+
+/* ── Player Info ── */
+.pc-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1A1A2E;
+}
+
+.credit-display {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.cd-icon { font-size: 22rpx; }
+.cd-score { font-size: 26rpx; font-weight: 700; }
+
+.pc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 8rpx;
+}
+
+.pc-meta-text { font-size: 22rpx; color: #888; }
+.pc-dot { color: #CCC; font-size: 20rpx; }
+
+.pc-bio {
+  display: block;
+  font-size: 24rpx;
+  color: #AAA;
+  margin-top: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.loading-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx;
+}

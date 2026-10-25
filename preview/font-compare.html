@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>字体方案对比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,700&family=Noto+Serif+SC:wght@400;500;600;700;900&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #111;
+  display: flex;
+  gap: 0;
+  padding: 40px 32px;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ── Font definitions ── */
+.font-jinling {
+  /* 金陵体：衬线体，古典优雅 */
+  font-family: 'Noto Serif SC', 'STSong', 'Songti SC', Georgia, serif;
+}
+.font-yuanti {
+  /* 圆体：圆润无衬线，现代亲切 */
+  font-family: 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Helvetica Neue', sans-serif;
+}
+.font-en {
+  /* English: Claude-style, DM Sans geometric sans */
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── Labels ── */
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.col-label {
+  color: rgba(255,255,255,0.85);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.col-sublabel {
+  color: rgba(255,255,255,0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 200px;
+}
+
+/* ── Phone ── */
+.phone {
+  width: 375px;
+  background: #F0F5FF;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 32px 100px rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.divider-line {
+  width: 1px;
+  height: 860px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.15) 70%, transparent);
+  margin: 40px 32px;
+  align-self: center;
+}
+
+/* ── Status Bar ── */
+.status-bar {
+  height: 44px;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.sb-time { font-size: 15px; font-weight: 700; color: #1A1A2E; font-family: 'DM Sans', sans-serif; }
+.sb-icons { font-size: 11px; color: #1A1A2E; }
+
+/* ── Header ── */
+.home-hd {
+  background: #FFF;
+  padding: 0 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ECEEF8;
+}
+.hd-logo { display: flex; align-items: center; gap: 5px; }
+.hd-logo-icon { font-size: 16px; }
+.hd-logo-text { font-size: 17px; font-weight: 900; color: #1A1A2E; letter-spacing: 1px; }
+.hd-right { display: flex; align-items: center; gap: 7px; }
+.hd-btn { width: 32px; height: 32px; background: #F5F7FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.hd-avatar { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; }
+.hd-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ── Feed Tabs ── */
+.feed-tabs {
+  background: #FFF;
+  display: flex;
+  padding: 7px 12px 10px;
+  gap: 4px;
+  border-bottom: 1px solid #ECEEF8;
+}
+.ftab { padding: 5px 15px; border-radius: 15px; font-size: 13px; color: #8B8FA8; font-weight: 500; }
+.ftab.active { background: #1A1A2E; color: #FFF; font-weight: 700; }
+
+/* ── Reels ── */
+.reels-row {
+  background: #FFF;
+  padding: 9px 10px 11px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #ECEEF8;
+  overflow-x: hidden;
+}
+.reel-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.reel-thumb { width: 42px; height: 58px; border-radius: 8px; overflow: hidden; position: relative; border: 2px solid transparent; }
+.reel-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.reel-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6)); }
+.reel-lv { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 7px; font-weight: 900; color: #FFF; padding: 1px 5px; border-radius: 4px; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.reel-name { font-size: 10px; color: #555; text-align: center; max-width: 42px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reel-add { width: 42px; height: 58px; border-radius: 8px; background: linear-gradient(135deg,#E8EFFF,#F0F5FF); border: 1.5px dashed #00B96B; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #00B96B; font-weight: 300; }
+
+/* ── Post Prompt ── */
+.post-prompt {
+  background: #FFF;
+  margin: 8px 10px 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ECEEF8;
+}
+.pp-av { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.pp-av img { width: 100%; height: 100%; object-fit: cover; }
+.pp-ph { font-size: 12px; color: #C0C4D8; flex: 1; }
+.pp-ic { border-left: 1px solid #ECEEF8; padding-left: 9px; font-size: 14px; display: flex; gap: 5px; }
+
+/* ── Post Card ── */
+.post-card {
+  background: #FFF;
+  margin: 8px 10px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,80,0.07);
+}
+.pcard-hd { display: flex; align-items: center; gap: 8px; padding: 9px 12px 7px; }
+.pcard-av { position: relative; flex-shrink: 0; }
+.pcard-av img { width: 36px; height: 36px; border-radius: 50%; display: block; }
+.pcard-dot { position: absolute; bottom: 0; right: -1px; width: 12px; height: 12px; background: #00B96B; border-radius: 50%; border: 1.5px solid #FFF; color: #FFF; font-size: 7px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pcard-info { flex: 1; }
+.pcard-nr { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+.pcard-name { font-size: 13.5px; font-weight: 700; color: #1A1A2E; }
+.pcard-lv { font-size: 9px; font-weight: 800; color: #FFF; padding: 1px 6px; border-radius: 5px; font-family: 'DM Sans', sans-serif; }
+.pcard-time { font-size: 11px; color: #8B8FA8; font-family: 'DM Sans', sans-serif; }
+.pcard-join { background: linear-gradient(135deg,#00C27A,#00875A); color: #FFF; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 10px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,185,107,0.3); font-family: 'DM Sans', sans-serif; }
+
+.pcard-cover { width: 100%; height: 96px; position: relative; }
+.pcard-cover-inner { position: absolute; inset: 0; background: rgba(0,0,0,0.12); padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; }
+.pcc-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.pcc-title { font-size: 13px; font-weight: 800; color: #FFF; flex: 1; margin-right: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); line-height: 1.3; }
+.pcc-chip { font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; background: rgba(0,200,107,0.3); color: #7FFFD4; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.pcc-bot { display: flex; align-items: flex-end; justify-content: space-between; }
+.pcc-fee { font-size: 15px; font-weight: 900; color: #FFE566; font-family: 'DM Sans', sans-serif; }
+.pcc-tags { display: flex; gap: 4px; }
+.pcc-tag { background: rgba(255,255,255,0.2); color: #FFF; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 6px; font-family: 'DM Sans', sans-serif; }
+
+.pcard-cap { display: flex; align-items: center; justify-content: space-between; padding: 6px 12px 3px; }
+.pcard-cap-t { font-size: 11px; color: #555; flex: 1; }
+.pcard-spots { background: #E6FAF2; color: #00B96B; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 7px; font-family: 'DM Sans', sans-serif; }
+
+.pcard-eng { display: flex; align-items: center; padding: 7px 12px 9px; border-top: 1px solid #F5F7FF; }
+.peng-i { display: flex; align-items: center; gap: 3px; margin-right: 14px; }
+.peng-bm { margin-left: auto; }
+.peng-ico { font-size: 13px; }
+.peng-val { font-size: 11px; color: #8B8FA8; font-family: 'DM Sans', sans-serif; }
+
+/* ── Second Post (smaller) ── */
+.post-card2 {
+  background: #FFF;
+  margin: 8px 10px 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,80,0.07);
+}
+
+/* ── Bottom Tab ── */
+.tab-bar {
+  height: 52px;
+  background: #FFF;
+  border-top: 1px solid #ECEEF8;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 2px;
+}
+.tb-it { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tb-ic { font-size: 19px; }
+.tb-lb { font-size: 10px; color: #8B8FA8; }
+.tb-it.act .tb-lb { color: #00B96B; font-weight: 700; }
+.tb-fab { width: 40px; height: 40px; background: linear-gradient(135deg,#00C27A,#00875A); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #FFF; font-weight: 300; box-shadow: 0 4px 14px rgba(0,185,107,0.4); }
+
+/* ── Font specimen boxes ── */
+.specimen {
+  background: #FFF;
+  margin: 8px 10px 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ECEEF8;
+}
+.spec-en { font-size: 15px; font-weight: 700; color: #1A1A2E; line-height: 1.4; margin-bottom: 6px; font-family: 'DM Sans', sans-serif; }
+.spec-sub-en { font-size: 11px; color: #8B8FA8; line-height: 1.6; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+.spec-zh { font-size: 15px; font-weight: 700; color: #1A1A2E; line-height: 1.5; margin-bottom: 4px; }
+.spec-sub-zh { font-size: 12px; color: #555; line-height: 1.7; }
+.spec-label { font-size: 9px; color: #8B8FA8; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ========== 金陵体 ========== -->
+<div class="column">
+  <div class="col-label">方案一：金陵体</div>
+  <div class="col-sublabel">Noto Serif SC · 衬线/明体<br>古典优雅，适合品牌感</div>
+  <div class="phone font-jinling">
+    <div class="status-bar">
+      <span class="sb-time font-en">9:41</span>
+      <span class="sb-icons font-en">●●● WiFi 🔋</span>
+    </div>
+    <div class="home-hd">
+      <div class="hd-logo">
+        <span class="hd-logo-icon">🏸</span>
+        <span class="hd-logo-text">匹克约球</span>
+      </div>
+      <div class="hd-right">
+        <div class="hd-btn">🔔</div>
+        <div class="hd-btn">🔍</div>
+        <div class="hd-avatar"><img src="https://placehold.co/32x32/4CAF50/FFF?text=李"></div>
+      </div>
+    </div>
+    <div class="feed-tabs">
+      <div class="ftab active">推荐</div>
+      <div class="ftab">最新</div>
+      <div class="ftab font-en">Nearby</div>
+    </div>
+
+    <!-- Font specimen -->
+    <div class="specimen">
+      <div class="spec-label font-en">Font Specimen · 字体展示</div>
+      <div class="spec-en">Pickleball Community<br>Join the Game Today</div>
+      <div class="spec-sub-en">Find nearby games · Meet players · Build your rating</div>
+      <div style="height:8px"></div>
+      <div class="spec-zh">同城约球，随时开始！</div>
+      <div class="spec-sub-zh">认证水平 · 信用约球 · 同城社区<br>已有 128 位球友加入匹克约球</div>
+    </div>
+
+    <!-- Reels -->
+    <div class="reels-row">
+      <div class="reel-item"><div class="reel-add">+</div><span class="reel-name">发球局</span></div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#E91E63">
+          <img src="https://placehold.co/42x58/E91E63/FFF?text=王">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#2196F3">P3</div>
+        </div>
+        <span class="reel-name">网球王子</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#FF9800">
+          <img src="https://placehold.co/42x58/FF9800/FFF?text=赵">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#FF9800">P5</div>
+        </div>
+        <span class="reel-name">橙子赵四</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#9C27B0">
+          <img src="https://placehold.co/42x58/9C27B0/FFF?text=陈">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#9C27B0">P4</div>
+        </div>
+        <span class="reel-name">快手小陈</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#2196F3">
+          <img src="https://placehold.co/42x58/1565C0/FFF?text=张">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#4CAF50">P2</div>
+        </div>
+        <span class="reel-name">蓝鸟张飞</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#F44336">
+          <img src="https://placehold.co/42x58/C62828/FFF?text=林">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#F44336">P6</div>
+        </div>
+        <span class="reel-name">球王小林</span>
+      </div>
+    </div>
+
+    <!-- Prompt -->
+    <div class="post-prompt">
+      <div class="pp-av"><img src="https://placehold.co/30x30/4CAF50/FFF?text=李"></div>
+      <div class="pp-ph">发布球局或约球动态…</div>
+      <div class="pp-ic"><span>🏸</span><span>📅</span></div>
+    </div>
+
+    <!-- Post 1 -->
+    <div class="post-card">
+      <div class="pcard-hd">
+        <div class="pcard-av">
+          <img src="https://placehold.co/36x36/E91E63/FFF?text=王">
+          <div class="pcard-dot">✓</div>
+        </div>
+        <div class="pcard-info">
+          <div class="pcard-nr">
+            <span class="pcard-name">网球王子</span>
+            <span class="pcard-lv" style="background:#2196F3">P3</span>
+          </div>
+          <span class="pcard-time">5月28日 · 朝阳</span>
+        </div>
+        <div class="pcard-join">加入</div>
+      </div>
+      <div class="pcard-cover" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+        <div class="pcard-cover-inner">
+          <div class="pcc-top">
+            <span class="pcc-title">周末友谊赛 · 四人单打</span>
+            <span class="pcc-chip">招募中</span>
+          </div>
+          <div class="pcc-bot">
+            <span class="pcc-fee">¥30/人</span>
+            <div class="pcc-tags"><span class="pcc-tag">P3-P4</span><span class="pcc-tag">09:00</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pcard-cap">
+        <span class="pcard-cap-t">📅 5月28日 · 📍 朝阳体育馆</span>
+        <span class="pcard-spots">还差1人</span>
+      </div>
+      <div class="pcard-eng">
+        <div class="peng-i"><span class="peng-ico">👥</span><span class="peng-val">3/4</span></div>
+        <div class="peng-i"><span class="peng-ico">💬</span><span class="peng-val">详情</span></div>
+        <div class="peng-i"><span class="peng-ico">↗</span><span class="peng-val">分享</span></div>
+        <div class="peng-bm"><span class="peng-ico">🔖</span></div>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post-card2">
+      <div class="pcard-hd">
+        <div class="pcard-av">
+          <img src="https://placehold.co/36x36/FF9800/FFF?text=赵">
+          <div class="pcard-dot">✓</div>
+        </div>
+        <div class="pcard-info">
+          <div class="pcard-nr">
+            <span class="pcard-name">橙子赵四</span>
+            <span class="pcard-lv" style="background:#FF9800">P5</span>
+          </div>
+          <span class="pcard-time">5月29日 · 东城</span>
+        </div>
+        <div class="pcard-join">加入</div>
+      </div>
+      <div class="pcard-cover" style="background:linear-gradient(135deg,#43E97B,#38A169)">
+        <div class="pcard-cover-inner">
+          <div class="pcc-top">
+            <span class="pcc-title">高手切磋 · 混合双打</span>
+            <span class="pcc-chip">招募中</span>
+          </div>
+          <div class="pcc-bot">
+            <span class="pcc-fee">¥50/人</span>
+            <div class="pcc-tags"><span class="pcc-tag">P4-P5</span><span class="pcc-tag">19:00</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pcard-cap">
+        <span class="pcard-cap-t">📅 5月29日 · 📍 国贸体育馆</span>
+        <span class="pcard-spots">还差2人</span>
+      </div>
+      <div class="pcard-eng">
+        <div class="peng-i"><span class="peng-ico">👥</span><span class="peng-val">2/4</span></div>
+        <div class="peng-i"><span class="peng-ico">💬</span><span class="peng-val">详情</span></div>
+        <div class="peng-i"><span class="peng-ico">↗</span><span class="peng-val">分享</span></div>
+        <div class="peng-bm"><span class="peng-ico">🔖</span></div>
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tb-it act"><span class="tb-ic">🏠</span><span class="tb-lb font-en" style="color:#00B96B">Home</span></div>
+      <div class="tb-it"><span class="tb-ic">🏸</span><span class="tb-lb">球局</span></div>
+      <div class="tb-fab">+</div>
+      <div class="tb-it"><span class="tb-ic">👥</span><span class="tb-lb">球友</span></div>
+      <div class="tb-it"><span class="tb-ic">👤</span><span class="tb-lb">我的</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-line"></div>
+
+<!-- ========== 圆体 ========== -->
+<div class="column">
+  <div class="col-label">方案二：圆体</div>
+  <div class="col-sublabel">ZCOOL QingKe HuangYou · 圆润无衬线<br>活泼亲切，适合社区感</div>
+  <div class="phone font-yuanti">
+    <div class="status-bar">
+      <span class="sb-time font-en">9:41</span>
+      <span class="sb-icons font-en">●●● WiFi 🔋</span>
+    </div>
+    <div class="home-hd">
+      <div class="hd-logo">
+        <span class="hd-logo-icon">🏸</span>
+        <span class="hd-logo-text">匹克约球</span>
+      </div>
+      <div class="hd-right">
+        <div class="hd-btn">🔔</div>
+        <div class="hd-btn">🔍</div>
+        <div class="hd-avatar"><img src="https://placehold.co/32x32/4CAF50/FFF?text=李"></div>
+      </div>
+    </div>
+    <div class="feed-tabs">
+      <div class="ftab active">推荐</div>
+      <div class="ftab">最新</div>
+      <div class="ftab font-en">Nearby</div>
+    </div>
+
+    <!-- Font specimen -->
+    <div class="specimen">
+      <div class="spec-label font-en">Font Specimen · 字体展示</div>
+      <div class="spec-en">Pickleball Community<br>Join the Game Today</div>
+      <div class="spec-sub-en">Find nearby games · Meet players · Build your rating</div>
+      <div style="height:8px"></div>
+      <div class="spec-zh">同城约球，随时开始！</div>
+      <div class="spec-sub-zh">认证水平 · 信用约球 · 同城社区<br>已有 128 位球友加入匹克约球</div>
+    </div>
+
+    <!-- Reels -->
+    <div class="reels-row">
+      <div class="reel-item"><div class="reel-add">+</div><span class="reel-name">发球局</span></div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#E91E63">
+          <img src="https://placehold.co/42x58/E91E63/FFF?text=王">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#2196F3">P3</div>
+        </div>
+        <span class="reel-name">网球王子</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#FF9800">
+          <img src="https://placehold.co/42x58/FF9800/FFF?text=赵">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#FF9800">P5</div>
+        </div>
+        <span class="reel-name">橙子赵四</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#9C27B0">
+          <img src="https://placehold.co/42x58/9C27B0/FFF?text=陈">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#9C27B0">P4</div>
+        </div>
+        <span class="reel-name">快手小陈</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#2196F3">
+          <img src="https://placehold.co/42x58/1565C0/FFF?text=张">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#4CAF50">P2</div>
+        </div>
+        <span class="reel-name">蓝鸟张飞</span>
+      </div>
+      <div class="reel-item">
+        <div class="reel-thumb" style="border-color:#F44336">
+          <img src="https://placehold.co/42x58/C62828/FFF?text=林">
+          <div class="reel-ov"></div>
+          <div class="reel-lv" style="background:#F44336">P6</div>
+        </div>
+        <span class="reel-name">球王小林</span>
+      </div>
+    </div>
+
+    <!-- Prompt -->
+    <div class="post-prompt">
+      <div class="pp-av"><img src="https://placehold.co/30x30/4CAF50/FFF?text=李"></div>
+      <div class="pp-ph">发布球局或约球动态…</div>
+      <div class="pp-ic"><span>🏸</span><span>📅</span></div>
+    </div>
+
+    <!-- Post 1 -->
+    <div class="post-card">
+      <div class="pcard-hd">
+        <div class="pcard-av">
+          <img src="https://placehold.co/36x36/E91E63/FFF?text=王">
+          <div class="pcard-dot">✓</div>
+        </div>
+        <div class="pcard-info">
+          <div class="pcard-nr">
+            <span class="pcard-name">网球王子</span>
+            <span class="pcard-lv" style="background:#2196F3">P3</span>
+          </div>
+          <span class="pcard-time">5月28日 · 朝阳</span>
+        </div>
+        <div class="pcard-join">加入</div>
+      </div>
+      <div class="pcard-cover" style="background:linear-gradient(135deg,#667EEA,#764BA2)">
+        <div class="pcard-cover-inner">
+          <div class="pcc-top">
+            <span class="pcc-title">周末友谊赛 · 四人单打</span>
+            <span class="pcc-chip">招募中</span>
+          </div>
+          <div class="pcc-bot">
+            <span class="pcc-fee">¥30/人</span>
+            <div class="pcc-tags"><span class="pcc-tag">P3-P4</span><span class="pcc-tag">09:00</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pcard-cap">
+        <span class="pcard-cap-t">📅 5月28日 · 📍 朝阳体育馆</span>
+        <span class="pcard-spots">还差1人</span>
+      </div>
+      <div class="pcard-eng">
+        <div class="peng-i"><span class="peng-ico">👥</span><span class="peng-val">3/4</span></div>
+        <div class="peng-i"><span class="peng-ico">💬</span><span class="peng-val">详情</span></div>
+        <div class="peng-i"><span class="peng-ico">↗</span><span class="peng-val">分享</span></div>
+        <div class="peng-bm"><span class="peng-ico">🔖</span></div>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post-card2">
+      <div class="pcard-hd">
+        <div class="pcard-av">
+          <img src="https://placehold.co/36x36/FF9800/FFF?text=赵">
+          <div class="pcard-dot">✓</div>
+        </div>
+        <div class="pcard-info">
+          <div class="pcard-nr">
+            <span class="pcard-name">橙子赵四</span>
+            <span class="pcard-lv" style="background:#FF9800">P5</span>
+          </div>
+          <span class="pcard-time">5月29日 · 东城</span>
+        </div>
+        <div class="pcard-join">加入</div>
+      </div>
+      <div class="pcard-cover" style="background:linear-gradient(135deg,#43E97B,#38A169)">
+        <div class="pcard-cover-inner">
+          <div class="pcc-top">
+            <span class="pcc-title">高手切磋 · 混合双打</span>
+            <span class="pcc-chip">招募中</span>
+          </div>
+          <div class="pcc-bot">
+            <span class="pcc-fee">¥50/人</span>
+            <div class="pcc-tags"><span class="pcc-tag">P4-P5</span><span class="pcc-tag">19:00</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pcard-cap">
+        <span class="pcard-cap-t">📅 5月29日 · 📍 国贸体育馆</span>
+        <span class="pcard-spots">还差2人</span>
+      </div>
+      <div class="pcard-eng">
+        <div class="peng-i"><span class="peng-ico">👥</span><span class="peng-val">2/4</span></div>
+        <div class="peng-i"><span class="peng-ico">💬</span><span class="peng-val">详情</span></div>
+        <div class="peng-i"><span class="peng-ico">↗</span><span class="peng-val">分享</span></div>
+        <div class="peng-bm"><span class="peng-ico">🔖</span></div>
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tb-it act"><span class="tb-ic">🏠</span><span class="tb-lb font-en" style="color:#00B96B">Home</span></div>
+      <div class="tb-it"><span class="tb-ic">🏸</span><span class="tb-lb">球局</span></div>
+      <div class="tb-fab">+</div>
+      <div class="tb-it"><span class="tb-ic">👥</span><span class="tb-lb">球友</span></div>
+      <div class="tb-it"><span class="tb-ic">👤</span><span class="tb-lb">我的</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
